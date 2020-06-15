@@ -36,3 +36,5 @@ services:
       MYSQL_PASSWORD: 1
 volumes:
   db_data:
+    name: smarthome_db_data
+    external: true
