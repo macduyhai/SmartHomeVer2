@@ -6,7 +6,7 @@ Build a environment for IoT(Embedded soft ware, Back end data base, Mobile App)
 <p>How to run this example</p>
 
 <p>step 1: create volume<br>
-    $ docker volume create controlmoney_db_data<br>
+    $ docker volume create smarthome_db_data<br>
 step 2: run two containers with docker compose<br>
     $ docker-compose up<br>
 step 3: data base migration
