@@ -1,14 +1,14 @@
 package rounters
 
 import (
+	"SmartHomeVer2/config"
+	"SmartHomeVer2/controlers"
+	"SmartHomeVer2/middlewares"
+	"SmartHomeVer2/services"
+
 	"github.com/gin-gonic/contrib/jwt"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-
-	"github.com/hongminhcbg/control-money/config"
-	"github.com/hongminhcbg/control-money/controlers"
-	"github.com/hongminhcbg/control-money/middlewares"
-	"github.com/hongminhcbg/control-money/services"
 )
 
 type Router struct {
@@ -35,6 +35,11 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 		account.Use(accountAuthMiddleWare.Check)
 		account.POST("", controller.CreateUser)
 		account.POST("/login", controller.Login)
+	}
+	{
+		control := engine.Group("/api/v1/device/control")
+		account.Use(accountAuthMiddleWare.Check)
+		account.POST("", controller.Controldevice)
 	}
 
 	{

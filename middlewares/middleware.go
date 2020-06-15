@@ -2,7 +2,7 @@ package middlewares
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/hongminhcbg/control-money/utilitys"
+	"SmartHomeVer2/utilitys"
 )
 
 func CORSMiddleware() gin.HandlerFunc {

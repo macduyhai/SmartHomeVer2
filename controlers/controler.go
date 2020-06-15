@@ -1,14 +1,15 @@
 package controlers
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/hongminhcbg/control-money/common"
+	"SmartHomeVer2/common"
 	"time"
 
-	"github.com/hongminhcbg/control-money/dtos"
-	"github.com/hongminhcbg/control-money/models"
-	"github.com/hongminhcbg/control-money/services"
-	"github.com/hongminhcbg/control-money/utilitys"
+	"github.com/gin-gonic/gin"
+
+	"SmartHomeVer2/dtos"
+	"SmartHomeVer2/models"
+	"SmartHomeVer2/services"
+	"SmartHomeVer2/utilitys"
 )
 
 type Controller struct {
@@ -16,6 +17,42 @@ type Controller struct {
 	avrService  services.AverageService
 }
 
+//------------------------------------------------------------
+func (ctl *Controller) Controldevice(context *gin.Context) {
+	var request dtos.Device
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+		return
+	}
+	// Key    string `json:"key"`
+	// Mac    string `json:"mac"`
+	// Id     int    `json:"id"`
+	// Value  int    `json:"value"`
+	// Serial string `json:"serial"`
+
+	dv := models.Device{
+		Key:    request.Key,
+		Mac:    request.Mac,
+		Id:     request.Id,
+		Value:  request.Value,
+		Serial: request.Serial,
+	}
+	if dv.Key != "lvJvDWKiv0" {
+		utilitys.ResponseError400(context, err.Error())
+		return
+	} else {
+		data, err := ctl.userService.Create(acc)
+		if err != nil {
+			utilitys.ResponseError400(context, err.Error())
+		} else {
+			utilitys.ResponseSuccess200(context, data, "success")
+		}
+	}
+
+}
+
+//-------------------------------------------------------------
 func NewController(provider services.Provider) Controller {
 	return Controller{userService: provider.GetUserService(),
 		avrService: provider.GetAverageService()}
@@ -118,7 +155,7 @@ func (ctl *Controller) GetLogs(context *gin.Context) {
 
 func stringYYYYMMDD2Time(input string) (*time.Time, error) {
 	layout := "2006-01-02"
-	result, err := time.Parse(layout,input)
+	result, err := time.Parse(layout, input)
 	if err != nil {
 		return nil, err
 	}
@@ -180,7 +217,7 @@ func (ctl *Controller) AnalysisByDay(context *gin.Context) {
 	}
 }
 
-func (ctl *Controller)GetAverageByDay(context *gin.Context)  {
+func (ctl *Controller) GetAverageByDay(context *gin.Context) {
 	userID, err := utilitys.GetUserID(context)
 	if err != nil {
 		utilitys.ResponseError400(context, "get userID error")

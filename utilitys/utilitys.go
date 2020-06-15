@@ -1,15 +1,15 @@
 package utilitys
 
 import (
+	"SmartHomeVer2/common"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
-	"github.com/hongminhcbg/control-money/common"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/hongminhcbg/control-money/dtos"
+	"SmartHomeVer2/dtos"
 )
 
 type UserIdentity struct {
@@ -34,16 +34,16 @@ func makeResponse(data interface{}, code int, msg string) dtos.Response {
 	}
 }
 
-func Response(context *gin.Context, data interface{}, code int, msg string)  {
+func Response(context *gin.Context, data interface{}, code int, msg string) {
 	resp := makeResponse(data, code, msg)
 	context.JSON(code, resp)
 }
 
-func ResponseError400(context *gin.Context, msg string)  {
+func ResponseError400(context *gin.Context, msg string) {
 	Response(context, nil, 400, msg)
 }
 
-func ResponseSuccess200(context *gin.Context, data interface{}, msg string)  {
+func ResponseSuccess200(context *gin.Context, data interface{}, msg string) {
 	Response(context, data, 200, msg)
 }
 

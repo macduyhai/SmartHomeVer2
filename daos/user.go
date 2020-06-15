@@ -5,7 +5,7 @@ import (
 
 	"github.com/jinzhu/gorm"
 
-	"github.com/hongminhcbg/control-money/models"
+	"SmartHomeVer2/models"
 )
 
 type UserDao interface {

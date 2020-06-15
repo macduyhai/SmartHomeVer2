@@ -1,6 +1,6 @@
 FROM golang:1.12 as builder
 
-MAINTAINER LHM <cbg.hongminh@gmail.com>
+MAINTAINER MDH <dh.duyhai@gmail.com>
 
 WORKDIR /app
 

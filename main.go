@@ -1,12 +1,12 @@
 package main
 
 import (
+	"SmartHomeVer2/config"
+	"SmartHomeVer2/rounters"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/kelseyhightower/envconfig"
-
-	"github.com/hongminhcbg/control-money/config"
-	"github.com/hongminhcbg/control-money/rounters"
 )
 
 func main() {

@@ -10,15 +10,36 @@ import (
 	"SmartHomeVer2/models"
 )
 
-type UserService interface {
-	Login(request dtos.LoginRequest) (*dtos.LoginResponse, error)
-	Create(user models.User) (*models.User, error)
-	CreateLog(log models.Log) (*models.Log, error)
-	//GetAverageMonth(request dtos.AvrMoneyPerMonthRequest) (*dtos.AvrMoneyPerMonthResponse, error)
-	AnalysisByTag(userID int64, begin *time.Time, end *time.Time) (map[string]int64, error)
-	AnalysisByDay(userID int64, begin *time.Time, end *time.Time) (map[string]int64, error)
-	GetLogsByTime(userID int64, begin *time.Time, end *time.Time) ([]models.Log, error)
+type DeviceService interface {
+	Add(request dtos.AddRequest) (*dtos.AddResponse, error)
+	Delete(request dtos.DeleteRequest) (*dtos.DeviceResponse, error)
+	Edit(request dtos.EditRequest) (*dtos.EditResponse, error)
+	TurnOn(request dtos.TurnOnRequest) (*dtos.DeviceResponse, error)
+	TurnOff(request dtos.TurnOffRequest) (*dtos.DeviceResponse, error)
 }
+
+func (service *userServiceImpl) Add(request dtos.LoginRequest) (*dtos.LoginResponse, error) {
+	user, err := service.userDao.Login(request.Username, request.Password)
+	if err != nil {
+		return nil, err
+	}
+
+	tocken, err := service.jwt.CreateTocken(user.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	response := dtos.LoginResponse{
+		UserID:   user.ID,
+		Username: user.Username,
+		Name:     user.Name,
+		Tocken:   tocken,
+		Money:    user.Money,
+	}
+	return &response, nil
+}
+
+//---------------------------------------------------------
 
 type userServiceImpl struct {
 	config  *config.Config

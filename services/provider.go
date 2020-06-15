@@ -1,9 +1,9 @@
 package services
 
 import (
-	"github.com/hongminhcbg/control-money/config"
-	"github.com/hongminhcbg/control-money/daos"
-	"github.com/hongminhcbg/control-money/middlewares"
+	"SmartHomeVer2/config"
+	"SmartHomeVer2/daos"
+	"SmartHomeVer2/middlewares"
 	"github.com/jinzhu/gorm"
 )
 

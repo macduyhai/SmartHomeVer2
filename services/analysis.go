@@ -1,6 +1,6 @@
 package services
 
-import "github.com/hongminhcbg/control-money/dtos"
+import "SmartHomeVer2/dtos"
 
 type AnalysisService interface {
 	ByTag(request dtos.AnalysisRequest) (*dtos.AnalysisTagResponse, error)
