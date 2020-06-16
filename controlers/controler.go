@@ -1,6 +1,7 @@
 package controlers
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/macduyhai/SmartHomeVer2/common"
@@ -19,28 +20,46 @@ type Controller struct {
 }
 
 //------------------------------------------------------------
-func (ctl *Controller) Controldevice(context *gin.Context) {
+func (ctl *Controller) AddDevice(context *gin.Context) {
 	var request dtos.Device
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
 		utilitys.ResponseError400(context, err.Error())
 		return
-	} else {
-		//utilitys.ResponseSuccess200(context, data, "success")
 	}
-	// 	// Key    string `json:"key"`
-	// 	// Mac    string `json:"mac"`
-	// 	// Id     int    `json:"id"`
-	// 	// Value  int    `json:"value"`
-	// 	// Serial string `json:"serial"`
-
-	// 	dv := models.Device{
-	// 		Key:    request.Key,
-	// 		Mac:    request.Mac,
-	// 		Id:     request.Id,
-	// 		Value:  request.Value,
-	// 		Serial: request.Serial,
-	// 	}
+	fmt.Println(request)
+}
+func (ctl *Controller) DeleteDevice(context *gin.Context) {
+	var request dtos.Device
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+		return
+	}
+	fmt.Println(request)
+}
+func (ctl *Controller) EditDevice(context *gin.Context) {
+	var request dtos.Device
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+		return
+	}
+	fmt.Println(request)
+}
+func (ctl *Controller) ControlDevice(context *gin.Context) {
+	var request dtos.Device
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+		return
+	}
+	// dv := models.Device{
+	// 	Mac:    request.Mac,
+	// 	Id:     request.Id,
+	// 	Value:  request.Value,
+	// 	Serial: request.Serial,
+	// }
 	// 	if dv.Key != "lvJvDWKiv0" {
 	// 		utilitys.ResponseError400(context, err.Error())
 	// 		return

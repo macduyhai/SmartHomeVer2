@@ -37,6 +37,14 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 		account.POST("/login", controller.Login)
 	}
 	{
+		device := engine.Group("/api/v1/device")
+		device.Use(accountAuthMiddleWare.Check)
+		device.POST("/add", controller.AddDevice)
+		device.POST("/delete", controller.DeleteDevice)
+		device.POST("/edit", controller.EditDevice)
+		device.POST("/control", controller.ControlDevice)
+	}
+	{
 		control := engine.Group("/api/v1/control")
 		control.Use(accountAuthMiddleWare.Check)
 		control.GET("", controller.Controldevice)

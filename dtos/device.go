@@ -66,9 +66,12 @@ type TurnOffRequest struct {
 }
 
 type Device struct {
-	Key    string `json:"key"`
-	Mac    string `json:"mac"`
-	Id     int    `json:"id"`
-	Value  int    `json:"value"`
-	Serial string `json:"serial"`
+	Chip_ID         string `json:"chip_id"`
+	Flash_Chip_ID   string `json:"flash_chip_id"`
+	IDE_Flash_Size  string `json:"ide_flash_size"`
+	Real_Flash_Size string `json:"real_flash_size"`
+	Soft_AP_IP      string `json:"soft_ap_ip"`
+	Mac             string `json:"mac"`
+	Value           bool   `json:"value"`
+	Serial          string `json:"serial"`
 }
