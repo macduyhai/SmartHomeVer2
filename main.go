@@ -1,8 +1,8 @@
 package main
 
 import (
-	"SmartHomeVer2/config"
-	"SmartHomeVer2/rounters"
+	"github.com/macduyhai/SmartHomeVer2/config"
+	"github.com/macduyhai/SmartHomeVer2/rounters"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"

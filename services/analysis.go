@@ -1,6 +1,6 @@
 package services
 
-import "SmartHomeVer2/dtos"
+import "github.com/macduyhai/SmartHomeVer2/dtos"
 
 type AnalysisService interface {
 	ByTag(request dtos.AnalysisRequest) (*dtos.AnalysisTagResponse, error)

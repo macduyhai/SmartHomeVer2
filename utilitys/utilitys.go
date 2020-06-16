@@ -1,7 +1,7 @@
 package utilitys
 
 import (
-	"SmartHomeVer2/common"
+	"github.com/macduyhai/SmartHomeVer2/common"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
@@ -9,7 +9,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"SmartHomeVer2/dtos"
+	"github.com/macduyhai/SmartHomeVer2/dtos"
 )
 
 type UserIdentity struct {

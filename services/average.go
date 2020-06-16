@@ -2,7 +2,7 @@ package services
 
 import (
 	"errors"
-	"SmartHomeVer2/daos"
+	"github.com/macduyhai/SmartHomeVer2/daos"
 	"time"
 )
 

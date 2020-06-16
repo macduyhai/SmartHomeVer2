@@ -3,11 +3,11 @@ package services
 import (
 	"time"
 
-	"SmartHomeVer2/config"
-	"SmartHomeVer2/daos"
-	"SmartHomeVer2/dtos"
-	"SmartHomeVer2/middlewares"
-	"SmartHomeVer2/models"
+	"github.com/macduyhai/SmartHomeVer2/config"
+	"github.com/macduyhai/SmartHomeVer2/daos"
+	"github.com/macduyhai/SmartHomeVer2/dtos"
+	"github.com/macduyhai/SmartHomeVer2/middlewares"
+	"github.com/macduyhai/SmartHomeVer2/models"
 )
 
 type DeviceService interface {

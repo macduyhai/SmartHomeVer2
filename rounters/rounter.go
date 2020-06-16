@@ -1,10 +1,10 @@
 package rounters
 
 import (
-	"SmartHomeVer2/config"
-	"SmartHomeVer2/controlers"
-	"SmartHomeVer2/middlewares"
-	"SmartHomeVer2/services"
+	"github.com/macduyhai/SmartHomeVer2/config"
+	"github.com/macduyhai/SmartHomeVer2/controlers"
+	"github.com/macduyhai/SmartHomeVer2/middlewares"
+	"github.com/macduyhai/SmartHomeVer2/services"
 
 	"github.com/gin-gonic/contrib/jwt"
 	"github.com/gin-gonic/gin"

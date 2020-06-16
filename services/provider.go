@@ -1,9 +1,9 @@
 package services
 
 import (
-	"SmartHomeVer2/config"
-	"SmartHomeVer2/daos"
-	"SmartHomeVer2/middlewares"
+	"github.com/macduyhai/SmartHomeVer2/config"
+	"github.com/macduyhai/SmartHomeVer2/daos"
+	"github.com/macduyhai/SmartHomeVer2/middlewares"
 	"github.com/jinzhu/gorm"
 )
 
