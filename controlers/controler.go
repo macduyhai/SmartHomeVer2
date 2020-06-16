@@ -15,8 +15,9 @@ import (
 )
 
 type Controller struct {
-	userService services.UserService
-	avrService  services.AverageService
+	userService   services.UserService
+	avrService    services.AverageService
+	deviceService service.DeviceService
 }
 
 //------------------------------------------------------------
@@ -27,7 +28,12 @@ func (ctl *Controller) AddDevice(context *gin.Context) {
 		utilitys.ResponseError400(context, err.Error())
 		return
 	}
-	fmt.Println(request)
+	data, err := ctl.deviceService.Add(request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+	} else {
+		utilitys.ResponseSuccess200(context, data, "success")
+	}
 }
 func (ctl *Controller) DeleteDevice(context *gin.Context) {
 	var request dtos.Device
