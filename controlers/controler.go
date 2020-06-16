@@ -26,7 +26,7 @@ func (ctl *Controller) Controldevice(context *gin.Context) {
 		utilitys.ResponseError400(context, err.Error())
 		return
 	} else {
-		utilitys.ResponseSuccess200(context, data, "success")
+		//utilitys.ResponseSuccess200(context, data, "success")
 	}
 	// 	// Key    string `json:"key"`
 	// 	// Mac    string `json:"mac"`
