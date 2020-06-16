@@ -23,7 +23,7 @@ type DeviceResponse struct { // DeleteResponse , TurnOnResponse, TurnOffResponse
 }
 type AddResponse struct {
 	Station_MAC string     `json:"station_mac"`
-	Chip_ID     int        `json:"chip_id"`
+	Chip_ID     string     `json:"chip_id"`
 	Name        string     `json:"name"`
 	Type        string     `json:"type"`
 	NewState    bool       `json:"newstate"`
