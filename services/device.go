@@ -43,7 +43,7 @@ func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRespons
 
 	response := dtos.AddResponse{
 		Station_MAC: device.Station_MAC,
-		Chip_ID:     device.device,
+		Chip_ID:     device.Chip_ID,
 		Name:        device.Name,
 		Type:        device.Type,
 		NewState:    device.NewState,
