@@ -7,7 +7,7 @@ import (
 )
 
 type DeviceDao interface {
-	AddAdd(device models.Device) (*models.Device, error)
+	Add(device models.Device) (*models.Device, error)
 	// Delete(user models.User) (*models.User, error)
 	// Edit(log models.Log) (*models.Log, error)
 	// TurnOn(userID int64, begin *time.Time, end *time.Time) ([]models.Log, error)
