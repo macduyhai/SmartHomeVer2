@@ -250,11 +250,6 @@ func (ctl *Controller) GetAverageByDay(context *gin.Context) {
 
 func (ctl *Controller) Ping(context *gin.Context) {
 	context.JSON(200, gin.H{
-		"message": "Pong",
-	})
-}
-func (ctl *Controller) Check(context *gin.Context) {
-	context.JSON(200, gin.H{
-		"message": "Check Okie",
+		"message": "Pong Pong",
 	})
 }
