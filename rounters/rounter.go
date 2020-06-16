@@ -37,7 +37,7 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 		account.POST("/login", controller.Login)
 	}
 	{
-		control := engine.Group("/api/v1/device/control")
+		control := engine.Group("/api/v1/control")
 		account.Use(accountAuthMiddleWare.Check)
 		account.GET("", controller.Controldevice)
 	}
