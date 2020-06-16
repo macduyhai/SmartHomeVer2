@@ -36,7 +36,7 @@ func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRespons
 		Name:            request.Name,
 		LastState:       false,
 		NewState:        false,
-		CreateAt:        *time.Time,
+		CreateAt:        time.Time,
 	}
 	device, err := service.deviceDao.Add(dv)
 	if err != nil {
