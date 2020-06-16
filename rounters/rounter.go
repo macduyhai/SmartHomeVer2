@@ -38,8 +38,8 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 	}
 	{
 		control := engine.Group("/api/v1/control")
-		account.Use(accountAuthMiddleWare.Check)
-		account.GET("", controller.Controldevice)
+		control.Use(accountAuthMiddleWare.Check)
+		control.GET("", controller.Controldevice)
 	}
 	{
 		log := engine.Group("/api/v1/log")
