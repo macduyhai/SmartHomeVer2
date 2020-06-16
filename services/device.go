@@ -1,6 +1,8 @@
 package services
 
 import (
+	"fmt"
+
 	"github.com/macduyhai/SmartHomeVer2/config"
 	"github.com/macduyhai/SmartHomeVer2/daos"
 	"github.com/macduyhai/SmartHomeVer2/dtos"
@@ -22,6 +24,7 @@ type deviceServiceImpl struct {
 }
 
 func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddResponse, error) {
+	fmt.Println("Add function on service")
 	dv := models.Device{
 		Chip_ID:         request.Chip_ID,
 		Flash_Chip_ID:   request.Flash_Chip_ID,
@@ -35,6 +38,7 @@ func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRespons
 		LastState:       false,
 		NewState:        false,
 	}
+	fmt.Println(dv)
 	device, err := service.deviceDao.Add(dv)
 	if err != nil {
 		return nil, err

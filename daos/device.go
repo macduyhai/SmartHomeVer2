@@ -1,6 +1,8 @@
 package daos
 
 import (
+	"fmt"
+
 	"github.com/jinzhu/gorm"
 
 	"github.com/macduyhai/SmartHomeVer2/models"
@@ -24,6 +26,7 @@ func NewDeviceDao(db *gorm.DB) DeviceDao {
 
 func (dao *deviceDaoImpl) Add(device models.Device) (*models.Device, error) {
 	if err := dao.db.Create(&device).Error; err != nil {
+		fmt.Println("insert database error")
 		return nil, err
 	}
 	return &device, nil
