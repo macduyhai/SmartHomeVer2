@@ -1,6 +1,11 @@
 package middlewares
 
 import (
+	"bytes"
+	"fmt"
+	"io"
+	"io/ioutil"
+
 	"github.com/gin-gonic/gin"
 	"github.com/macduyhai/SmartHomeVer2/utilitys"
 )
@@ -35,11 +40,34 @@ func (client *CheckAPIKey) Check(context *gin.Context) {
 	}
 }
 
-func SetUserID(context *gin.Context)  {
+func SetUserID(context *gin.Context) {
 	err := utilitys.SetUserID(context)
 	if err != nil {
-		utilitys.Response(context, nil, 401, "parse userID error: " + err.Error())
+		utilitys.Response(context, nil, 401, "parse userID error: "+err.Error())
 		context.Abort()
 	}
 	context.Next()
+}
+
+// add
+
+func RequestLogger() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		buf, _ := ioutil.ReadAll(c.Request.Body)
+		rdr1 := ioutil.NopCloser(bytes.NewBuffer(buf))
+		rdr2 := ioutil.NopCloser(bytes.NewBuffer(buf)) //We have to create a new Buffer, because rdr1 will be read.
+
+		fmt.Println(readBody(rdr1)) // Print request body
+
+		c.Request.Body = rdr2
+		c.Next()
+	}
+}
+
+func readBody(reader io.Reader) string {
+	buf := new(bytes.Buffer)
+	buf.ReadFrom(reader)
+
+	s := buf.String()
+	return s
 }

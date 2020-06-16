@@ -71,7 +71,8 @@ type Device struct {
 	IDE_Flash_Size  string `json:"ide_flash_size"`
 	Real_Flash_Size string `json:"real_flash_size"`
 	Soft_AP_IP      string `json:"soft_ap_ip"`
-	Mac             string `json:"mac"`
+	Soft_AP_MAC     string `json:"soft_ap_mac"`
+	Station_MAC     string `json:"Station_mac"`
 	Value           bool   `json:"value"`
 	Serial          string `json:"serial"`
 }
