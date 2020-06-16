@@ -1,13 +1,13 @@
 package services
 
 import (
-	"time"
+	// "time"
 
-	"github.com/macduyhai/SmartHomeVer2/config"
-	"github.com/macduyhai/SmartHomeVer2/daos"
+	// "github.com/macduyhai/SmartHomeVer2/config"
+	// "github.com/macduyhai/SmartHomeVer2/daos"
 	"github.com/macduyhai/SmartHomeVer2/dtos"
-	"github.com/macduyhai/SmartHomeVer2/middlewares"
-	"github.com/macduyhai/SmartHomeVer2/models"
+	// "github.com/macduyhai/SmartHomeVer2/middlewares"
+	// "github.com/macduyhai/SmartHomeVer2/models"
 )
 
 type DeviceService interface {
@@ -18,111 +18,111 @@ type DeviceService interface {
 	TurnOff(request dtos.TurnOffRequest) (*dtos.DeviceResponse, error)
 }
 
-func (service *userServiceImpl) Add(request dtos.LoginRequest) (*dtos.LoginResponse, error) {
-	user, err := service.userDao.Login(request.Username, request.Password)
-	if err != nil {
-		return nil, err
-	}
+// func (service *userServiceImpl) Add(request dtos.LoginRequest) (*dtos.LoginResponse, error) {
+// 	user, err := service.userDao.Login(request.Username, request.Password)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-	tocken, err := service.jwt.CreateTocken(user.ID)
-	if err != nil {
-		return nil, err
-	}
+// 	tocken, err := service.jwt.CreateTocken(user.ID)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-	response := dtos.LoginResponse{
-		UserID:   user.ID,
-		Username: user.Username,
-		Name:     user.Name,
-		Tocken:   tocken,
-		Money:    user.Money,
-	}
-	return &response, nil
-}
+// 	response := dtos.LoginResponse{
+// 		UserID:   user.ID,
+// 		Username: user.Username,
+// 		Name:     user.Name,
+// 		Tocken:   tocken,
+// 		Money:    user.Money,
+// 	}
+// 	return &response, nil
+// }
 
-//---------------------------------------------------------
+// //---------------------------------------------------------
 
-type userServiceImpl struct {
-	config  *config.Config
-	userDao daos.UserDao
-	jwt     middlewares.JWT
-}
+// type userServiceImpl struct {
+// 	config  *config.Config
+// 	userDao daos.UserDao
+// 	jwt     middlewares.JWT
+// }
 
-func NewUserService(conf *config.Config, userDao daos.UserDao, jwt middlewares.JWT) UserService {
-	return &userServiceImpl{config: conf,
-		userDao: userDao,
-		jwt:     jwt,
-	}
-}
+// func NewUserService(conf *config.Config, userDao daos.UserDao, jwt middlewares.JWT) UserService {
+// 	return &userServiceImpl{config: conf,
+// 		userDao: userDao,
+// 		jwt:     jwt,
+// 	}
+// }
 
-func (service *userServiceImpl) Login(request dtos.LoginRequest) (*dtos.LoginResponse, error) {
-	user, err := service.userDao.Login(request.Username, request.Password)
-	if err != nil {
-		return nil, err
-	}
+// func (service *userServiceImpl) Login(request dtos.LoginRequest) (*dtos.LoginResponse, error) {
+// 	user, err := service.userDao.Login(request.Username, request.Password)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-	tocken, err := service.jwt.CreateTocken(user.ID)
-	if err != nil {
-		return nil, err
-	}
+// 	tocken, err := service.jwt.CreateTocken(user.ID)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-	response := dtos.LoginResponse{
-		UserID:   user.ID,
-		Username: user.Username,
-		Name:     user.Name,
-		Tocken:   tocken,
-		Money:    user.Money,
-	}
-	return &response, nil
-}
+// 	response := dtos.LoginResponse{
+// 		UserID:   user.ID,
+// 		Username: user.Username,
+// 		Name:     user.Name,
+// 		Tocken:   tocken,
+// 		Money:    user.Money,
+// 	}
+// 	return &response, nil
+// }
 
-func (service *userServiceImpl) Create(user models.User) (*models.User, error) {
-	return service.userDao.Create(user)
-}
+// func (service *userServiceImpl) Create(user models.User) (*models.User, error) {
+// 	return service.userDao.Create(user)
+// }
 
-func (service *userServiceImpl) CreateLog(log models.Log) (*models.Log, error) {
-	return service.userDao.CreateLog(log)
-}
+// func (service *userServiceImpl) CreateLog(log models.Log) (*models.Log, error) {
+// 	return service.userDao.CreateLog(log)
+// }
 
-//func (service *userServiceImpl) GetAverageMonth(request dtos.AvrMoneyPerMonthRequest) (*dtos.AvrMoneyPerMonthResponse, error) {
-//	return nil, nil
-//}
+// //func (service *userServiceImpl) GetAverageMonth(request dtos.AvrMoneyPerMonthRequest) (*dtos.AvrMoneyPerMonthResponse, error) {
+// //	return nil, nil
+// //}
 
-func (service *userServiceImpl) AnalysisByTag(userID int64, begin *time.Time, end *time.Time) (map[string]int64, error) {
-	logs, err := service.userDao.GetLog(userID, begin, end)
-	if err != nil {
-		return nil, err
-	}
+// func (service *userServiceImpl) AnalysisByTag(userID int64, begin *time.Time, end *time.Time) (map[string]int64, error) {
+// 	logs, err := service.userDao.GetLog(userID, begin, end)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-	m := make(map[string]int64)
-	for _, item := range logs {
-		if val, ok := m[item.Tag]; ok {
-			m[item.Tag] = val + item.Money
-		} else {
-			m[item.Tag] = item.Money
-		}
-	}
-	return m, nil
-}
+// 	m := make(map[string]int64)
+// 	for _, item := range logs {
+// 		if val, ok := m[item.Tag]; ok {
+// 			m[item.Tag] = val + item.Money
+// 		} else {
+// 			m[item.Tag] = item.Money
+// 		}
+// 	}
+// 	return m, nil
+// }
 
-func (service *userServiceImpl) AnalysisByDay(userID int64, begin *time.Time, end *time.Time) (map[string]int64, error) {
-	logs, err := service.userDao.GetLog(userID, begin, end)
-	if err != nil {
-		return nil, err
-	}
+// func (service *userServiceImpl) AnalysisByDay(userID int64, begin *time.Time, end *time.Time) (map[string]int64, error) {
+// 	logs, err := service.userDao.GetLog(userID, begin, end)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-	m := make(map[string]int64)
-	for _, item := range logs {
-		timeStr := item.UpdateAt.Format("2006-01-02")
-		if val, ok := m[timeStr]; ok {
-			m[timeStr] = val + item.Money
-		} else {
-			m[timeStr] = item.Money
-		}
-	}
+// 	m := make(map[string]int64)
+// 	for _, item := range logs {
+// 		timeStr := item.UpdateAt.Format("2006-01-02")
+// 		if val, ok := m[timeStr]; ok {
+// 			m[timeStr] = val + item.Money
+// 		} else {
+// 			m[timeStr] = item.Money
+// 		}
+// 	}
 
-	return m, nil
-}
+// 	return m, nil
+// }
 
-func (service *userServiceImpl) GetLogsByTime(userID int64, begin *time.Time, end *time.Time) ([]models.Log, error) {
-	return service.userDao.GetLog(userID, begin, end)
-}
+// func (service *userServiceImpl) GetLogsByTime(userID int64, begin *time.Time, end *time.Time) ([]models.Log, error) {
+// 	return service.userDao.GetLog(userID, begin, end)
+// }
