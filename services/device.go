@@ -1,8 +1,7 @@
 package services
 
 import (
-	"fmt"
-
+	"github.com/golang/glog"
 	"github.com/macduyhai/SmartHomeVer2/config"
 	"github.com/macduyhai/SmartHomeVer2/daos"
 	"github.com/macduyhai/SmartHomeVer2/dtos"
@@ -24,7 +23,7 @@ type deviceServiceImpl struct {
 }
 
 func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddResponse, error) {
-	fmt.Println("Add function on service")
+	glog.Warning("Add function on service")
 	dv := models.Device{
 		Chip_ID:         request.Chip_ID,
 		Flash_Chip_ID:   request.Flash_Chip_ID,
@@ -38,12 +37,12 @@ func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRespons
 		LastState:       false,
 		NewState:        false,
 	}
-	fmt.Println(dv)
+	glog.Warning(dv)
 	device, err := service.deviceDao.Add(dv)
 	if err != nil {
 		return nil, err
 	}
-
+	glog.Warning("Service 3")
 	response := dtos.AddResponse{
 		Station_MAC: device.Station_MAC,
 		Chip_ID:     device.Chip_ID,
