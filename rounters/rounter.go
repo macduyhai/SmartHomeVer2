@@ -36,12 +36,11 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 		account.POST("", controller.CreateUser)
 		account.POST("/login", controller.Login)
 	}
-	// {
-	// 	control := engine.Group("/api/v1/device/control")
-	// 	account.Use(accountAuthMiddleWare.Check)
-	// 	account.POST("", controller.Controldevice)
-	// }
-
+	{
+		control := engine.Group("/api/v1/device/control")
+		account.Use(accountAuthMiddleWare.Check)
+		account.GET("", controller.Controldevice)
+	}
 	{
 		log := engine.Group("/api/v1/log")
 		log.Use(jwt.Auth(router.config.SecretKet))

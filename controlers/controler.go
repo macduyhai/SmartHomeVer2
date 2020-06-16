@@ -19,39 +19,41 @@ type Controller struct {
 }
 
 //------------------------------------------------------------
-// func (ctl *Controller) Controldevice(context *gin.Context) {
-// 	var request dtos.Device
-// 	err := context.ShouldBindJSON(&request)
-// 	if err != nil {
-// 		utilitys.ResponseError400(context, err.Error())
-// 		return
-// 	}
-// 	// Key    string `json:"key"`
-// 	// Mac    string `json:"mac"`
-// 	// Id     int    `json:"id"`
-// 	// Value  int    `json:"value"`
-// 	// Serial string `json:"serial"`
+func (ctl *Controller) Controldevice(context *gin.Context) {
+	var request dtos.Device
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+		return
+	} else {
+		utilitys.ResponseSuccess200(context, data, "success")
+	}
+	// 	// Key    string `json:"key"`
+	// 	// Mac    string `json:"mac"`
+	// 	// Id     int    `json:"id"`
+	// 	// Value  int    `json:"value"`
+	// 	// Serial string `json:"serial"`
 
-// 	dv := models.Device{
-// 		Key:    request.Key,
-// 		Mac:    request.Mac,
-// 		Id:     request.Id,
-// 		Value:  request.Value,
-// 		Serial: request.Serial,
-// 	}
-// 	if dv.Key != "lvJvDWKiv0" {
-// 		utilitys.ResponseError400(context, err.Error())
-// 		return
-// 	} else {
-// 		data, err := ctl.userService.Create(acc)
-// 		if err != nil {
-// 			utilitys.ResponseError400(context, err.Error())
-// 		} else {
-// 			utilitys.ResponseSuccess200(context, data, "success")
-// 		}
-// 	}
+	// 	dv := models.Device{
+	// 		Key:    request.Key,
+	// 		Mac:    request.Mac,
+	// 		Id:     request.Id,
+	// 		Value:  request.Value,
+	// 		Serial: request.Serial,
+	// 	}
+	// 	if dv.Key != "lvJvDWKiv0" {
+	// 		utilitys.ResponseError400(context, err.Error())
+	// 		return
+	// 	} else {
+	// 		data, err := ctl.userService.Create(acc)
+	// 		if err != nil {
+	// 			utilitys.ResponseError400(context, err.Error())
+	// 		} else {
+	// 			utilitys.ResponseSuccess200(context, data, "success")
+	// 		}
+	// 	}
 
-// }
+}
 
 //-------------------------------------------------------------
 func NewController(provider services.Provider) Controller {
