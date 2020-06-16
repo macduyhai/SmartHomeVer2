@@ -28,6 +28,7 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 	engine := gin.Default()
 	engine.Use(middlewares.CORSMiddleware())
 	engine.GET("/ping", controller.Ping)
+	engine.GET("/check", controller.Check)
 
 	accountAuthMiddleWare := middlewares.CheckAPIKey{ApiKey: router.config.APIKey}
 	{
