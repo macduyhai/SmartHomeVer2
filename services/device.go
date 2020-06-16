@@ -1,6 +1,8 @@
 package services
 
 import (
+	"time"
+
 	"github.com/macduyhai/SmartHomeVer2/config"
 	"github.com/macduyhai/SmartHomeVer2/daos"
 	"github.com/macduyhai/SmartHomeVer2/dtos"
@@ -34,7 +36,7 @@ func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRespons
 		Name:            request.Name,
 		LastState:       false,
 		NewState:        false,
-		CreateAt:        request.CreateAt,
+		CreateAt:        *time.Time,
 	}
 	device, err := service.deviceDao.Add(dv)
 	if err != nil {

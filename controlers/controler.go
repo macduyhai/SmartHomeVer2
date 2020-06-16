@@ -61,23 +61,6 @@ func (ctl *Controller) ControlDevice(context *gin.Context) {
 		utilitys.ResponseError400(context, err.Error())
 		return
 	}
-	// dv := models.Device{
-	// 	Mac:    request.Mac,
-	// 	Id:     request.Id,
-	// 	Value:  request.Value,
-	// 	Serial: request.Serial,
-	// }
-	// 	if dv.Key != "lvJvDWKiv0" {
-	// 		utilitys.ResponseError400(context, err.Error())
-	// 		return
-	// 	} else {
-	// 		data, err := ctl.userService.Create(acc)
-	// 		if err != nil {
-	// 			utilitys.ResponseError400(context, err.Error())
-	// 		} else {
-	// 			utilitys.ResponseSuccess200(context, data, "success")
-	// 		}
-	// 	}
 
 }
 
