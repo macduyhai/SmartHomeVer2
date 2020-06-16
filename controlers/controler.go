@@ -17,7 +17,7 @@ import (
 type Controller struct {
 	userService   services.UserService
 	avrService    services.AverageService
-	deviceService service.DeviceService
+	deviceService services.DeviceService
 }
 
 //------------------------------------------------------------
