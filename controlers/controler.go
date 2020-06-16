@@ -22,12 +22,13 @@ type Controller struct {
 
 //------------------------------------------------------------
 func (ctl *Controller) AddDevice(context *gin.Context) {
-	var request dtos.Device
+	var request dtos.AddRequest
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
 		utilitys.ResponseError400(context, err.Error())
 		return
 	}
+
 	data, err := ctl.deviceService.Add(request)
 	if err != nil {
 		utilitys.ResponseError400(context, err.Error())
