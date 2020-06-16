@@ -1,4 +1,4 @@
-module github.com/hongminhcbg/control-money
+module github.com/macduyhai/SmartHomeVer2/
 
 go 1.12
 
