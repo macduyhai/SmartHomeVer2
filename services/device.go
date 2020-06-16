@@ -1,12 +1,10 @@
 package services
 
 import (
-	"time"
-
 	"github.com/macduyhai/SmartHomeVer2/config"
 	"github.com/macduyhai/SmartHomeVer2/daos"
-	"github.com/macduyhai/SmartHomeVer2/config"
 	"github.com/macduyhai/SmartHomeVer2/dtos"
+
 	// "github.com/macduyhai/SmartHomeVer2/middlewares"
 	"github.com/macduyhai/SmartHomeVer2/models"
 )
@@ -44,12 +42,12 @@ func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRespons
 	}
 
 	response := dtos.AddResponse{
-		Station_MAC:   device.Station_MAC,
-		Chip_ID: device.device,
-		Name:     device.Name,
-		Type:  device.Type,
-		NewState:  device.NewState,
-		CreateAt:  device.CreateAt
+		Station_MAC: device.Station_MAC,
+		Chip_ID:     device.device,
+		Name:        device.Name,
+		Type:        device.Type,
+		NewState:    device.NewState,
+		CreateAt:    device.CreateAt,
 	}
 	return &response, nil
 }
