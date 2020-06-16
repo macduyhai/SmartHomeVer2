@@ -45,11 +45,6 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 		device.POST("/control", controller.ControlDevice)
 	}
 	{
-		control := engine.Group("/api/v1/control")
-		control.Use(accountAuthMiddleWare.Check)
-		control.GET("", controller.Controldevice)
-	}
-	{
 		log := engine.Group("/api/v1/log")
 		log.Use(jwt.Auth(router.config.SecretKet))
 		log.Use(middlewares.SetUserID)
