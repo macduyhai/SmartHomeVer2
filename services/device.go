@@ -1,6 +1,7 @@
 package services
 
 import (
+	"SmartHomeVer2/models"
 	"fmt"
 
 	"github.com/macduyhai/SmartHomeVer2/config"
@@ -23,33 +24,33 @@ type deviceServiceImpl struct {
 
 func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddResponse, error) {
 	fmt.Println("Add function on service")
-	// dv := models.Device{
-	// 	Chip_ID:         request.Chip_ID,
-	// 	Flash_Chip_ID:   request.Flash_Chip_ID,
-	// 	IDE_Flash_Size:  request.IDE_Flash_Size,
-	// 	Real_Flash_Size: request.Real_Flash_Size,
-	// 	Soft_AP_IP:      request.Soft_AP_IP,
-	// 	Soft_AP_MAC:     request.Soft_AP_MAC,
-	// 	Station_MAC:     request.Station_MAC,
-	// 	Serial:          request.Serial,
-	// 	Name:            request.Name,
-	// 	LastState:       false,
-	// 	NewState:        false,
-	// }
-	// glog.Warning(dv)
-	// device, err := service.deviceDao.Add(dv)
-	// if err != nil {
-	// 	return nil, err
-	// }
-	// glog.Warning("Service 3")
-	// response := dtos.AddResponse{
-	// 	Station_MAC: device.Station_MAC,
-	// 	Chip_ID:     device.Chip_ID,
-	// 	Name:        device.Name,
-	// 	Type:        device.Type,
-	// 	NewState:    device.NewState,
-	// 	CreateAt:    device.CreateAt,
-	// }
-	response := "dtos.AddResponse"
+	dv := models.Device{
+		Chip_ID:         request.Chip_ID,
+		Flash_Chip_ID:   request.Flash_Chip_ID,
+		IDE_Flash_Size:  request.IDE_Flash_Size,
+		Real_Flash_Size: request.Real_Flash_Size,
+		Soft_AP_IP:      request.Soft_AP_IP,
+		Soft_AP_MAC:     request.Soft_AP_MAC,
+		Station_MAC:     request.Station_MAC,
+		Serial:          request.Serial,
+		Name:            request.Name,
+		LastState:       false,
+		NewState:        false,
+	}
+	fmt.Println(dv)
+	device, err := service.deviceDao.Add(dv)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Println("Service 3")
+	response := dtos.AddResponse{
+		Station_MAC: device.Station_MAC,
+		Chip_ID:     device.Chip_ID,
+		Name:        device.Name,
+		Type:        device.Type,
+		NewState:    device.NewState,
+		CreateAt:    device.CreateAt,
+	}
+
 	return &response, nil
 }
