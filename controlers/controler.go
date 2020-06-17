@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/golang/glog"
 	"github.com/macduyhai/SmartHomeVer2/common"
 
 	"github.com/gin-gonic/gin"
@@ -29,15 +28,15 @@ func (ctl *Controller) AddDevice(context *gin.Context) {
 		utilitys.ResponseError400(context, err.Error())
 		return
 	}
-
-	data, err := ctl.deviceService.Add(request)
-	if err != nil {
-		utilitys.ResponseError400(context, err.Error())
-		glog.Warning("AddDevice 1")
-	} else {
-		utilitys.ResponseSuccess200(context, data, "success")
-		glog.Warning("AddDevice 2")
-	}
+	fmt.Println(request)
+	// data, err := ctl.deviceService.Add(request)
+	// if err != nil {
+	// 	utilitys.ResponseError400(context, err.Error())
+	// 	glog.Warning("AddDevice 1")
+	// } else {
+	// 	utilitys.ResponseSuccess200(context, data, "success")
+	// 	glog.Warning("AddDevice 2")
+	// }
 }
 func (ctl *Controller) DeleteDevice(context *gin.Context) {
 	var request dtos.Device
