@@ -1,8 +1,9 @@
 package services
 
 import (
-	"SmartHomeVer2/models"
 	"fmt"
+
+	"github.com/macduyhai/SmartHomeVer2/models"
 
 	"github.com/macduyhai/SmartHomeVer2/config"
 	"github.com/macduyhai/SmartHomeVer2/daos"
