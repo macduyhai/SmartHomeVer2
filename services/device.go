@@ -24,7 +24,7 @@ type deviceServiceImpl struct {
 }
 
 func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddResponse, error) {
-	fmt.Println("Add function on service")
+	fmt.Println(request)
 	dv := models.Device{
 		Chip_ID:         request.Chip_ID,
 		Flash_Chip_ID:   request.Flash_Chip_ID,
