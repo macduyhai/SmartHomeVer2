@@ -26,9 +26,9 @@ func NewDeviceDao(db *gorm.DB) DeviceDao {
 
 func (dao *deviceDaoImpl) Add(device models.Device) (*models.Device, error) {
 	fmt.Println(device)
-	// if err := dao.db.Create(&device).Error; err != nil {
-	// 	fmt.Println("insert database error")
-	// 	return nil, err
-	// }
+	if err := dao.db.Create(&device).Error; err != nil {
+		fmt.Println("insert database error")
+		return nil, err
+	}
 	return &device, nil
 }
