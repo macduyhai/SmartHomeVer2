@@ -29,14 +29,14 @@ func (ctl *Controller) AddDevice(context *gin.Context) {
 		return
 	}
 	fmt.Println(request)
-	// data, err := ctl.deviceService.Add(request)
-	// if err != nil {
-	// 	utilitys.ResponseError400(context, err.Error())
-	// 	glog.Warning("AddDevice 1")
-	// } else {
-	// 	utilitys.ResponseSuccess200(context, data, "success")
-	// 	glog.Warning("AddDevice 2")
-	// }
+	data, err := ctl.deviceService.Add(request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+		fmt.Println("AddDevice 1")
+	} else {
+		utilitys.ResponseSuccess200(context, data, "success")
+		fmt.Println("AddDevice 2")
+	}
 }
 func (ctl *Controller) DeleteDevice(context *gin.Context) {
 	var request dtos.Device
