@@ -50,6 +50,6 @@ func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRespons
 	// 	NewState:    device.NewState,
 	// 	CreateAt:    device.CreateAt,
 	// }
-	response := dtos.AddResponse
+	response := "dtos.AddResponse"
 	return &response, nil
 }
