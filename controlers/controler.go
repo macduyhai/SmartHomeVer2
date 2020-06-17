@@ -30,6 +30,7 @@ func (ctl *Controller) AddDevice(context *gin.Context) {
 	}
 	//fmt.Println(request)
 	data, err := ctl.deviceService.Add(request)
+	fmt.Println(data)
 	if err != nil {
 		fmt.Println("AddDevice 1")
 		//utilitys.ResponseError400(context, err.Error())
