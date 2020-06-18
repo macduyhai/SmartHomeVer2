@@ -1,6 +1,10 @@
 package dtos
 
-import "time"
+import (
+	"time"
+
+	"github.com/macduyhai/SmartHomeVer2/models"
+)
 
 //------------------------------- Request -------------------------------------
 type AddRequest struct {
