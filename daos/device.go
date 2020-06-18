@@ -52,5 +52,6 @@ func (dao *deviceDaoImpl) Edit(userID int64, username, chip_id, name, typedv str
 	if device.Type != typedv {
 		device.Type = typedv
 	}
+	dao.db.Save(&device)
 	return device, nil
 }
