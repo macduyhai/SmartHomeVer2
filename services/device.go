@@ -28,7 +28,6 @@ type deviceServiceImpl struct {
 func NewDeviceService(conf *config.Config, deviceDao daos.DeviceDao, jwt middlewares.JWT) DeviceService {
 	return &deviceServiceImpl{config: conf,
 		deviceDao: deviceDao,
-		jwt:       jwt,
 	}
 }
 
