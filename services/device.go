@@ -38,7 +38,7 @@ func (service *deviceServiceImpl) Edit(request dtos.EditRequest) (*dtos.EditResp
 	response := dtos.EditResponse{
 		User_ID:  request.User_ID,
 		Username: request.Username,
-		Device:   &device,
+		Device:   device,
 	}
 	return &response, nil
 }
