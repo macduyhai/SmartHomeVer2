@@ -12,7 +12,7 @@ type DeviceDao interface {
 	Add(device models.Device) (*models.Device, error)
 	List(userID int64, username string) ([]models.Device, error)
 	// Delete(user models.User) (*models.User, error)
-	Edit(userID int64, username, chip_id, name, typedv string) (*models.Device, error)
+	Edit(userID int64, username, chip_id, name, typedv string) (models.Device, error)
 	// TurnOn(userID int64, begin *time.Time, end *time.Time) ([]models.Log, error)
 	// TurnOff(userName string) (*models.User, error)
 }
