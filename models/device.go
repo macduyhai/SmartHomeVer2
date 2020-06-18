@@ -5,7 +5,7 @@ import "time"
 //Device : Cấu trúc device trogn data base
 type Device struct {
 	ID              int64      `gorm:"column:id;PRIMARY_KEY"`
-	User_ID         string     `gorm:"column:user_id"`
+	User_ID         int64      `gorm:"column:user_id"`
 	Chip_ID         string     `gorm:"column:chip_id"`
 	Flash_Chip_ID   string     `gorm:"column:flash_chip_id"`
 	IDE_Flash_Size  string     `gorm:"column:ide_flash_size"`

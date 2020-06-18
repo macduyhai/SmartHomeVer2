@@ -32,7 +32,7 @@ func NewDeviceService(conf *config.Config, deviceDao daos.DeviceDao, jwt middlew
 }
 
 func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddResponse, error) {
-	fmt.Println(request)
+
 	dv := models.Device{
 		User_ID:         request.User_ID,
 		Chip_ID:         request.Chip_ID,
@@ -48,7 +48,7 @@ func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRespons
 		LastState:       false,
 		NewState:        false,
 	}
-	fmt.Println(dv)
+
 	device, err := service.deviceDao.Add(dv)
 	if err != nil {
 		return nil, err

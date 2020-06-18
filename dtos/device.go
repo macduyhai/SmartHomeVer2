@@ -4,7 +4,7 @@ import "time"
 
 //------------------------------- Request -------------------------------------
 type AddRequest struct {
-	User_ID         string `json:"user_id"`
+	User_ID         int64  `json:"user_id"`
 	Chip_ID         string `json:"chip_id"`
 	Flash_Chip_ID   string `json:"flash_chip_id"`
 	IDE_Flash_Size  string `json:"ide_flash_size"`
@@ -22,7 +22,7 @@ type DeviceResponse struct { // DeleteResponse , TurnOnResponse, TurnOffResponse
 	Status string `json:"status"`
 }
 type AddResponse struct {
-	User_ID     string     `json:"user_id"`
+	User_ID     int64      `json:"user_id"`
 	Station_MAC string     `json:"station_mac"`
 	Chip_ID     string     `json:"chip_id"`
 	Name        string     `json:"name"`
