@@ -63,13 +63,7 @@ type DeleteRequest struct {
 	idDevice int    `json:"id_device"`
 	Serial   string `json:"serial"`
 }
-type EditRequest struct {
-	Mac       string `json:"mac"`
-	Name      int    `json:"name"`
-	Type      string `json:"type"`
-	Serial    string `json:"serial"`
-	LastState bool   `json:"laststate"`
-}
+
 type TurnOnRequest struct {
 	Mac      string `json:"mac"`
 	idDevice int    `json:"id_device"`
