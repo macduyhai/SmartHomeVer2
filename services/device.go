@@ -1,8 +1,6 @@
 package services
 
 import (
-	"fmt"
-
 	"github.com/macduyhai/SmartHomeVer2/middlewares"
 	"github.com/macduyhai/SmartHomeVer2/models"
 
@@ -31,6 +29,20 @@ func NewDeviceService(conf *config.Config, deviceDao daos.DeviceDao, jwt middlew
 		deviceDao: deviceDao,
 	}
 }
+
+func (service *deviceServiceImpl) Edit(request dtos.ListRequest) (*dtos.ListResponse, error) {
+	device, err := service.deviceDao.Edit(request.User_ID, request.Username, request.Chip_ID, request.Name, request.Type)
+	if err != nil {
+		return nil, err
+	}
+	response := dtos.EditResponse{
+		User_ID:  request.User_ID,
+		Username: request.Username,
+		Device:   device,
+	}
+	return &response, nil
+}
+
 func (service *deviceServiceImpl) List(request dtos.ListRequest) (*dtos.ListResponse, error) {
 	devices, err := service.deviceDao.List(request.User_ID, request.Username)
 	if err != nil {
@@ -65,7 +77,6 @@ func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRespons
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println("Service 3")
 	response := dtos.AddResponse{
 		User_ID:     request.User_ID,
 		Station_MAC: device.Station_MAC,

@@ -63,6 +63,23 @@ func (ctl *Controller) ListDevice(context *gin.Context) {
 	}
 }
 
+// Edit device
+func (ctl *Controller) EditDevice(context *gin.Context) {
+	var request dtos.EditRequest
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+		return
+	}
+	data, err := ctl.deviceService.Edit(request)
+
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+	} else {
+		utilitys.ResponseSuccess200(context, data, "success")
+	}
+}
+
 func (ctl *Controller) DeleteDevice(context *gin.Context) {
 	var request dtos.Device
 	err := context.ShouldBindJSON(&request)
@@ -72,15 +89,7 @@ func (ctl *Controller) DeleteDevice(context *gin.Context) {
 	}
 	fmt.Println(request)
 }
-func (ctl *Controller) EditDevice(context *gin.Context) {
-	var request dtos.Device
-	err := context.ShouldBindJSON(&request)
-	if err != nil {
-		utilitys.ResponseError400(context, err.Error())
-		return
-	}
-	fmt.Println(request)
-}
+
 func (ctl *Controller) ControlDevice(context *gin.Context) {
 	var request dtos.Device
 	err := context.ShouldBindJSON(&request)

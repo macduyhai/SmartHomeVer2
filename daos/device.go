@@ -12,7 +12,7 @@ type DeviceDao interface {
 	Add(device models.Device) (*models.Device, error)
 	List(userID int64, username string) ([]models.Device, error)
 	// Delete(user models.User) (*models.User, error)
-	// Edit(log models.Log) (*models.Log, error)
+	Edit(log models.Log) (*models.Log, error)
 	// TurnOn(userID int64, begin *time.Time, end *time.Time) ([]models.Log, error)
 	// TurnOff(userName string) (*models.User, error)
 }
@@ -40,4 +40,17 @@ func (dao *deviceDaoImpl) List(userID int64, username string) ([]models.Device, 
 	}
 
 	return devices, nil
+}
+func (dao *deviceDaoImpl) Edit(userID int64, username, chip_id, name, typedv string) (*models.Device, error) {
+	device := models.Device{}
+	if err := dao.db.Where("user_id = ? AND chip_id =?", userID, chip_id).Find(&device).Error; err != nil {
+		return nil, err
+	}
+	if device.Name != name {
+		device.Name = name
+	}
+	if device.Type != typedv {
+		device.Type = typedv
+	}
+	return &device, nil
 }

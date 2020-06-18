@@ -39,17 +39,22 @@ type ListResponse struct {
 	Username string `json:"username"`
 	Devices  []models.Device
 }
-
-type DeviceResponse struct { // DeleteResponse , TurnOnResponse, TurnOffResponse
-	Status string `json:"status"`
+type EditRequest struct {
+	User_ID  int64  `json:"user_id"`
+	Username string `json:"username"`
+	Chip_ID  string `json:"chip_id"`
+	Name     string `json:"name"`
+	Type     string `json:"type"`
+}
+type EditResponse struct {
+	User_ID  int64  `json:"user_id"`
+	Username string `json:"username"`
+	Device   models.Device
 }
 
-type EditResponse struct {
-	Mac       string `json:"mac"`
-	idDevice  int    `json:"id_device"`
-	Name      string `json:"name"`
-	Type      string `json:"type"`
-	LastState bool   `json:"laststate"`
+//---------------------------------------------------
+type DeviceResponse struct { // DeleteResponse , TurnOnResponse, TurnOffResponse
+	Status string `json:"status"`
 }
 
 type DeleteRequest struct {
