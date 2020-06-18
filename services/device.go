@@ -43,6 +43,7 @@ func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRespons
 		Station_MAC:     request.Station_MAC,
 		Serial:          request.Serial,
 		Name:            request.Name,
+		Type:            request.Type,
 		LastState:       false,
 		NewState:        false,
 	}
