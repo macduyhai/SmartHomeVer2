@@ -16,11 +16,6 @@ type AddRequest struct {
 	Name            string `json:"name"`
 	Type            string `json:"type"`
 }
-
-//------------------------------- Response -------------------------------------
-type DeviceResponse struct { // DeleteResponse , TurnOnResponse, TurnOffResponse
-	Status string `json:"status"`
-}
 type AddResponse struct {
 	User_ID     int64      `json:"user_id"`
 	Station_MAC string     `json:"station_mac"`
@@ -29,6 +24,20 @@ type AddResponse struct {
 	Type        string     `json:"type"`
 	NewState    bool       `json:"newstate"`
 	CreateAt    *time.Time `json:"createat"`
+}
+
+type ListRequest struct {
+	User_ID  int64  `json:"user_id"`
+	Username string `json:"username"`
+}
+type ListResponse struct {
+	User_ID  int64  `json:"user_id"`
+	Username string `json:"username"`
+	Devices  []models.Device
+}
+
+type DeviceResponse struct { // DeleteResponse , TurnOnResponse, TurnOffResponse
+	Status string `json:"status"`
 }
 
 type EditResponse struct {

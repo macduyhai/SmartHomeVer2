@@ -37,13 +37,32 @@ func (ctl *Controller) AddDevice(context *gin.Context) {
 	}
 	// fmt.Println(request)
 	data, err := ctl.deviceService.Add(request)
-	fmt.Println(data)
+
 	if err != nil {
 		utilitys.ResponseError400(context, err.Error())
 	} else {
 		utilitys.ResponseSuccess200(context, data, "success")
 	}
 }
+
+//ListDevice
+func (ctl *Controller) ListDevice(context *gin.Context) {
+	var request dtos.ListRequest
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+		return
+	}
+	// fmt.Println(request)
+	data, err := ctl.deviceService.List(request)
+
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+	} else {
+		utilitys.ResponseSuccess200(context, data, "success")
+	}
+}
+
 func (ctl *Controller) DeleteDevice(context *gin.Context) {
 	var request dtos.Device
 	err := context.ShouldBindJSON(&request)

@@ -25,10 +25,18 @@ func NewDeviceDao(db *gorm.DB) DeviceDao {
 }
 
 func (dao *deviceDaoImpl) Add(device models.Device) (*models.Device, error) {
-	fmt.Println(device)
+
 	if err := dao.db.Create(&device).Error; err != nil {
 		fmt.Println("insert database error")
 		return nil, err
 	}
 	return &device, nil
+}
+func (dao *deviceDaoImpl) List(userID int64, username string) ([]models.Device, error) {
+	devices := make([]models.Device, 0)
+	if err := dao.db.Where("user_id = ?", userID).Find(&devices).Error; err != nil {
+		return nil, err
+	}
+
+	return devices, nil
 }

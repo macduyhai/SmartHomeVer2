@@ -14,6 +14,7 @@ import (
 
 type DeviceService interface {
 	Add(request dtos.AddRequest) (*dtos.AddResponse, error)
+	List(request dtos.ListRequest) (*dtos.ListResponse, error)
 	// Delete(request dtos.DeleteRequest) (*dtos.DeviceResponse, error)
 	// Edit(request dtos.EditRequest) (*dtos.EditResponse, error)
 	// TurnOn(request dtos.TurnOnRequest) (*dtos.DeviceResponse, error)
@@ -30,7 +31,18 @@ func NewDeviceService(conf *config.Config, deviceDao daos.DeviceDao, jwt middlew
 		deviceDao: deviceDao,
 	}
 }
-
+func (service *deviceServiceImpl) List(request dtos.ListRequest) (*dtos.ListResponse, error) {
+	devices, err := service.deviceDao.List(request.User_ID,request.Username)
+	if err != nil {
+		return nil, err
+	}
+	response := dtos.ListResponse{
+		User_ID := request.User_ID,
+		Username := request.Username,
+		Devices := devices,
+	}
+	return &response, nil
+}
 func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddResponse, error) {
 
 	dv := models.Device{
