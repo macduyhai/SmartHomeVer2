@@ -32,14 +32,14 @@ func NewDeviceService(conf *config.Config, deviceDao daos.DeviceDao, jwt middlew
 	}
 }
 func (service *deviceServiceImpl) List(request dtos.ListRequest) (*dtos.ListResponse, error) {
-	devices, err := service.deviceDao.List(request.User_ID,request.Username)
+	devices, err := service.deviceDao.List(request.User_ID, request.Username)
 	if err != nil {
 		return nil, err
 	}
 	response := dtos.ListResponse{
-		User_ID := request.User_ID,
-		Username := request.Username,
-		Devices := devices,
+		User_ID:  request.User_ID,
+		Username: request.Username,
+		Devices:  devices,
 	}
 	return &response, nil
 }
