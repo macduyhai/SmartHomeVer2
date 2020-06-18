@@ -34,6 +34,7 @@ func NewDeviceService(conf *config.Config, deviceDao daos.DeviceDao, jwt middlew
 func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddResponse, error) {
 	fmt.Println(request)
 	dv := models.Device{
+		User_ID:         request.User_ID,
 		Chip_ID:         request.Chip_ID,
 		Flash_Chip_ID:   request.Flash_Chip_ID,
 		IDE_Flash_Size:  request.IDE_Flash_Size,
@@ -54,6 +55,7 @@ func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRespons
 	}
 	fmt.Println("Service 3")
 	response := dtos.AddResponse{
+		User_ID:     request.User_ID,
 		Station_MAC: device.Station_MAC,
 		Chip_ID:     device.Chip_ID,
 		Name:        device.Name,

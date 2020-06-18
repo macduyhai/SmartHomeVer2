@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS `devices`;
 
 CREATE TABLE `devices` (
     `id` BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+    `user_id` BIGINT(20),
     `chip_id` VARCHAR(64) UNIQUE,
     `flash_chip_id` VARCHAR(64) UNIQUE,
     `ide_flash_size` VARCHAR(64) UNIQUE,
