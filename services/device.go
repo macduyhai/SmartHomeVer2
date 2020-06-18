@@ -14,7 +14,7 @@ type DeviceService interface {
 	Add(request dtos.AddRequest) (*dtos.AddResponse, error)
 	List(request dtos.ListRequest) (*dtos.ListResponse, error)
 	// Delete(request dtos.DeleteRequest) (*dtos.DeviceResponse, error)
-	// Edit(request dtos.EditRequest) (*dtos.EditResponse, error)
+	Edit(request dtos.EditRequest) (*dtos.EditResponse, error)
 	// TurnOn(request dtos.TurnOnRequest) (*dtos.DeviceResponse, error)
 	// TurnOff(request dtos.TurnOffRequest) (*dtos.DeviceResponse, error)
 }
