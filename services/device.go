@@ -31,8 +31,8 @@ func NewDeviceService(conf *config.Config, deviceDao daos.DeviceDao, jwt middlew
 }
 
 func (service *deviceServiceImpl) Edit(request dtos.EditRequest) (*dtos.EditResponse, error) {
-	*device, err := service.deviceDao.Edit(request.User_ID, request.Username, request.Chip_ID, request.Name, request.Type)
-	if err != nil {
+	device, err := service.deviceDao.Edit(request.User_ID, request.Username, request.Chip_ID, request.Name, request.Type)
+	if device == models.Device{} {
 		return nil, err
 	}
 	response := dtos.EditResponse{
