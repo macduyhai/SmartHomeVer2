@@ -20,6 +20,13 @@ type Controller struct {
 	deviceService services.DeviceService
 }
 
+func NewController(provider services.Provider) Controller {
+	return Controller{userService: provider.GetUserService(),
+		avrService:    provider.GetAverageService(),
+		deviceService: provider.GetDeviceService(),
+	}
+}
+
 //------------------------------------------------------------
 func (ctl *Controller) AddDevice(context *gin.Context) {
 	var request dtos.AddRequest
@@ -69,10 +76,6 @@ func (ctl *Controller) ControlDevice(context *gin.Context) {
 }
 
 //-------------------------------------------------------------
-func NewController(provider services.Provider) Controller {
-	return Controller{userService: provider.GetUserService(),
-		avrService: provider.GetAverageService()}
-}
 
 func (ctl *Controller) Login(context *gin.Context) {
 	var request dtos.LoginRequest

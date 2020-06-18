@@ -1,23 +1,31 @@
 package services
 
 import (
+	"github.com/jinzhu/gorm"
 	"github.com/macduyhai/SmartHomeVer2/config"
 	"github.com/macduyhai/SmartHomeVer2/daos"
 	"github.com/macduyhai/SmartHomeVer2/middlewares"
-	"github.com/jinzhu/gorm"
 )
 
 type Provider interface {
 	GetUserService() UserService
 	GetAnalysisService() AnalysisService
 	GetAverageService() AverageService
+	GetDeviceService() DeviceService
 }
 
 type providerImpl struct {
 	config *config.Config
-	db *gorm.DB
+	db     *gorm.DB
 }
 
+func (provider *providerImpl) GetDeviceService() DeviceService {
+	deviceDao := daos.NewDeviceDao(provider.db)
+	jwtClient := middlewares.NewJWT(provider.config.SecretKet)
+	return NewDeviceService(provider.config, deviceDao, jwtClient)
+}
+
+//---------------------------------------
 func (provider *providerImpl) GetUserService() UserService {
 	userDao := daos.NewUserDao(provider.db)
 	jwtClient := middlewares.NewJWT(provider.config.SecretKet)
@@ -34,5 +42,5 @@ func (provider *providerImpl) GetAnalysisService() AnalysisService {
 }
 
 func NewProvider(conf *config.Config, db *gorm.DB) Provider {
-	return &providerImpl{config: conf,db:db}
+	return &providerImpl{config: conf, db: db}
 }

@@ -3,6 +3,7 @@ package services
 import (
 	"fmt"
 
+	"github.com/macduyhai/SmartHomeVer2/middlewares"
 	"github.com/macduyhai/SmartHomeVer2/models"
 
 	"github.com/macduyhai/SmartHomeVer2/config"
@@ -18,9 +19,17 @@ type DeviceService interface {
 	// TurnOn(request dtos.TurnOnRequest) (*dtos.DeviceResponse, error)
 	// TurnOff(request dtos.TurnOffRequest) (*dtos.DeviceResponse, error)
 }
+
 type deviceServiceImpl struct {
 	config    *config.Config
 	deviceDao daos.DeviceDao
+}
+
+func NewDeviceService(conf *config.Config, deviceDao daos.DeviceDao, jwt middlewares.JWT) DeviceService {
+	return &deviceServiceImpl{config: conf,
+		deviceDao: deviceDao,
+		jwt:       jwt,
+	}
 }
 
 func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddResponse, error) {
