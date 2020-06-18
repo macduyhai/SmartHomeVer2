@@ -10,6 +10,7 @@ import (
 
 type DeviceDao interface {
 	Add(device models.Device) (*models.Device, error)
+	List(userID int64, username string) ([]models.Device, error)
 	// Delete(user models.User) (*models.User, error)
 	// Edit(log models.Log) (*models.Log, error)
 	// TurnOn(userID int64, begin *time.Time, end *time.Time) ([]models.Log, error)
