@@ -43,15 +43,19 @@ func (dao *deviceDaoImpl) List(userID int64, username string) ([]models.Device, 
 }
 func (dao *deviceDaoImpl) Edit(userID int64, username, chip_id, name, typedv string) (models.Device, error) {
 	device := models.Device{}
+	fmt.Println(device)
 	if err := dao.db.Where("user_id = ? AND chip_id =?", userID, chip_id).Find(&device).Error; err != nil {
 		return device, err
 	}
+	fmt.Println(device)
 	if device.Name != name {
 		device.Name = name
 	}
 	if device.Type != typedv {
 		device.Type = typedv
 	}
+	fmt.Println(device)
 	dao.db.Save(&device)
+	fmt.Println(device)
 	return device, nil
 }

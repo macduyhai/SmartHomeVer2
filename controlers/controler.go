@@ -66,13 +66,14 @@ func (ctl *Controller) ListDevice(context *gin.Context) {
 // Edit device
 func (ctl *Controller) EditDevice(context *gin.Context) {
 	var request dtos.EditRequest
+	fmt.Println(request)
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
 		utilitys.ResponseError400(context, err.Error())
 		return
 	}
 	data, err := ctl.deviceService.Edit(request)
-
+	fmt.Println(data)
 	if err != nil {
 		utilitys.ResponseError400(context, err.Error())
 	} else {
