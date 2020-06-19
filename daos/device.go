@@ -64,6 +64,5 @@ func (dao *deviceDaoImpl) Delete(userID int64, chip_id string) (models.Device, e
 	if err := dao.db.Where("user_id = ? AND chip_id =?", userID, chip_id).Delete(&device).Error; err != nil {
 		return device, err
 	}
-	dao.db.Save(&device)
 	return device, nil
 }
