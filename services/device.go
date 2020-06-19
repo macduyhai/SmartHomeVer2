@@ -29,7 +29,7 @@ func NewDeviceService(conf *config.Config, deviceDao daos.DeviceDao, jwt middlew
 		deviceDao: deviceDao,
 	}
 }
-func (service *deviceServiceImpl) Delete(request dtos.ListRequest) (*dtos.DeviceResponse, error) {
+func (service *deviceServiceImpl) Delete(request dtos.DeleteRequest) (*dtos.DeviceResponse, error) {
 	devices, err := service.deviceDao.Delete(request.User_ID, request.Username)
 	if err != nil {
 		return nil, err
