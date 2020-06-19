@@ -13,7 +13,7 @@ import (
 type DeviceService interface {
 	Add(request dtos.AddRequest) (*dtos.AddResponse, error)
 	List(request dtos.ListRequest) (*dtos.ListResponse, error)
-	// Delete(request dtos.DeleteRequest) (*dtos.DeviceResponse, error)
+	Delete(request dtos.DeleteRequest) (*dtos.DeviceResponse, error)
 	Edit(request dtos.EditRequest) (*dtos.EditResponse, error)
 	// TurnOn(request dtos.TurnOnRequest) (*dtos.DeviceResponse, error)
 	// TurnOff(request dtos.TurnOffRequest) (*dtos.DeviceResponse, error)
@@ -29,7 +29,16 @@ func NewDeviceService(conf *config.Config, deviceDao daos.DeviceDao, jwt middlew
 		deviceDao: deviceDao,
 	}
 }
-
+func (service *deviceServiceImpl) Delete(request dtos.ListRequest) (*dtos.DeviceResponse, error) {
+	devices, err := service.deviceDao.Delete(request.User_ID, request.Username)
+	if err != nil {
+		return nil, err
+	}
+	response := dtos.DeviceResponse{
+		Status: "Deleted",
+	}
+	return &response, nil
+}
 func (service *deviceServiceImpl) Edit(request dtos.EditRequest) (*dtos.EditResponse, error) {
 	device, err := service.deviceDao.Edit(request.User_ID, request.Username, request.Chip_ID, request.Name, request.Type)
 	if (device == models.Device{}) {

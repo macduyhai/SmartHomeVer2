@@ -51,17 +51,15 @@ type EditResponse struct {
 	Username string `json:"username"`
 	Device   models.Device
 }
+type DeleteRequest struct {
+	User_ID  int64  `json:"user_id"`
+	Username string `json:"username"`
+	Chip_ID  string `json:"chip_id"`
+}
 
 //---------------------------------------------------
 type DeviceResponse struct { // DeleteResponse , TurnOnResponse, TurnOffResponse
 	Status string `json:"status"`
-}
-
-type DeleteRequest struct {
-	Mac      string `json:"mac"`
-	Name     string `json:"name"`
-	idDevice int    `json:"id_device"`
-	Serial   string `json:"serial"`
 }
 
 type TurnOnRequest struct {

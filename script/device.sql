@@ -9,7 +9,7 @@ CREATE TABLE `devices` (
     `real_flash_size` VARCHAR(64) ,
     `soft_ap_ip` VARCHAR(64) ,
     `soft_ap_mac` VARCHAR(64) ,
-    `Station_mac` VARCHAR(64) ,
+    `station_mac` VARCHAR(64) ,
     `serial` VARCHAR(64) ,
     `name` VARCHAR(64) ,
     `type` VARCHAR(64) ,

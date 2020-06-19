@@ -1,7 +1,6 @@
 package controlers
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/macduyhai/SmartHomeVer2/common"
@@ -66,14 +65,14 @@ func (ctl *Controller) ListDevice(context *gin.Context) {
 // Edit device
 func (ctl *Controller) EditDevice(context *gin.Context) {
 	var request dtos.EditRequest
-	fmt.Println(request)
+
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
 		utilitys.ResponseError400(context, err.Error())
 		return
 	}
 	data, err := ctl.deviceService.Edit(request)
-	fmt.Println(data)
+
 	if err != nil {
 		utilitys.ResponseError400(context, err.Error())
 	} else {
@@ -81,14 +80,21 @@ func (ctl *Controller) EditDevice(context *gin.Context) {
 	}
 }
 
+// Delete device
 func (ctl *Controller) DeleteDevice(context *gin.Context) {
-	var request dtos.Device
+	var request dtos.DeleteRequest
+
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
 		utilitys.ResponseError400(context, err.Error())
 		return
 	}
-	fmt.Println(request)
+	data, err := ctl.deviceService.Delete(request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+	} else {
+		utilitys.ResponseSuccess200(context, data, "success")
+	}
 }
 
 func (ctl *Controller) ControlDevice(context *gin.Context) {
