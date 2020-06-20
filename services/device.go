@@ -30,7 +30,7 @@ func NewDeviceService(conf *config.Config, deviceDao daos.DeviceDao, jwt middlew
 	}
 }
 func (service *deviceServiceImpl) Delete(request dtos.DeleteRequest) (*dtos.DeviceResponse, error) {
-	_, err := service.deviceDao.Delete(request.User_ID, request.Username)
+	_, err := service.deviceDao.Delete(request.User_ID, request.Chip_ID)
 	if err != nil {
 		return nil, err
 	}
