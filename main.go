@@ -1,15 +1,18 @@
 package main
 
 import (
-	"github.com/macduyhai/SmartHomeVer2/config"
-	"github.com/macduyhai/SmartHomeVer2/rounters"
-
+	"SmartHomeVer2/config"
+	"SmartHomeVer2/rounters"
+	"SmartHomeVer2/services"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/kelseyhightower/envconfig"
 )
 
 func main() {
+	// Init connect mqtt
+	services.MqttBegin()
+
 	conf := config.Config{}
 	if err := envconfig.Process("", &conf); err != nil {
 		panic(err)
@@ -30,5 +33,5 @@ func main() {
 	}
 	router := rounters.NewRouter(&conf, db)
 	app, _ := router.InitGin()
-	_ = app.Run(":80")
+	_ = app.Run(":9191")
 }

@@ -6,11 +6,11 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/macduyhai/SmartHomeVer2/common"
+	"SmartHomeVer2/common"
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/macduyhai/SmartHomeVer2/dtos"
+	"SmartHomeVer2/dtos"
 )
 
 type UserIdentity struct {

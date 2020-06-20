@@ -3,14 +3,14 @@ package controlers
 import (
 	"time"
 
-	"github.com/macduyhai/SmartHomeVer2/common"
+	"SmartHomeVer2/common"
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/macduyhai/SmartHomeVer2/dtos"
-	"github.com/macduyhai/SmartHomeVer2/models"
-	"github.com/macduyhai/SmartHomeVer2/services"
-	"github.com/macduyhai/SmartHomeVer2/utilitys"
+	"SmartHomeVer2/dtos"
+	"SmartHomeVer2/models"
+	"SmartHomeVer2/services"
+	"SmartHomeVer2/utilitys"
 )
 
 type Controller struct {
@@ -98,15 +98,34 @@ func (ctl *Controller) DeleteDevice(context *gin.Context) {
 }
 
 func (ctl *Controller) ControlDevice(context *gin.Context) {
-	var request dtos.Device
+	var request dtos.ControlRequest
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
 		utilitys.ResponseError400(context, err.Error())
 		return
 	}
-
+	data, err := ctl.deviceService.Control(request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+	} else {
+		utilitys.ResponseSuccess200(context, data, "success")
+	}
 }
-
+//
+func (ctl *Controller) GetstatusDevice(context *gin.Context) {
+	var request dtos.GetstatusRequest
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+		return
+	}
+	data, err := ctl.deviceService.Getstatus(request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+	} else {
+		utilitys.ResponseSuccess200(context, data, "success")
+	}
+}
 //-------------------------------------------------------------
 
 func (ctl *Controller) Login(context *gin.Context) {

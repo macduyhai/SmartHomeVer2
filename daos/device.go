@@ -2,10 +2,8 @@ package daos
 
 import (
 	"fmt"
-
 	"github.com/jinzhu/gorm"
-
-	"github.com/macduyhai/SmartHomeVer2/models"
+	"SmartHomeVer2/models"
 )
 
 type DeviceDao interface {
@@ -13,8 +11,8 @@ type DeviceDao interface {
 	List(userID int64, username string) ([]models.Device, error)
 	Delete(userID int64, chip_id string) (models.Device, error)
 	Edit(userID int64, username, chip_id, name, typedv string) (models.Device, error)
-	// TurnOn(userID int64, begin *time.Time, end *time.Time) ([]models.Log, error)
-	// TurnOff(userName string) (*models.User, error)
+	Control(userID int64, chip_id string , state bool) (models.Device, error)
+	Getstatus( chip_id string , station_mac string) (models.Device, error)
 }
 
 type deviceDaoImpl struct {
@@ -35,7 +33,7 @@ func (dao *deviceDaoImpl) Add(device models.Device) (*models.Device, error) {
 }
 func (dao *deviceDaoImpl) List(userID int64, username string) ([]models.Device, error) {
 	devices := make([]models.Device, 0)
-	if err := dao.db.Where("user_id = ?", userID).Find(&devices).Error; err != nil {
+	if err := dao.db.Where("user_id = ?AND username =?", userID,username).Find(&devices).Error; err != nil {
 		return nil, err
 	}
 
@@ -43,20 +41,18 @@ func (dao *deviceDaoImpl) List(userID int64, username string) ([]models.Device, 
 }
 func (dao *deviceDaoImpl) Edit(userID int64, username, chip_id, name, typedv string) (models.Device, error) {
 	device := models.Device{}
-	fmt.Println(device)
 	if err := dao.db.Where("user_id = ? AND chip_id =?", userID, chip_id).Find(&device).Error; err != nil {
 		return device, err
 	}
-	fmt.Println(device)
 	if device.Name != name {
 		device.Name = name
 	}
 	if device.Type != typedv {
 		device.Type = typedv
 	}
-	fmt.Println(device)
+
 	dao.db.Save(&device)
-	fmt.Println(device)
+
 	return device, nil
 }
 func (dao *deviceDaoImpl) Delete(userID int64, chip_id string) (models.Device, error) {
@@ -64,8 +60,25 @@ func (dao *deviceDaoImpl) Delete(userID int64, chip_id string) (models.Device, e
 	if err := dao.db.Where("user_id = ? AND chip_id =?", userID, chip_id).Delete(&device).Error; err != nil {
 		return device, err
 	}
-	//if err := dao.db.Where("id =?", device.ID).Delete(&device).Error; err != nil {
-	//	return device, err
-	//}
 	return device, nil
+}
+func (dao *deviceDaoImpl) Control(userID int64, chip_id string , state bool) (models.Device, error){
+	device := models.Device{}
+	if err := dao.db.Where("user_id = ? AND chip_id =?", userID, chip_id).Find(&device).Error; err != nil {
+		return device, err
+	}
+	if device.State != state {
+		device.State = state
+		
+	}
+	dao.db.Save(&device)
+	return device, nil
+}
+func (dao *deviceDaoImpl)Getstatus( chip_id string , station_mac string) (models.Device, error){
+	device := models.Device{}
+	if err := dao.db.Where("station_mac = ? AND chip_id =?", station_mac, chip_id).Find(&device).Error; err != nil {
+		return device, err
+	}
+	return device, nil
+	
 }

@@ -1,13 +1,15 @@
 package services
 
 import (
-	"github.com/macduyhai/SmartHomeVer2/middlewares"
-	"github.com/macduyhai/SmartHomeVer2/models"
+	"fmt"
 
-	"github.com/macduyhai/SmartHomeVer2/config"
-	"github.com/macduyhai/SmartHomeVer2/daos"
-	"github.com/macduyhai/SmartHomeVer2/dtos"
-	// "github.com/macduyhai/SmartHomeVer2/middlewares"
+	"SmartHomeVer2/middlewares"
+	"SmartHomeVer2/models"
+
+	"SmartHomeVer2/config"
+	"SmartHomeVer2/daos"
+	"SmartHomeVer2/dtos"
+	// "SmartHomeVer2/middlewares"
 )
 
 type DeviceService interface {
@@ -15,8 +17,8 @@ type DeviceService interface {
 	List(request dtos.ListRequest) (*dtos.ListResponse, error)
 	Delete(request dtos.DeleteRequest) (*dtos.DeviceResponse, error)
 	Edit(request dtos.EditRequest) (*dtos.EditResponse, error)
-	// TurnOn(request dtos.TurnOnRequest) (*dtos.DeviceResponse, error)
-	// TurnOff(request dtos.TurnOffRequest) (*dtos.DeviceResponse, error)
+	Control(request dtos.ControlRequest) (*dtos.ControlResponse, error)
+	Getstatus(request dtos.GetstatusRequest) (*dtos.GetstatusResponse, error)
 }
 
 type deviceServiceImpl struct {
@@ -29,13 +31,51 @@ func NewDeviceService(conf *config.Config, deviceDao daos.DeviceDao, jwt middlew
 		deviceDao: deviceDao,
 	}
 }
+func (service *deviceServiceImpl)Getstatus(request dtos.GetstatusRequest) (*dtos.GetstatusResponse, error){
+	device, err := service.deviceDao.Getstatus(request.Chip_ID, request.Station_MAC)
+	if (device == models.Device{}) {
+		return nil, err
+	}
+	response := dtos.GetstatusResponse{
+		Chip_ID: device.Chip_ID,
+		Station_MAC:  device.Station_MAC,
+		State:   device.State,
+	}
+	return &response, nil
+}
+// Control
+func (service *deviceServiceImpl) Control(request dtos.ControlRequest) (*dtos.ControlResponse, error){
+	device, err := service.deviceDao.Control(request.User_ID, request.Chip_ID,request.State)
+	if err != nil {
+		return nil, err
+	}
+		
+	if device.State == true {
+		fmt.Println("Bật đèn")
+		s := "{\"chip_id\":" +device.Chip_ID + "," + "\"station_mac\":" + device.Station_MAC + "," + "\"value\":\"1\"}"
+		fmt.Println(s)
+		PublishData(device.Chip_ID, s)
+	}else {
+		fmt.Println("Tắt đèn")
+		s := "{\"chip_id\":" +device.Chip_ID + "," + "\"station_mac\":" + device.Station_MAC + "," + "\"value\":\"0\"}"
+		fmt.Println(s)
+		PublishData(device.Chip_ID, s)
+	}
+
+	response := dtos.ControlResponse{
+		Chip_ID: device.Chip_ID,
+		State: device.State,
+	}
+	return &response, nil
+}
+
 func (service *deviceServiceImpl) Delete(request dtos.DeleteRequest) (*dtos.DeviceResponse, error) {
 	_, err := service.deviceDao.Delete(request.User_ID, request.Chip_ID)
 	if err != nil {
 		return nil, err
 	}
 	response := dtos.DeviceResponse{
-		Status: "Deleted",
+		Status: "deleted",
 	}
 	return &response, nil
 }
@@ -78,8 +118,7 @@ func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRespons
 		Serial:          request.Serial,
 		Name:            request.Name,
 		Type:            request.Type,
-		LastState:       false,
-		NewState:        false,
+		State:        false,
 	}
 
 	device, err := service.deviceDao.Add(dv)
@@ -92,7 +131,7 @@ func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRespons
 		Chip_ID:     device.Chip_ID,
 		Name:        device.Name,
 		Type:        device.Type,
-		NewState:    device.NewState,
+		State:    device.State,
 		CreateAt:    device.CreateAt,
 	}
 

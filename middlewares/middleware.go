@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 
 	"github.com/gin-gonic/gin"
-	"github.com/macduyhai/SmartHomeVer2/utilitys"
+	"SmartHomeVer2/utilitys"
 )
 
 func CORSMiddleware() gin.HandlerFunc {

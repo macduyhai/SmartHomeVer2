@@ -3,7 +3,7 @@ package dtos
 import (
 	"time"
 
-	"github.com/macduyhai/SmartHomeVer2/models"
+	"SmartHomeVer2/models"
 )
 
 //------------------------------- Request -------------------------------------
@@ -26,7 +26,7 @@ type AddResponse struct {
 	Chip_ID     string     `json:"chip_id"`
 	Name        string     `json:"name"`
 	Type        string     `json:"type"`
-	NewState    bool       `json:"newstate"`
+	State    bool       `json:"state"`
 	CreateAt    *time.Time `json:"createat"`
 }
 
@@ -56,26 +56,30 @@ type DeleteRequest struct {
 	Username string `json:"username"`
 	Chip_ID  string `json:"chip_id"`
 }
+type ControlRequest struct {
+	User_ID  int64  `json:"user_id"`
+	Chip_ID  string `json:"chip_id"`
+	State bool	`json:"state"`
+}
+type ControlResponse struct {
+	Chip_ID  string `json:"chip_id"`
+	State bool	`json:"state"`
+}
+type GetstatusRequest struct {
+	Station_MAC  string  `json:"station_mac"`
+	Chip_ID  string `json:"chip_id"`
+}
+type GetstatusResponse struct {
+	Station_MAC  string  `json:"station_mac"`
+	Chip_ID  string `json:"chip_id"`
+	State bool	`json:"state"`
+}
 
 //---------------------------------------------------
 type DeviceResponse struct { // DeleteResponse , TurnOnResponse, TurnOffResponse
 	Status string `json:"status"`
 }
 
-type TurnOnRequest struct {
-	Mac      string `json:"mac"`
-	idDevice int    `json:"id_device"`
-	Name     string `json:"name"`
-	Type     string `json:"type"`
-	NewState bool   `json:"newstate"`
-}
-type TurnOffRequest struct {
-	Mac      string `json:"mac"`
-	idDevice int    `json:"id_device"`
-	Name     string `json:"name"`
-	Type     string `json:"type"`
-	NewState bool   `json:"newstate"`
-}
 
 type Device struct {
 	Chip_ID         string     `json:"chip_id"`
