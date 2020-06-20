@@ -13,8 +13,7 @@ CREATE TABLE `devices` (
     `serial` VARCHAR(64) ,
     `name` VARCHAR(64) ,
     `type` VARCHAR(64) ,
-    `laststate` BOOLEAN,
-    `newstate` BOOLEAN,
+    `state` BOOLEAN,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     INDEX device_name (`name`)
 );

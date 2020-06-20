@@ -45,6 +45,7 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 		device.POST("/delete", controller.DeleteDevice)
 		device.POST("/edit", controller.EditDevice)
 		device.POST("/control", controller.ControlDevice)
+		device.POST("/getstatus", controller.GetstatusDevice)
 	}
 	{
 		log := engine.Group("/api/v1/log")

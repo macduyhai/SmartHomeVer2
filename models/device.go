@@ -16,7 +16,6 @@ type Device struct {
 	Serial          string     `gorm:"column:serial"`
 	Name            string     `gorm:"column:name"`
 	Type            string     `gorm:"column:type"`
-	LastState       bool       `gorm:"column:laststate"`
-	NewState        bool       `gorm:"column:newstate"`
+	State           bool       `gorm:"column:state"`
 	CreateAt        *time.Time `gorm:"column:created_at"`
 }

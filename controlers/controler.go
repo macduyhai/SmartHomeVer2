@@ -98,13 +98,34 @@ func (ctl *Controller) DeleteDevice(context *gin.Context) {
 }
 
 func (ctl *Controller) ControlDevice(context *gin.Context) {
-	var request dtos.Device
+	var request dtos.ControlRequest
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
 		utilitys.ResponseError400(context, err.Error())
 		return
 	}
+	data, err := ctl.deviceService.Control(request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+	} else {
+		utilitys.ResponseSuccess200(context, data, "success")
+	}
+}
 
+//
+func (ctl *Controller) GetstatusDevice(context *gin.Context) {
+	var request dtos.GetstatusRequest
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+		return
+	}
+	data, err := ctl.deviceService.Getstatus(request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+	} else {
+		utilitys.ResponseSuccess200(context, data, "success")
+	}
 }
 
 //-------------------------------------------------------------
