@@ -35,7 +35,7 @@ func (dao *deviceDaoImpl) Add(device models.Device) (*models.Device, error) {
 }
 func (dao *deviceDaoImpl) List(userID int64, username string) ([]models.Device, error) {
 	devices := make([]models.Device, 0)
-	if err := dao.db.Where("user_id = ?AND username =?", userID, username).Find(&devices).Error; err != nil {
+	if err := dao.db.Where("user_id = ?", userID).Find(&devices).Error; err != nil {
 		return nil, err
 	}
 
