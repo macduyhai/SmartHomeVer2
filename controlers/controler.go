@@ -16,18 +16,18 @@ import (
 type Controller struct {
 	userService   services.UserService
 	avrService    services.AverageService
-	deviceService services.DeviceService
+	controllerService services.ControllerService
 }
 
 func NewController(provider services.Provider) Controller {
 	return Controller{userService: provider.GetUserService(),
 		avrService:    provider.GetAverageService(),
-		deviceService: provider.GetDeviceService(),
+		controllerService: provider.GetcontrollerService(),
 	}
 }
 
 //------------------------------------------------------------
-func (ctl *Controller) AddDevice(context *gin.Context) {
+func (ctl *Controller) Addcontroller(context *gin.Context) {
 	var request dtos.AddRequest
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
@@ -35,7 +35,7 @@ func (ctl *Controller) AddDevice(context *gin.Context) {
 		return
 	}
 	// fmt.Println(request)
-	data, err := ctl.deviceService.Add(request)
+	data, err := ctl.controllerService.Add(request)
 
 	if err != nil {
 		utilitys.ResponseError400(context, err.Error())
@@ -44,88 +44,88 @@ func (ctl *Controller) AddDevice(context *gin.Context) {
 	}
 }
 
-//ListDevice
-func (ctl *Controller) ListDevice(context *gin.Context) {
-	var request dtos.ListRequest
-	err := context.ShouldBindJSON(&request)
-	if err != nil {
-		utilitys.ResponseError400(context, err.Error())
-		return
-	}
-	// fmt.Println(request)
-	data, err := ctl.deviceService.List(request)
+// //Listcontroller
+// func (ctl *Controller) Listcontroller(context *gin.Context) {
+// 	var request dtos.ListRequest
+// 	err := context.ShouldBindJSON(&request)
+// 	if err != nil {
+// 		utilitys.ResponseError400(context, err.Error())
+// 		return
+// 	}
+// 	// fmt.Println(request)
+// 	data, err := ctl.controllerService.List(request)
 
-	if err != nil {
-		utilitys.ResponseError400(context, err.Error())
-	} else {
-		utilitys.ResponseSuccess200(context, data, "success")
-	}
-}
+// 	if err != nil {
+// 		utilitys.ResponseError400(context, err.Error())
+// 	} else {
+// 		utilitys.ResponseSuccess200(context, data, "success")
+// 	}
+// }
 
-// Edit device
-func (ctl *Controller) EditDevice(context *gin.Context) {
-	var request dtos.EditRequest
+// // Edit controller
+// func (ctl *Controller) Editcontroller(context *gin.Context) {
+// 	var request dtos.EditRequest
 
-	err := context.ShouldBindJSON(&request)
-	if err != nil {
-		utilitys.ResponseError400(context, err.Error())
-		return
-	}
-	data, err := ctl.deviceService.Edit(request)
+// 	err := context.ShouldBindJSON(&request)
+// 	if err != nil {
+// 		utilitys.ResponseError400(context, err.Error())
+// 		return
+// 	}
+// 	data, err := ctl.controllerService.Edit(request)
 
-	if err != nil {
-		utilitys.ResponseError400(context, err.Error())
-	} else {
-		utilitys.ResponseSuccess200(context, data, "success")
-	}
-}
+// 	if err != nil {
+// 		utilitys.ResponseError400(context, err.Error())
+// 	} else {
+// 		utilitys.ResponseSuccess200(context, data, "success")
+// 	}
+// }
 
-// Delete device
-func (ctl *Controller) DeleteDevice(context *gin.Context) {
-	var request dtos.DeleteRequest
+// // Delete controller
+// func (ctl *Controller) Deletecontroller(context *gin.Context) {
+// 	var request dtos.DeleteRequest
 
-	err := context.ShouldBindJSON(&request)
-	if err != nil {
-		utilitys.ResponseError400(context, err.Error())
-		return
-	}
-	data, err := ctl.deviceService.Delete(request)
-	if err != nil {
-		utilitys.ResponseError400(context, err.Error())
-	} else {
-		utilitys.ResponseSuccess200(context, data, "success")
-	}
-}
+// 	err := context.ShouldBindJSON(&request)
+// 	if err != nil {
+// 		utilitys.ResponseError400(context, err.Error())
+// 		return
+// 	}
+// 	data, err := ctl.controllerService.Delete(request)
+// 	if err != nil {
+// 		utilitys.ResponseError400(context, err.Error())
+// 	} else {
+// 		utilitys.ResponseSuccess200(context, data, "success")
+// 	}
+// }
 
-func (ctl *Controller) ControlDevice(context *gin.Context) {
-	var request dtos.ControlRequest
-	err := context.ShouldBindJSON(&request)
-	if err != nil {
-		utilitys.ResponseError400(context, err.Error())
-		return
-	}
-	data, err := ctl.deviceService.Control(request)
-	if err != nil {
-		utilitys.ResponseError400(context, err.Error())
-	} else {
-		utilitys.ResponseSuccess200(context, data, "success")
-	}
-}
-//
-func (ctl *Controller) GetstatusDevice(context *gin.Context) {
-	var request dtos.GetstatusRequest
-	err := context.ShouldBindJSON(&request)
-	if err != nil {
-		utilitys.ResponseError400(context, err.Error())
-		return
-	}
-	data, err := ctl.deviceService.Getstatus(request)
-	if err != nil {
-		utilitys.ResponseError400(context, err.Error())
-	} else {
-		utilitys.ResponseSuccess200(context, data, "success")
-	}
-}
+// func (ctl *Controller) Controlcontroller(context *gin.Context) {
+// 	var request dtos.ControlRequest
+// 	err := context.ShouldBindJSON(&request)
+// 	if err != nil {
+// 		utilitys.ResponseError400(context, err.Error())
+// 		return
+// 	}
+// 	data, err := ctl.controllerService.Control(request)
+// 	if err != nil {
+// 		utilitys.ResponseError400(context, err.Error())
+// 	} else {
+// 		utilitys.ResponseSuccess200(context, data, "success")
+// 	}
+// }
+// //
+// func (ctl *Controller) Getstatuscontroller(context *gin.Context) {
+// 	var request dtos.GetstatusRequest
+// 	err := context.ShouldBindJSON(&request)
+// 	if err != nil {
+// 		utilitys.ResponseError400(context, err.Error())
+// 		return
+// 	}
+// 	data, err := ctl.controllerService.Getstatus(request)
+// 	if err != nil {
+// 		utilitys.ResponseError400(context, err.Error())
+// 	} else {
+// 		utilitys.ResponseSuccess200(context, data, "success")
+// 	}
+// }
 //-------------------------------------------------------------
 
 func (ctl *Controller) Login(context *gin.Context) {

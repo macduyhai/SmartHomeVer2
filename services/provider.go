@@ -11,7 +11,7 @@ type Provider interface {
 	GetUserService() UserService
 	GetAnalysisService() AnalysisService
 	GetAverageService() AverageService
-	GetDeviceService() DeviceService
+	GetcontrollerService() ControllerService
 }
 
 type providerImpl struct {
@@ -19,10 +19,10 @@ type providerImpl struct {
 	db     *gorm.DB
 }
 
-func (provider *providerImpl) GetDeviceService() DeviceService {
-	deviceDao := daos.NewDeviceDao(provider.db)
+func (provider *providerImpl) GetcontrollerService() ControllerService {
+	controllerDao := daos.NewcontrollerDao(provider.db)
 	jwtClient := middlewares.NewJWT(provider.config.SecretKet)
-	return NewDeviceService(provider.config, deviceDao, jwtClient)
+	return NewcontrollerService(provider.config, controllerDao, jwtClient)
 }
 
 //---------------------------------------

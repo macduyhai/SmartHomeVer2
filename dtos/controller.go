@@ -7,6 +7,13 @@ import (
 )
 
 //------------------------------- Request -------------------------------------
+type Device struct {
+	// Controller_id   string     `json:"controller_id"`  // Chip_ID = Controller_id
+	Device_id  		string     `json:"device_id"`
+	Name            string     `json:"name"`
+	Type            string     `json:"type"`
+	State       	bool      `json:"state"`
+}
 type AddRequest struct {
 	User_ID         int64  `json:"user_id"`
 	Chip_ID         string `json:"chip_id"`
@@ -19,6 +26,9 @@ type AddRequest struct {
 	Serial          string `json:"serial"`
 	Name            string `json:"name"`
 	Type            string `json:"type"`
+	Active			bool   `json:"active"`
+	Number_device	int64 `json:"number_device"`
+	Devices 		[]Device
 }
 type AddResponse struct {
 	User_ID     int64      `json:"user_id"`
@@ -26,7 +36,8 @@ type AddResponse struct {
 	Chip_ID     string     `json:"chip_id"`
 	Name        string     `json:"name"`
 	Type        string     `json:"type"`
-	State    bool       `json:"state"`
+	Active    	bool       `json:"active"`
+	Number_device	int64 `json:"number_device"`
 	CreateAt    *time.Time `json:"createat"`
 }
 
@@ -81,16 +92,4 @@ type DeviceResponse struct { // DeleteResponse , TurnOnResponse, TurnOffResponse
 }
 
 
-type Device struct {
-	Chip_ID         string     `json:"chip_id"`
-	Flash_Chip_ID   string     `json:"flash_chip_id"`
-	IDE_Flash_Size  string     `json:"ide_flash_size"`
-	Real_Flash_Size string     `json:"real_flash_size"`
-	Soft_AP_IP      string     `json:"soft_ap_ip"`
-	Soft_AP_MAC     string     `json:"soft_ap_mac"`
-	Station_MAC     string     `json:"station_mac"`
-	Serial          string     `json:"serial"`
-	Name            string     `json:"name"`
-	Type            string     `json:"type"`
-	CreateAt        *time.Time `json:"createat"`
-}
+
