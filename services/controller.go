@@ -14,7 +14,7 @@ import (
 
 type ControllerService interface {
 	Add(request dtos.AddRequest) (*dtos.AddResponse, error)
-	// List(request dtos.ListRequest) (*dtos.ListResponse, error)
+	List(request dtos.ListRequest) (*dtos.ListResponse, error)
 	// Delete(request dtos.DeleteRequest) (*dtos.controllerResponse, error)
 	// Edit(request dtos.EditRequest) (*dtos.EditResponse, error)
 	// Control(request dtos.ControlRequest) (*dtos.ControlResponse, error)
@@ -52,6 +52,7 @@ func (service *controllerServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRes
 
 	dv:= request.Devices
 
+	// controller, err := service.controllerDao.Add(contrl)
 	controller, err := service.controllerDao.Add(contrl,dv)
 	if err != nil {
 		return nil, err
@@ -71,7 +72,19 @@ func (service *controllerServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRes
 	return &response, nil
 }
 
-
+func (service *controllerServiceImpl) List(request dtos.ListRequest) (*dtos.ListResponse, error) {
+	controllers, err := service.controllerDao.List(request.User_ID, request.Username)
+	if err != nil {
+		return nil, err
+	}
+	
+	response := dtos.ListResponse{
+		User_ID:  request.User_ID,
+		Username: request.Username,
+		Controllers:  controllers,
+	}
+	return &response, nil
+}
 
 // func (service *controllerServiceImpl)Getstatus(request dtos.GetstatusRequest) (*dtos.GetstatusResponse, error){
 // 	controller, err := service.controllerDao.Getstatus(request.Chip_ID, request.Station_MAC)
@@ -134,17 +147,6 @@ func (service *controllerServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRes
 // 	return &response, nil
 // }
 
-// func (service *controllerServiceImpl) List(request dtos.ListRequest) (*dtos.ListResponse, error) {
-// 	controllers, err := service.controllerDao.List(request.User_ID, request.Username)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	response := dtos.ListResponse{
-// 		User_ID:  request.User_ID,
-// 		Username: request.Username,
-// 		controllers:  controllers,
-// 	}
-// 	return &response, nil
-// }
+
 
 

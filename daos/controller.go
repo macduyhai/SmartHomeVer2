@@ -9,7 +9,7 @@ import (
 
 type ControllerDao interface {
 	Add(controller models.Controller,dv []dtos.Device) (*models.Controller, error)
-	// List(userID int64, username string) ([]models.Controller, error)
+	List(userID int64, username string) ([]models.Controller, error)
 	// Delete(userID int64, chip_id string) (models.Controller, error)
 	// Edit(userID int64, username, chip_id, name, typedv string) (models.Controller, error)
 	// Control(userID int64, chip_id string , state bool) (models.Controller, error)
@@ -39,6 +39,7 @@ func (dao *controllerDaoImpl) Add(controller models.Controller,dv []dtos.Device)
 			Type: dv[i].Type,
 			State: dv[i].State,
 		}
+
 		if err := dao.db.Create(&device).Error; err != nil {
 			fmt.Println("insert database device error")
 			return nil, err
@@ -47,14 +48,28 @@ func (dao *controllerDaoImpl) Add(controller models.Controller,dv []dtos.Device)
 		
 	return &controller, nil
 }
-// func (dao *controllerDaoImpl) List(userID int64, username string) ([]models.controller, error) {
-// 	controllers := make([]models.controller, 0)
-// 	if err := dao.db.Where("user_id = ?AND username =?", userID,username).Find(&controllers).Error; err != nil {
-// 		return nil, err
-// 	}
+func (dao *controllerDaoImpl) List(userID int64, username string) ([]models.Controller, error) {
+	controllers := make([]models.Controller, 0)
+	if err := dao.db.Where("user_id =?", userID).Find(&controllers).Error; err != nil {
+		return nil, err
+	}
+	// for i, c := range controllers {
+	for i:=0;i<len(controllers);i++ {
+		devices := make([]models.Device, 0)
+		if err := dao.db.Where("controller_id =?", controllers[i].ID).Find(&devices).Error; err != nil {
+			return nil, err
+		}
+		controllers[i].Devices =devices
+		// fmt.Println("----------------------------------------0------------------------------------------------")
+		// // fmt.Println(c)
+		// fmt.Println(controllers[i].Devices)
+		// fmt.Println("----------------------------------------1------------------------------------------------")
+	}
 
-// 	return controllers, nil
-// }
+	return  controllers, nil
+}
+
+
 // func (dao *controllerDaoImpl) Edit(userID int64, username, chip_id, name, typedv string) (models.controller, error) {
 // 	controller := models.controller{}
 // 	if err := dao.db.Where("user_id = ? AND chip_id =?", userID, chip_id).Find(&controller).Error; err != nil {

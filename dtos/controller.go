@@ -14,6 +14,18 @@ type Device struct {
 	Type            string     `json:"type"`
 	State       	bool      `json:"state"`
 }
+type Controller struct {
+	Chip_ID         string `json:"chip_id"`
+	Flash_Chip_ID   string `json:"flash_chip_id"`
+	Soft_AP_IP      string `json:"soft_ap_ip"`
+	Station_MAC     string `json:"station_mac"`
+	Serial          string `json:"serial"`
+	Name            string `json:"name"`
+	Type            string `json:"type"`
+	Active			bool   `json:"active"`
+	Number_device	int64 `json:"number_device"`
+	Devices 		[]Device
+}
 type AddRequest struct {
 	User_ID         int64  `json:"user_id"`
 	Chip_ID         string `json:"chip_id"`
@@ -48,7 +60,7 @@ type ListRequest struct {
 type ListResponse struct {
 	User_ID  int64  `json:"user_id"`
 	Username string `json:"username"`
-	Devices  []models.Device
+	Controllers  []models.Controller
 }
 type EditRequest struct {
 	User_ID  int64  `json:"user_id"`

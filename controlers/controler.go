@@ -44,23 +44,23 @@ func (ctl *Controller) Addcontroller(context *gin.Context) {
 	}
 }
 
-// //Listcontroller
-// func (ctl *Controller) Listcontroller(context *gin.Context) {
-// 	var request dtos.ListRequest
-// 	err := context.ShouldBindJSON(&request)
-// 	if err != nil {
-// 		utilitys.ResponseError400(context, err.Error())
-// 		return
-// 	}
-// 	// fmt.Println(request)
-// 	data, err := ctl.controllerService.List(request)
+//Listcontroller
+func (ctl *Controller) Listcontroller(context *gin.Context) {
+	var request dtos.ListRequest
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+		return
+	}
+	// fmt.Println(request)
+	data, err := ctl.controllerService.List(request)
 
-// 	if err != nil {
-// 		utilitys.ResponseError400(context, err.Error())
-// 	} else {
-// 		utilitys.ResponseSuccess200(context, data, "success")
-// 	}
-// }
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+	} else {
+		utilitys.ResponseSuccess200(context, data, "success")
+	}
+}
 
 // // Edit controller
 // func (ctl *Controller) Editcontroller(context *gin.Context) {

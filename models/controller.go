@@ -17,5 +17,6 @@ type Controller struct {
 	Type            string     `gorm:"column:type"`
 	Active       	bool       `gorm:"column:active"`
 	Number_device   int64      `gorm:"column:number_device"`
+	Devices 		[]Device
 	CreateAt        *time.Time `gorm:"column:created_at"`
 }
