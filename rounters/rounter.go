@@ -42,10 +42,10 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 		device.Use(accountAuthMiddleWare.Check)
 		device.POST("/add", controller.Addcontroller)
 		device.POST("/list", controller.Listcontroller)
-		// device.POST("/delete", controller.DeleteDevice)
+		device.POST("/delete", controller.Deletecontroller)
 		// device.POST("/edit", controller.EditDevice)
-		// device.POST("/control", controller.ControlDevice)
-		// device.POST("/getstatus",controller.GetstatusDevice)
+		device.POST("/control", controller.Controlcontroller)
+		device.POST("/getstatus",controller.Getstatuscontroller)
 	}
 	{
 		log := engine.Group("/api/v1/log")

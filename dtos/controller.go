@@ -82,20 +82,23 @@ type DeleteRequest struct {
 type ControlRequest struct {
 	User_ID  int64  `json:"user_id"`
 	Chip_ID  string `json:"chip_id"`
+	Device_id string `json:"device_id"`
 	State bool	`json:"state"`
 }
 type ControlResponse struct {
 	Chip_ID  string `json:"chip_id"`
+	Device_id string `json:"device_id"`
 	State bool	`json:"state"`
 }
 type GetstatusRequest struct {
 	Station_MAC  string  `json:"station_mac"`
 	Chip_ID  string `json:"chip_id"`
+
 }
 type GetstatusResponse struct {
 	Station_MAC  string  `json:"station_mac"`
 	Chip_ID  string `json:"chip_id"`
-	State bool	`json:"state"`
+	Devices [] models.Device
 }
 
 //---------------------------------------------------

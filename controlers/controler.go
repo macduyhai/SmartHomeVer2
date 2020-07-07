@@ -2,7 +2,7 @@ package controlers
 
 import (
 	"time"
-
+	"fmt"
 	"SmartHomeVer2/common"
 
 	"github.com/gin-gonic/gin"
@@ -80,52 +80,55 @@ func (ctl *Controller) Listcontroller(context *gin.Context) {
 // 	}
 // }
 
-// // Delete controller
-// func (ctl *Controller) Deletecontroller(context *gin.Context) {
-// 	var request dtos.DeleteRequest
+// Delete controller
+func (ctl *Controller) Deletecontroller(context *gin.Context) {
+	fmt.Println("Controller Delete")
+	var request dtos.DeleteRequest
 
-// 	err := context.ShouldBindJSON(&request)
-// 	if err != nil {
-// 		utilitys.ResponseError400(context, err.Error())
-// 		return
-// 	}
-// 	data, err := ctl.controllerService.Delete(request)
-// 	if err != nil {
-// 		utilitys.ResponseError400(context, err.Error())
-// 	} else {
-// 		utilitys.ResponseSuccess200(context, data, "success")
-// 	}
-// }
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+		return
+	}
+	fmt.Println("Controller Delete 2")
+	data, err := ctl.controllerService.Delete(request)
+	fmt.Println("Controller Delete 3")
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+	} else {
+		utilitys.ResponseSuccess200(context, data, "success")
+	}
+}
 
-// func (ctl *Controller) Controlcontroller(context *gin.Context) {
-// 	var request dtos.ControlRequest
-// 	err := context.ShouldBindJSON(&request)
-// 	if err != nil {
-// 		utilitys.ResponseError400(context, err.Error())
-// 		return
-// 	}
-// 	data, err := ctl.controllerService.Control(request)
-// 	if err != nil {
-// 		utilitys.ResponseError400(context, err.Error())
-// 	} else {
-// 		utilitys.ResponseSuccess200(context, data, "success")
-// 	}
-// }
-// //
-// func (ctl *Controller) Getstatuscontroller(context *gin.Context) {
-// 	var request dtos.GetstatusRequest
-// 	err := context.ShouldBindJSON(&request)
-// 	if err != nil {
-// 		utilitys.ResponseError400(context, err.Error())
-// 		return
-// 	}
-// 	data, err := ctl.controllerService.Getstatus(request)
-// 	if err != nil {
-// 		utilitys.ResponseError400(context, err.Error())
-// 	} else {
-// 		utilitys.ResponseSuccess200(context, data, "success")
-// 	}
-// }
+func (ctl *Controller) Controlcontroller(context *gin.Context) {
+	var request dtos.ControlRequest
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+		return
+	}
+	data, err := ctl.controllerService.Control(request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+	} else {
+		utilitys.ResponseSuccess200(context, data, "success")
+	}
+}
+
+func (ctl *Controller) Getstatuscontroller(context *gin.Context) {
+	var request dtos.GetstatusRequest
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+		return
+	}
+	data, err := ctl.controllerService.Getstatus(request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+	} else {
+		utilitys.ResponseSuccess200(context, data, "success")
+	}
+}
 //-------------------------------------------------------------
 
 func (ctl *Controller) Login(context *gin.Context) {

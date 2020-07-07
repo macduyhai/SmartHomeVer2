@@ -15,10 +15,10 @@ import (
 type ControllerService interface {
 	Add(request dtos.AddRequest) (*dtos.AddResponse, error)
 	List(request dtos.ListRequest) (*dtos.ListResponse, error)
-	// Delete(request dtos.DeleteRequest) (*dtos.controllerResponse, error)
+	Delete(request dtos.DeleteRequest) (*dtos.DeviceResponse, error)
 	// Edit(request dtos.EditRequest) (*dtos.EditResponse, error)
-	// Control(request dtos.ControlRequest) (*dtos.ControlResponse, error)
-	// Getstatus(request dtos.GetstatusRequest) (*dtos.GetstatusResponse, error)
+	Control(request dtos.ControlRequest) (*dtos.ControlResponse, error)
+	Getstatus(request dtos.GetstatusRequest) (*dtos.GetstatusResponse, error)
 }
 
 type controllerServiceImpl struct {
@@ -86,54 +86,58 @@ func (service *controllerServiceImpl) List(request dtos.ListRequest) (*dtos.List
 	return &response, nil
 }
 
-// func (service *controllerServiceImpl)Getstatus(request dtos.GetstatusRequest) (*dtos.GetstatusResponse, error){
-// 	controller, err := service.controllerDao.Getstatus(request.Chip_ID, request.Station_MAC)
-// 	if (controller == models.controller{}) {
-// 		return nil, err
-// 	}
-// 	response := dtos.GetstatusResponse{
-// 		Chip_ID: controller.Chip_ID,
-// 		Station_MAC:  controller.Station_MAC,
-// 		State:   controller.State,
-// 	}
-// 	return &response, nil
-// }
-// // Control
-// func (service *controllerServiceImpl) Control(request dtos.ControlRequest) (*dtos.ControlResponse, error){
-// 	controller, err := service.controllerDao.Control(request.User_ID, request.Chip_ID,request.State)
-// 	if err != nil {
-// 		return nil, err
-// 	}
+func (service *controllerServiceImpl) Delete(request dtos.DeleteRequest) (*dtos.DeviceResponse, error) {
+	fmt.Println("Service Delete")
+	_, err := service.controllerDao.Delete(request.User_ID, request.Chip_ID)
+	if err != nil {
+		return nil, err
+	}
+	response := dtos.DeviceResponse{
+		Status: "deleted",
+	}
+	return &response, nil
+}
+
+func (service *controllerServiceImpl)Getstatus(request dtos.GetstatusRequest) (*dtos.GetstatusResponse, error){
+	controller, err := service.controllerDao.Getstatus(request.Chip_ID, request.Station_MAC)
+	if (err != nil) {
+		return nil, err
+	}
+	response := dtos.GetstatusResponse{
+		Chip_ID: controller.Chip_ID,
+		Station_MAC:  controller.Station_MAC,
+		Devices: controller.Devices,
+	}
+	return &response, nil
+}
+// Control
+func (service *controllerServiceImpl) Control(request dtos.ControlRequest) (*dtos.ControlResponse, error){
+	controller,device, err := service.controllerDao.Control(request.User_ID, request.Chip_ID,request.Device_id,request.State)
+	if err != nil {
+		return nil, err
+	}
 		
-// 	if controller.State == true {
-// 		fmt.Println("Bật đèn")
-// 		s := "{\"chip_id\":" +controller.Chip_ID + "," + "\"station_mac\":" + controller.Station_MAC + "," + "\"value\":\"1\"}"
-// 		fmt.Println(s)
-// 		PublishData(controller.Chip_ID, s)
-// 	}else {
-// 		fmt.Println("Tắt đèn")
-// 		s := "{\"chip_id\":" +controller.Chip_ID + "," + "\"station_mac\":" + controller.Station_MAC + "," + "\"value\":\"0\"}"
-// 		fmt.Println(s)
-// 		PublishData(controller.Chip_ID, s)
-// 	}
+	if device.State == true {
+		fmt.Println("Bật đèn")
+		s := "{\"chip_id\":" +controller.Chip_ID +"," + "\"device_id\":" + device.Device_id + "," + "\"station_mac\":" + controller.Station_MAC + "," + "\"value\":\"1\"}"
+		fmt.Println(s)
+		PublishData(controller.Chip_ID,device.Device_id, s)
+	}else {
+		fmt.Println("Tắt đèn")
+		s := "{\"chip_id\":" +controller.Chip_ID +"," + "\"device_id\":" + device.Device_id + "," + "\"station_mac\":" + controller.Station_MAC + "," + "\"value\":\"0\"}"
+		fmt.Println(s)
+		PublishData(controller.Chip_ID,device.Device_id, s)
+	}
 
-// 	response := dtos.ControlResponse{
-// 		Chip_ID: controller.Chip_ID,
-// 		State: controller.State,
-// 	}
-// 	return &response, nil
-// }
+	response := dtos.ControlResponse{
+		Chip_ID: controller.Chip_ID,
+		Device_id: device.Device_id,
+		State: device.State,
+	}
+	return &response, nil
+}
 
-// func (service *controllerServiceImpl) Delete(request dtos.DeleteRequest) (*dtos.controllerResponse, error) {
-// 	_, err := service.controllerDao.Delete(request.User_ID, request.Chip_ID)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	response := dtos.controllerResponse{
-// 		Status: "deleted",
-// 	}
-// 	return &response, nil
-// }
+
 // func (service *controllerServiceImpl) Edit(request dtos.EditRequest) (*dtos.EditResponse, error) {
 // 	controller, err := service.controllerDao.Edit(request.User_ID, request.Username, request.Chip_ID, request.Name, request.Type)
 // 	if (controller == models.controller{}) {

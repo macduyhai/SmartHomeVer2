@@ -24,17 +24,18 @@ const CmsPassBi = ""
 
 // idBox : Phân định device
 var idBox = ""
+var idDevice = ""
 
 // CmsTopicIn : Server to Box
-var CmsTopicIn = "/v1/devices/NTQ/" + idBox + "/telemetry"
+var CmsTopicIn = "/v1/devices/NTQ/" + idBox +"/"+idDevice+ "/telemetry"
 
 // CmsTopicOut : Box to Server
-var CmsTopicOut = "/v1/devices/NTQ/" + idBox + "/request/"
+var CmsTopicOut = "/v1/devices/NTQ/" + idBox +"/"+idDevice+ "/request/"
 
 //PublishData : Function
-func PublishData(idBox string, payload string) { // idBox : Mac of device
-	CmsTopicIn = "/v1/devices/NTQ/" + idBox + "/telemetry"
-	CmsTopicOut = "/v1/devices/NTQ/" + idBox + "/request/"
+func PublishData(idBox string,idDevice string, payload string) { // idBox : Mac of device
+	CmsTopicIn = "/v1/devices/NTQ/" + idBox +"/"+idDevice+  "/telemetry"
+	CmsTopicOut = "/v1/devices/NTQ/" + idBox +"/"+idDevice+  "/request/"
 	fmt.Println("idBox: " + idBox)
 	fmt.Println("TOPIC IN :" + CmsTopicIn)
 	fmt.Println("TOPIC OUT :" + CmsTopicOut)
