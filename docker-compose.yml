@@ -9,9 +9,9 @@ services:
         - golang:1.12
     depends_on:
       - mysql
-    image: smart-home:v1.0.0
+    image: qc-monitor:v1.0.0
     ports:
-      - "9191:80"
+      - "9090:80"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/ping"]
       interval: 1m30s
@@ -20,21 +20,21 @@ services:
       start_period: 40s
     environment:
       - MYSQL_URL=root:bW90aGVyIGZ1Y2tlciBub29i@tcp(mysql:3306)/cm?charset=utf8mb4&collation=utf8mb4_unicode_ci&parseTime=True&loc=Local
-      - API_KEY=hongminh229297
-      - SECRET_KEY=hongminh229297
+      - API_KEY=duyhai1995
+      - SECRET_KEY=duyhai1995
   mysql:
     image: mysql:5.7
-    container_name: mysql-smarthome
+    container_name: mysql-qc-monitor
     volumes:
       - db_data:/var/lib/mysql
     ports:
-      - "3307:3306"
+      - "3308:3306"
     environment:
       MYSQL_ROOT_PASSWORD: bW90aGVyIGZ1Y2tlciBub29i
-      MYSQL_DATABASE: cm
+      MYSQL_DATABASE: qc_monitor
       MYSQL_USER: user1
       MYSQL_PASSWORD: 1
 volumes:
   db_data:
-    name: smarthome_db_data
+    name: monitor_db_data
     external: true
