@@ -19,12 +19,14 @@ type LoginResponse struct {
 	Name     string `json:"full_name"`
 	Tocken   string `json:"tocken"`
 	Money    int64  `json:"money"`
+	Phone    string `json:"phone"`
 }
 
 type CreateUserRequest struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
 	Name     string `json:"name"`
+	Phone    string `json:"phone"`
 }
 
 type CreateLogRequest struct {

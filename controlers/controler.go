@@ -158,6 +158,7 @@ func (ctl *Controller) CreateUser(context *gin.Context) {
 		Name:     request.Name,
 		Username: request.Username,
 		Password: request.Password,
+		Phone:    request.Phone,
 	}
 	data, err := ctl.userService.Create(acc)
 	if err != nil {

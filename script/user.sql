@@ -6,6 +6,10 @@ CREATE TABLE `users` (
     `username` VARCHAR(64) UNIQUE,
     `password` VARCHAR(64),
     `money` INT(11),
+    `phone` VARCHAR(255) DEFAULT '',
+    `number_video` INT(10)  DEFAULT 0,
+    `total_size` INT(10)  DEFAULT 0,
+    `max_size` INT(10)  DEFAULT 2100,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX user_name (`username`)
