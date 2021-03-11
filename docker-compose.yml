@@ -23,7 +23,7 @@ services:
       - API_KEY=duyhai1995
       - SECRET_KEY=duyhai1995
   mysql:
-    image: mysql:5.
+    image: mysql:5.7
     container_name: mysql-qc-monitor
     volumes:
       - db_data:/var/lib/mysql

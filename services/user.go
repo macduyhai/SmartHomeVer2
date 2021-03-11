@@ -50,6 +50,7 @@ func (service *userServiceImpl) Login(request dtos.LoginRequest) (*dtos.LoginRes
 		Name:     user.Name,
 		Tocken:   tocken,
 		Money:    user.Money,
+		Phone:    user.Phone,
 	}
 	return &response, nil
 }
