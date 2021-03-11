@@ -159,6 +159,7 @@ func (ctl *Controller) CreateUser(context *gin.Context) {
 		Username: request.Username,
 		Password: request.Password,
 		Phone:    request.Phone,
+		Max_size: 2100,
 	}
 	data, err := ctl.userService.Create(acc)
 	if err != nil {
