@@ -12,7 +12,7 @@ import (
 
 type DeviceService interface {
 	Add(request dtos.AddRequest) (*dtos.AddResponse, error)
-	// List(request dtos.ListRequest) (*dtos.ListResponse, error)
+	List(request dtos.ListRequest) (*dtos.ListResponse, error)
 	// Delete(request dtos.DeleteRequest) (*dtos.DeviceResponse, error)
 	// Edit(request dtos.EditRequest) (*dtos.EditResponse, error)
 	// Control(request dtos.ControlRequest) (*dtos.ControlResponse, error)
@@ -30,22 +30,6 @@ func NewDeviceService(conf *config.Config, deviceDao daos.DeviceDao, jwt middlew
 	}
 }
 func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddResponse, error) {
-	// User_ID     int64      `gorm:"column:user_id"`
-	// Device_name string     `gorm:"column:device_name"`
-	// Mac         string     `gorm:"column:mac"`
-	// Video_name  string     `gorm:"column:video_name"`
-	// Video_size  int64      `gorm:"column:video_size"`
-	// Video_time  int64      `gorm:"column:video_time"`
-	// Status      int        `gorm:"column:status"`
-	// Location    string     `gorm:"column:location"`
-	// Expired     *time.Time `gorm:"column:expired"`
-	// CreateAt    *time.Time `gorm:"column:created_at"`
-	// Updated_at  *time.Time `gorm:"column:updated_at"`
-
-	// User_ID     int64  `json:"user_id"`
-	// Mac         string `json:"mac"`
-	// Device_name string `json:"device_name"`
-	// Location    string `json:"location"`
 
 	dv := models.Device{
 		User_ID:     request.User_ID,
@@ -59,17 +43,6 @@ func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRespons
 	if err != nil {
 		return nil, err
 	}
-
-	// Mac         string     `json:"mac"`
-	// Device_name string     `json:"chip_id"`
-	// Video_name  string     `json:"video_name"`
-	// Video_size  int64      `json:"video_size"`
-	// Video_time  int64      `json:"video_time"`
-	// Status      int        `json:"status"`
-	// Location    string     `json:"location"`
-	// Expired     *time.Time `json:"expired"`
-	// CreateAt    *time.Time `json:"createat"`
-
 	response := dtos.AddResponse{
 		Mac:         device.Mac,
 		Device_name: device.Device_name,
@@ -82,6 +55,19 @@ func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRespons
 		CreateAt:    device.CreateAt,
 	}
 
+	return &response, nil
+}
+
+func (service *deviceServiceImpl) List(request dtos.ListRequest) (*dtos.ListResponse, error) {
+	devices, err := service.deviceDao.List(request.User_ID, request.Username)
+	if err != nil {
+		return nil, err
+	}
+	response := dtos.ListResponse{
+		User_ID:  request.User_ID,
+		Username: request.Username,
+		Devices:  devices,
+	}
 	return &response, nil
 }
 
@@ -143,19 +129,6 @@ func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRespons
 // 		User_ID:  request.User_ID,
 // 		Username: request.Username,
 // 		Device:   device,
-// 	}
-// 	return &response, nil
-// }
-
-// func (service *deviceServiceImpl) List(request dtos.ListRequest) (*dtos.ListResponse, error) {
-// 	devices, err := service.deviceDao.List(request.User_ID, request.Username)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	response := dtos.ListResponse{
-// 		User_ID:  request.User_ID,
-// 		Username: request.Username,
-// 		Devices:  devices,
 // 	}
 // 	return &response, nil
 // }

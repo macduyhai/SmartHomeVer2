@@ -10,7 +10,7 @@ import (
 
 type DeviceDao interface {
 	Add(device models.Device) (*models.Device, error)
-	// List(userID int64, username string) ([]models.Device, error)
+	List(userID int64, username string) ([]models.Device, error)
 	// Delete(userID int64, chip_id string) (models.Device, error)
 	// Edit(userID int64, username, chip_id, name, typedv string) (models.Device, error)
 	// Control(userID int64, chip_id string, state bool) (models.Device, error)
@@ -34,14 +34,15 @@ func (dao *deviceDaoImpl) Add(device models.Device) (*models.Device, error) {
 	return &device, nil
 }
 
-// func (dao *deviceDaoImpl) List(userID int64, username string) ([]models.Device, error) {
-// 	devices := make([]models.Device, 0)
-// 	if err := dao.db.Where("user_id = ?", userID).Find(&devices).Error; err != nil {
-// 		return nil, err
-// 	}
+func (dao *deviceDaoImpl) List(userID int64, username string) ([]models.Device, error) {
+	devices := make([]models.Device, 0)
+	if err := dao.db.Where("user_id = ?", userID).Find(&devices).Error; err != nil {
+		return nil, err
+	}
 
-// 	return devices, nil
-// }
+	return devices, nil
+}
+
 // func (dao *deviceDaoImpl) Edit(userID int64, username, chip_id, name, typedv string) (models.Device, error) {
 // 	device := models.Device{}
 // 	if err := dao.db.Where("user_id = ? AND chip_id =?", userID, chip_id).Find(&device).Error; err != nil {
