@@ -13,7 +13,7 @@ import (
 type DeviceService interface {
 	Add(request dtos.AddRequest) (*dtos.AddResponse, error)
 	List(request dtos.ListRequest) (*dtos.ListResponse, error)
-	// Delete(request dtos.DeleteRequest) (*dtos.DeviceResponse, error)
+	Delete(request dtos.DeleteRequest) (*dtos.DeviceResponse, error)
 	// Edit(request dtos.EditRequest) (*dtos.EditResponse, error)
 	// Control(request dtos.ControlRequest) (*dtos.ControlResponse, error)
 	// Getstatus(request dtos.GetstatusRequest) (*dtos.GetstatusResponse, error)
@@ -70,7 +70,29 @@ func (service *deviceServiceImpl) List(request dtos.ListRequest) (*dtos.ListResp
 	}
 	return &response, nil
 }
+func (service *deviceServiceImpl) Delete(request dtos.DeleteRequest) (*dtos.DeviceResponse, error) {
+	_, err := service.deviceDao.Delete(request.User_ID, request.Mac)
+	if err != nil {
+		return nil, err
+	}
+	response := dtos.DeviceResponse{
+		Status: "deleted",
+	}
+	return &response, nil
+}
 
+// func (service *deviceServiceImpl) Edit(request dtos.EditRequest) (*dtos.EditResponse, error) {
+// 	device, err := service.deviceDao.Edit(request.User_ID, request.Username, request.Chip_ID, request.Name, request.Type)
+// 	if (device == models.Device{}) {
+// 		return nil, err
+// 	}
+// 	response := dtos.EditResponse{
+// 		User_ID:  request.User_ID,
+// 		Username: request.Username,
+// 		Device:   device,
+// 	}
+// 	return &response, nil
+// }
 // func (service *deviceServiceImpl) Getstatus(request dtos.GetstatusRequest) (*dtos.GetstatusResponse, error) {
 // 	device, err := service.deviceDao.Getstatus(request.Chip_ID, request.Station_MAC)
 // 	if (device == models.Device{}) {
@@ -106,29 +128,6 @@ func (service *deviceServiceImpl) List(request dtos.ListRequest) (*dtos.ListResp
 // 	response := dtos.ControlResponse{
 // 		Chip_ID: device.Chip_ID,
 // 		State:   device.State,
-// 	}
-// 	return &response, nil
-// }
-
-// func (service *deviceServiceImpl) Delete(request dtos.DeleteRequest) (*dtos.DeviceResponse, error) {
-// 	_, err := service.deviceDao.Delete(request.User_ID, request.Chip_ID)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	response := dtos.DeviceResponse{
-// 		Status: "deleted",
-// 	}
-// 	return &response, nil
-// }
-// func (service *deviceServiceImpl) Edit(request dtos.EditRequest) (*dtos.EditResponse, error) {
-// 	device, err := service.deviceDao.Edit(request.User_ID, request.Username, request.Chip_ID, request.Name, request.Type)
-// 	if (device == models.Device{}) {
-// 		return nil, err
-// 	}
-// 	response := dtos.EditResponse{
-// 		User_ID:  request.User_ID,
-// 		Username: request.Username,
-// 		Device:   device,
 // 	}
 // 	return &response, nil
 // }

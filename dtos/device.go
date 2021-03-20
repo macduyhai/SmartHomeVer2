@@ -47,9 +47,8 @@ type EditResponse struct {
 	Device   models.Device
 }
 type DeleteRequest struct {
-	User_ID  int64  `json:"user_id"`
-	Username string `json:"username"`
-	Chip_ID  string `json:"chip_id"`
+	User_ID int64  `json:"user_id"`
+	Mac     string `json:"mac"`
 }
 type ControlRequest struct {
 	User_ID int64  `json:"user_id"`
