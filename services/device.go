@@ -2,6 +2,7 @@ package services
 
 import (
 	"fmt"
+	"path/filepath"
 
 	"github.com/macduyhai/SmartHomeVer2/middlewares"
 	"github.com/macduyhai/SmartHomeVer2/models"
@@ -108,7 +109,9 @@ func (service *deviceServiceImpl) Getstatus(request dtos.GetstatusRequest) (*dto
 
 // Upload
 func (service *deviceServiceImpl) Upload(request dtos.UploadRequest) (*dtos.UploadResponse, error) {
-	fmt.Println(request.Files)
+	// fmt.Println(request.Files)
+	filename := filepath.Base(request.Files)
+	fmt.Println(filename)
 
 	//---------------------
 	device, err := service.deviceDao.Upload(request.User_ID, request.Mac)
