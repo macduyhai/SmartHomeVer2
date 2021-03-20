@@ -35,11 +35,10 @@ type ListResponse struct {
 	Devices  []models.Device
 }
 type EditRequest struct {
-	User_ID  int64  `json:"user_id"`
-	Username string `json:"username"`
-	Chip_ID  string `json:"chip_id"`
-	Name     string `json:"name"`
-	Type     string `json:"type"`
+	User_ID     int64  `json:"user_id"`
+	Mac         string `json:"mac"`
+	Device_Name string `json:"device_name"`
+	Location    string `json:"location"`
 }
 type EditResponse struct {
 	User_ID  int64  `json:"user_id"`
@@ -60,13 +59,12 @@ type ControlResponse struct {
 	State   bool   `json:"state"`
 }
 type GetstatusRequest struct {
-	Station_MAC string `json:"station_mac"`
-	Chip_ID     string `json:"chip_id"`
+	User_ID int64  `json:"user_id"`
+	Mac     string `json:"mac"`
 }
 type GetstatusResponse struct {
-	Station_MAC string `json:"station_mac"`
-	Chip_ID     string `json:"chip_id"`
-	State       bool   `json:"state"`
+	Mac    string `json:"mac"`
+	Status int    `json:"status"`
 }
 
 //---------------------------------------------------

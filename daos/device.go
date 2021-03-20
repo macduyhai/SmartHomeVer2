@@ -12,9 +12,9 @@ type DeviceDao interface {
 	Add(device models.Device) (*models.Device, error)
 	List(userID int64, username string) ([]models.Device, error)
 	Delete(userID int64, mac string) (models.Device, error)
-	// Edit(userID int64, username, chip_id, name, typedv string) (models.Device, error)
+	Edit(userID int64, mac, deviceName, location string) (models.Device, error)
 	// Control(userID int64, chip_id string, state bool) (models.Device, error)
-	// Getstatus(chip_id string, station_mac string) (models.Device, error)
+	Getstatus(userID int64, mac string) (models.Device, error)
 }
 
 type deviceDaoImpl struct {
@@ -43,22 +43,22 @@ func (dao *deviceDaoImpl) List(userID int64, username string) ([]models.Device, 
 	return devices, nil
 }
 
-// func (dao *deviceDaoImpl) Edit(userID int64, username, chip_id, name, typedv string) (models.Device, error) {
-// 	device := models.Device{}
-// 	if err := dao.db.Where("user_id = ? AND chip_id =?", userID, chip_id).Find(&device).Error; err != nil {
-// 		return device, err
-// 	}
-// 	if device.Name != name {
-// 		device.Name = name
-// 	}
-// 	if device.Type != typedv {
-// 		device.Type = typedv
-// 	}
+func (dao *deviceDaoImpl) Edit(userID int64, mac, deviceName, location string) (models.Device, error) {
+	device := models.Device{}
+	if err := dao.db.Where("user_id = ? AND mac =?", userID, mac).Find(&device).Error; err != nil {
+		return device, err
+	}
+	if device.Device_name != deviceName {
+		device.Device_name = deviceName
+	}
+	if device.Location != location {
+		device.Location = location
+	}
 
-// 	dao.db.Save(&device)
+	dao.db.Save(&device)
 
-// 	return device, nil
-// }
+	return device, nil
+}
 func (dao *deviceDaoImpl) Delete(userID int64, mac string) (models.Device, error) {
 	device := models.Device{}
 	if err := dao.db.Where("user_id = ? AND mac =?", userID, mac).Delete(&device).Error; err != nil {
@@ -79,11 +79,11 @@ func (dao *deviceDaoImpl) Delete(userID int64, mac string) (models.Device, error
 // 	dao.db.Save(&device)
 // 	return device, nil
 // }
-// func (dao *deviceDaoImpl) Getstatus(chip_id string, station_mac string) (models.Device, error) {
-// 	device := models.Device{}
-// 	if err := dao.db.Where("station_mac = ? AND chip_id =?", station_mac, chip_id).Find(&device).Error; err != nil {
-// 		return device, err
-// 	}
-// 	return device, nil
+func (dao *deviceDaoImpl) Getstatus(userID int64, mac string) (models.Device, error) {
+	device := models.Device{}
+	if err := dao.db.Where("user_id = ? AND mac =?", userID, mac).Find(&device).Error; err != nil {
+		return device, err
+	}
+	return device, nil
 
-// }
+}

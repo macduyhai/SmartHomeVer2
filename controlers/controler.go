@@ -79,23 +79,39 @@ func (ctl *Controller) DeleteDevice(context *gin.Context) {
 	}
 }
 
-// // Edit device
-// func (ctl *Controller) EditDevice(context *gin.Context) {
-// 	var request dtos.EditRequest
+// Edit device
+func (ctl *Controller) EditDevice(context *gin.Context) {
+	var request dtos.EditRequest
 
-// 	err := context.ShouldBindJSON(&request)
-// 	if err != nil {
-// 		utilitys.ResponseError400(context, err.Error())
-// 		return
-// 	}
-// 	data, err := ctl.deviceService.Edit(request)
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+		return
+	}
+	data, err := ctl.deviceService.Edit(request)
 
-// 	if err != nil {
-// 		utilitys.ResponseError400(context, err.Error())
-// 	} else {
-// 		utilitys.ResponseSuccess200(context, data, "success")
-// 	}
-// }
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+	} else {
+		utilitys.ResponseSuccess200(context, data, "success")
+	}
+}
+
+//
+func (ctl *Controller) GetstatusDevice(context *gin.Context) {
+	var request dtos.GetstatusRequest
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+		return
+	}
+	data, err := ctl.deviceService.Getstatus(request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+	} else {
+		utilitys.ResponseSuccess200(context, data, "success")
+	}
+}
 
 // func (ctl *Controller) ControlDevice(context *gin.Context) {
 // 	var request dtos.ControlRequest
@@ -105,22 +121,6 @@ func (ctl *Controller) DeleteDevice(context *gin.Context) {
 // 		return
 // 	}
 // 	data, err := ctl.deviceService.Control(request)
-// 	if err != nil {
-// 		utilitys.ResponseError400(context, err.Error())
-// 	} else {
-// 		utilitys.ResponseSuccess200(context, data, "success")
-// 	}
-// }
-
-// //
-// func (ctl *Controller) GetstatusDevice(context *gin.Context) {
-// 	var request dtos.GetstatusRequest
-// 	err := context.ShouldBindJSON(&request)
-// 	if err != nil {
-// 		utilitys.ResponseError400(context, err.Error())
-// 		return
-// 	}
-// 	data, err := ctl.deviceService.Getstatus(request)
 // 	if err != nil {
 // 		utilitys.ResponseError400(context, err.Error())
 // 	} else {
