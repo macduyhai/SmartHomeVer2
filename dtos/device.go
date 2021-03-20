@@ -8,25 +8,20 @@ import (
 
 //------------------------------- Request -------------------------------------
 type AddRequest struct {
-	User_ID         int64  `json:"user_id"`
-	Chip_ID         string `json:"chip_id"`
-	Flash_Chip_ID   string `json:"flash_chip_id"`
-	IDE_Flash_Size  string `json:"ide_flash_size"`
-	Real_Flash_Size string `json:"real_flash_size"`
-	Soft_AP_IP      string `json:"soft_ap_ip"`
-	Soft_AP_MAC     string `json:"soft_ap_mac"`
-	Station_MAC     string `json:"station_mac"`
-	Serial          string `json:"serial"`
-	Name            string `json:"name"`
-	Type            string `json:"type"`
+	User_ID     int64  `json:"user_id"`
+	Mac         string `json:"mac"`
+	Device_name string `json:"device_name"`
+	Location    string `json:"location"`
 }
 type AddResponse struct {
-	User_ID     int64      `json:"user_id"`
-	Station_MAC string     `json:"station_mac"`
-	Chip_ID     string     `json:"chip_id"`
-	Name        string     `json:"name"`
-	Type        string     `json:"type"`
-	State       bool       `json:"state"`
+	Mac         string     `json:"mac"`
+	Device_name string     `json:"chip_id"`
+	Video_name  string     `json:"video_name"`
+	Video_size  int64      `json:"video_size"`
+	Video_time  int64      `json:"video_time"`
+	Status      int        `json:"status"`
+	Location    string     `json:"location"`
+	Expired     *time.Time `json:"expired"`
 	CreateAt    *time.Time `json:"createat"`
 }
 
@@ -81,15 +76,25 @@ type DeviceResponse struct { // DeleteResponse , TurnOnResponse, TurnOffResponse
 }
 
 type Device struct {
-	Chip_ID         string     `json:"chip_id"`
-	Flash_Chip_ID   string     `json:"flash_chip_id"`
-	IDE_Flash_Size  string     `json:"ide_flash_size"`
-	Real_Flash_Size string     `json:"real_flash_size"`
-	Soft_AP_IP      string     `json:"soft_ap_ip"`
-	Soft_AP_MAC     string     `json:"soft_ap_mac"`
-	Station_MAC     string     `json:"station_mac"`
-	Serial          string     `json:"serial"`
-	Name            string     `json:"name"`
-	Type            string     `json:"type"`
-	CreateAt        *time.Time `json:"createat"`
+	Mac        string     `json:"mac"`
+	Video_name string     `json:"video_name"`
+	Video_size int64      `json:"video_size"`
+	Video_time int64      `json:"video_time"`
+	Status     int        `json:"status"`
+	Location   string     `json:"location"`
+	Expired    *time.Time `json:"expired"`
+	CreateAt   *time.Time `json:"createat"`
 }
+
+// ID         int64      `gorm:"column:id;PRIMARY_KEY"`
+// User_ID    int64      `gorm:"column:user_id"`
+// Mac        string     `gorm:"column:mac"`
+// Video_name string     `gorm:"column:video_name"`
+// Video_size int64      `gorm:"column:video_size"`
+// Video_time int64      `gorm:"column:video_time"`
+// Status     int        `gorm:"column:status"`
+// Expired    *time.Time `gorm:"column:expired"`
+// Location   string     `gorm:"column:location"`
+// State      bool       `gorm:"column:state"`
+// CreateAt   *time.Time `gorm:"column:created_at"`
+// Updated_at *time.Time `gorm:"column:updated_at"`
