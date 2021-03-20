@@ -49,14 +49,13 @@ type DeleteRequest struct {
 	User_ID int64  `json:"user_id"`
 	Mac     string `json:"mac"`
 }
-type ControlRequest struct {
+type UploadRequest struct {
 	User_ID int64  `json:"user_id"`
-	Chip_ID string `json:"chip_id"`
-	State   bool   `json:"state"`
+	Mac     string `json:"mac"`
+	Files   string `json:"files"`
 }
-type ControlResponse struct {
-	Chip_ID string `json:"chip_id"`
-	State   bool   `json:"state"`
+type UploadResponse struct {
+	Device models.Device
 }
 type GetstatusRequest struct {
 	User_ID int64  `json:"user_id"`

@@ -1,6 +1,8 @@
 package services
 
 import (
+	"fmt"
+
 	"github.com/macduyhai/SmartHomeVer2/middlewares"
 	"github.com/macduyhai/SmartHomeVer2/models"
 
@@ -15,7 +17,7 @@ type DeviceService interface {
 	List(request dtos.ListRequest) (*dtos.ListResponse, error)
 	Delete(request dtos.DeleteRequest) (*dtos.DeviceResponse, error)
 	Edit(request dtos.EditRequest) (*dtos.EditResponse, error)
-	// Control(request dtos.ControlRequest) (*dtos.ControlResponse, error)
+	Upload(request dtos.UploadRequest) (*dtos.UploadResponse, error)
 	Getstatus(request dtos.GetstatusRequest) (*dtos.GetstatusResponse, error)
 }
 
@@ -104,28 +106,28 @@ func (service *deviceServiceImpl) Getstatus(request dtos.GetstatusRequest) (*dto
 	return &response, nil
 }
 
-// // Control
-// func (service *deviceServiceImpl) Control(request dtos.ControlRequest) (*dtos.ControlResponse, error) {
-// 	device, err := service.deviceDao.Control(request.User_ID, request.Chip_ID, request.State)
-// 	if err != nil {
-// 		return nil, err
-// 	}
+// Upload
+func (service *deviceServiceImpl) Upload(request dtos.UploadRequest) (*dtos.UploadResponse, error) {
+	fmt.Println(request)
+	device, err := service.deviceDao.Upload(request.User_ID, request.Mac)
+	if err != nil {
+		return nil, err
+	}
 
-// 	if device.State == true {
-// 		fmt.Println("Bật đèn")
-// 		s := "{\"chip_id\":" + device.Chip_ID + "," + "\"station_mac\":" + device.Station_MAC + "," + "\"value\":\"1\"}"
-// 		fmt.Println(s)
-// 		PublishData(device.Chip_ID, s)
-// 	} else {
-// 		fmt.Println("Tắt đèn")
-// 		s := "{\"chip_id\":" + device.Chip_ID + "," + "\"station_mac\":" + device.Station_MAC + "," + "\"value\":\"0\"}"
-// 		fmt.Println(s)
-// 		PublishData(device.Chip_ID, s)
-// 	}
+	// if device.State == true {
+	// 	fmt.Println("Bật đèn")
+	// 	s := "{\"chip_id\":" + device.Chip_ID + "," + "\"station_mac\":" + device.Station_MAC + "," + "\"value\":\"1\"}"
+	// 	fmt.Println(s)
+	// 	PublishData(device.Chip_ID, s)
+	// } else {
+	// 	fmt.Println("Tắt đèn")
+	// 	s := "{\"chip_id\":" + device.Chip_ID + "," + "\"station_mac\":" + device.Station_MAC + "," + "\"value\":\"0\"}"
+	// 	fmt.Println(s)
+	// 	PublishData(device.Chip_ID, s)
+	// }
 
-// 	response := dtos.ControlResponse{
-// 		Chip_ID: device.Chip_ID,
-// 		State:   device.State,
-// 	}
-// 	return &response, nil
-// }
+	response := dtos.UploadResponse{
+		Device: device,
+	}
+	return &response, nil
+}

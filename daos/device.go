@@ -13,7 +13,7 @@ type DeviceDao interface {
 	List(userID int64, username string) ([]models.Device, error)
 	Delete(userID int64, mac string) (models.Device, error)
 	Edit(userID int64, mac, deviceName, location string) (models.Device, error)
-	// Control(userID int64, chip_id string, state bool) (models.Device, error)
+	Upload(userID int64, mac string) (models.Device, error)
 	Getstatus(userID int64, mac string) (models.Device, error)
 }
 
@@ -67,18 +67,18 @@ func (dao *deviceDaoImpl) Delete(userID int64, mac string) (models.Device, error
 	return device, nil
 }
 
-// func (dao *deviceDaoImpl) Control(userID int64, chip_id string, state bool) (models.Device, error) {
-// 	device := models.Device{}
-// 	if err := dao.db.Where("user_id = ? AND chip_id =?", userID, chip_id).Find(&device).Error; err != nil {
-// 		return device, err
-// 	}
-// 	if device.State != state {
-// 		device.State = state
+func (dao *deviceDaoImpl) Upload(userID int64, mac string) (models.Device, error) {
+	device := models.Device{}
+	if err := dao.db.Where("user_id = ? AND mac =?", userID, mac).Find(&device).Error; err != nil {
+		return device, err
+	}
+	// if device.State != state {
+	// 	device.State = state
 
-// 	}
-// 	dao.db.Save(&device)
-// 	return device, nil
-// }
+	// }
+	dao.db.Save(&device)
+	return device, nil
+}
 func (dao *deviceDaoImpl) Getstatus(userID int64, mac string) (models.Device, error) {
 	device := models.Device{}
 	if err := dao.db.Where("user_id = ? AND mac =?", userID, mac).Find(&device).Error; err != nil {

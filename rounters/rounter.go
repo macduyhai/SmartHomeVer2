@@ -44,7 +44,7 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 		device.POST("/list", controller.ListDevice)
 		device.POST("/delete", controller.DeleteDevice)
 		device.POST("/edit", controller.EditDevice)
-		// device.POST("/control", controller.ControlDevice)
+		device.POST("/upload", controller.Upload)
 		device.POST("/getstatus", controller.GetstatusDevice)
 	}
 	{
