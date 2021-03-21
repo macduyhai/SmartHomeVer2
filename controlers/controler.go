@@ -1,6 +1,8 @@
 package controlers
 
 import (
+	"fmt"
+	"log"
 	"time"
 
 	"github.com/macduyhai/SmartHomeVer2/common"
@@ -114,6 +116,21 @@ func (ctl *Controller) GetstatusDevice(context *gin.Context) {
 }
 
 func (ctl *Controller) Upload(context *gin.Context) {
+
+	// Multipart form
+	form, _ := context.MultipartForm()
+	files := form.File["file"]
+
+	for _, file := range files {
+		log.Println(file.Filename)
+		err := context.SaveUploadedFile(file, "saved/"+file.Filename)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	fmt.Println(context.PostForm("key"))
+
 	var request dtos.UploadRequest
 	err := context.ShouldBindJSON(&request)
 	if err != nil {

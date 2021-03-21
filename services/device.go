@@ -1,8 +1,6 @@
 package services
 
 import (
-	"fmt"
-
 	"github.com/macduyhai/SmartHomeVer2/middlewares"
 	"github.com/macduyhai/SmartHomeVer2/models"
 
@@ -108,9 +106,7 @@ func (service *deviceServiceImpl) Getstatus(request dtos.GetstatusRequest) (*dto
 
 // Upload
 func (service *deviceServiceImpl) Upload(request dtos.UploadRequest) (*dtos.UploadResponse, error) {
-	fmt.Printf("------------0------------\n")
-	fmt.Println(request.Files)
-	fmt.Printf("------------1------------\n")
+
 	//---------------------
 	device, err := service.deviceDao.Upload(request.User_ID, request.Mac)
 	if err != nil {
