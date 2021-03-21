@@ -2,7 +2,6 @@ package middlewares
 
 import (
 	"bytes"
-	"fmt"
 	"io"
 	"io/ioutil"
 
@@ -54,10 +53,10 @@ func SetUserID(context *gin.Context) {
 func RequestLogger() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		buf, _ := ioutil.ReadAll(c.Request.Body)
-		rdr1 := ioutil.NopCloser(bytes.NewBuffer(buf))
+		// rdr1 := ioutil.NopCloser(bytes.NewBuffer(buf))
 		rdr2 := ioutil.NopCloser(bytes.NewBuffer(buf)) //We have to create a new Buffer, because rdr1 will be read.
 
-		fmt.Println(readBody(rdr1)) // Print request body
+		// fmt.Println(readBody(rdr1)) // Print request body
 
 		c.Request.Body = rdr2
 		c.Next()
