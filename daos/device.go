@@ -2,6 +2,7 @@ package daos
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/jinzhu/gorm"
 
@@ -70,13 +71,14 @@ func (dao *deviceDaoImpl) Delete(userID int64, mac string) (models.Device, error
 func (dao *deviceDaoImpl) Upload(userID int64, mac string) (models.Device, error) {
 	device := models.Device{}
 	if err := dao.db.Where("user_id = ? AND mac =?", userID, mac).Find(&device).Error; err != nil {
+		log.Println(err)
 		return device, err
 	}
 	// if device.State != state {
 	// 	device.State = state
 
 	// }
-	dao.db.Save(&device)
+	//dao.db.Save(&device)
 	return device, nil
 }
 func (dao *deviceDaoImpl) Getstatus(userID int64, mac string) (models.Device, error) {
