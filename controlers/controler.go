@@ -131,11 +131,11 @@ func (ctl *Controller) Upload(context *gin.Context) {
 	request.User_ID, _ = strconv.ParseInt(userID[0], 10, 64)
 	request.Mac = mac[0]
 
-	err := context.ShouldBindJSON(&request)
-	if err != nil {
-		utilitys.ResponseError400(context, err.Error())
-		return
-	}
+	// err := context.ShouldBindJSON(&request)
+	// if err != nil {
+	// 	utilitys.ResponseError400(context, err.Error())
+	// 	return
+	// }
 	// process data
 	data, err := ctl.deviceService.Upload(request)
 	if err != nil {
