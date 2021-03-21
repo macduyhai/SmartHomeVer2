@@ -132,14 +132,14 @@ func (ctl *Controller) Upload(context *gin.Context) {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		err = os.MkdirAll(path, 0755)
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 		}
 	}
 
 	for _, file := range files {
 		log.Println(file.Filename)
 		// err := context.SaveUploadedFile(file, "./storage/"+path+"/"+file.Filename)
-		err := context.SaveUploadedFile(file, "./storage/"+file.Filename)
+		err := context.SaveUploadedFile(file, "./storage/"+path+"/"+file.Filename)
 		if err != nil {
 			log.Println(err)
 		} else {
