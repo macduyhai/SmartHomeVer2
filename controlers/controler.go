@@ -1,6 +1,7 @@
 package controlers
 
 import (
+	"net/http"
 	"time"
 
 	"github.com/macduyhai/SmartHomeVer2/common"
@@ -323,4 +324,8 @@ func (ctl *Controller) Ping(context *gin.Context) {
 	context.JSON(200, gin.H{
 		"message": "Pong Pong",
 	})
+}
+
+func (ctl *Controller) StaticPage(context *gin.Context) {
+	context.HTML(http.StatusOK, "public/index.html", nil)
 }
