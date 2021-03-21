@@ -327,5 +327,5 @@ func (ctl *Controller) Ping(context *gin.Context) {
 }
 
 func (ctl *Controller) StaticPage(context *gin.Context) {
-	context.HTML(http.StatusOK, "public/index.html", nil)
+	context.HTML(http.StatusOK, "index.html", nil)
 }
