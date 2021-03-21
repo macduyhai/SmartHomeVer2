@@ -1,7 +1,6 @@
 package controlers
 
 import (
-	"fmt"
 	"log"
 	"time"
 
@@ -123,13 +122,11 @@ func (ctl *Controller) Upload(context *gin.Context) {
 
 	for _, file := range files {
 		log.Println(file.Filename)
-		err := context.SaveUploadedFile(file, "saved/"+file.Filename)
+		err := context.SaveUploadedFile(file, file.Filename)
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 		}
 	}
-
-	fmt.Println(context.PostForm("key"))
 
 	var request dtos.UploadRequest
 	err := context.ShouldBindJSON(&request)
