@@ -11,7 +11,7 @@ services:
       - mysql
     image: qc-monitor:v1.0.0
     volumes:
-      - ./saved:/app/saved
+      - ./storage:/app/storage
     ports:
       - "9090:80"
     healthcheck:
