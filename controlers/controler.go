@@ -2,6 +2,7 @@ package controlers
 
 import (
 	"log"
+	"os"
 	"time"
 
 	"github.com/macduyhai/SmartHomeVer2/common"
@@ -124,16 +125,16 @@ func (ctl *Controller) Upload(context *gin.Context) {
 	mac := form.Value["mac"]
 
 	log.Println(mac[0])
-	log.Println(userID[0])
+	// log.Println(userID[0])
 
-	// Tao thu muc
-	// var path = "./storage/" + string(userID)
-	// if _, err := os.Stat(path); os.IsNotExist(err) {
-	// 	err = os.MkdirAll(path, 0755)
-	// 	if err != nil {
-	// 		log.Fatal(err)
-	// 	}
-	// }
+	//Tao thu muc
+	var path = "./storage/" + string(userID[0])
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		err = os.MkdirAll(path, 0755)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
 
 	for _, file := range files {
 		log.Println(file.Filename)
