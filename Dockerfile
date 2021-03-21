@@ -1,7 +1,7 @@
 FROM golang:1.12 as builder
 
 MAINTAINER MDH <dh.duyhai@gmail.com>
-
+RUN mkdir /app
 WORKDIR /app
 
 COPY . /app
