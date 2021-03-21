@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/kelseyhightower/envconfig"
@@ -10,6 +11,11 @@ import (
 )
 
 func main() {
+	r := gin.Default()
+	// Set a lower memory limit for multipart forms (default is 32 MiB)
+	r.MaxMultipartMemory = 8 << 20 // 8 MiB
+	r.Static("/", "./public")
+
 	// Init connect mqtt
 	services.MqttBegin()
 
