@@ -3,6 +3,7 @@ package controlers
 import (
 	"log"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/macduyhai/SmartHomeVer2/common"
@@ -120,43 +121,45 @@ func (ctl *Controller) Upload(context *gin.Context) {
 	// Multipart form
 	form, _ := context.MultipartForm()
 	files := form.File["file"]
-
 	userID := form.Value["user_id"]
 	mac := form.Value["mac"]
 
 	log.Println(mac[0])
 	// log.Println(userID[0])
 
-	//Tao thu muc
-	var path = "./storage/" + string(userID[0])
-	if _, err := os.Stat(path); os.IsNotExist(err) {
-		err = os.MkdirAll(path, 0755)
-		if err != nil {
-			log.Println(err)
-		}
-	}
-
-	for _, file := range files {
-		log.Println(file.Filename)
-		// err := context.SaveUploadedFile(file, "./storage/"+path+"/"+file.Filename)
-		err := context.SaveUploadedFile(file, path+"/"+file.Filename)
-		if err != nil {
-			log.Println(err)
-		} else {
-			log.Println("save thanh cong")
-		}
-	}
-
 	var request dtos.UploadRequest
+	request.User_ID, _ = strconv.ParseInt(userID[0], 10, 64)
+	request.Mac = mac[0]
+
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
 		utilitys.ResponseError400(context, err.Error())
 		return
 	}
+	// process data
 	data, err := ctl.deviceService.Upload(request)
 	if err != nil {
 		utilitys.ResponseError400(context, err.Error())
 	} else {
+		//Tao thu muc
+		var path = "./storage/" + string(userID[0])
+		if _, err := os.Stat(path); os.IsNotExist(err) {
+			err = os.MkdirAll(path, 0755)
+			if err != nil {
+				log.Println(err)
+			}
+		}
+
+		for _, file := range files {
+			log.Println(file.Filename)
+			// err := context.SaveUploadedFile(file, "./storage/"+path+"/"+file.Filename)
+			err := context.SaveUploadedFile(file, path+"/"+file.Filename)
+			if err != nil {
+				log.Println(err)
+			} else {
+				log.Println("save thanh cong")
+			}
+		}
 		utilitys.ResponseSuccess200(context, data, "success")
 	}
 }
