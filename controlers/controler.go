@@ -119,15 +119,28 @@ func (ctl *Controller) Upload(context *gin.Context) {
 	// Multipart form
 	form, _ := context.MultipartForm()
 	files := form.File["file"]
+	userID := form.File["user_id"]
+	mac := form.File["mac"]
+	log.Println(mac)
+	log.Println(userID)
+	// Tao thu muc
+	// var path = "./storage/" + string(userID)
+	// if _, err := os.Stat(path); os.IsNotExist(err) {
+	// 	err = os.MkdirAll(path, 0755)
+	// 	if err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// }
 
 	for _, file := range files {
 		log.Println(file.Filename)
-		err := context.SaveUploadedFile(file, "./saved/"+file.Filename)
+		// err := context.SaveUploadedFile(file, "./storage/"+path+"/"+file.Filename)
+		err := context.SaveUploadedFile(file, "./storage/"+file.Filename)
 		if err != nil {
 			log.Println(err)
 		} else {
-                        log.Println("save thanh cong")
-                }
+			log.Println("save thanh cong")
+		}
 	}
 
 	var request dtos.UploadRequest
