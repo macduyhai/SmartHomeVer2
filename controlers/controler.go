@@ -139,7 +139,7 @@ func (ctl *Controller) Upload(context *gin.Context) {
 	for _, file := range files {
 		log.Println(file.Filename)
 		// err := context.SaveUploadedFile(file, "./storage/"+path+"/"+file.Filename)
-		err := context.SaveUploadedFile(file, "./storage/"+path+"/"+file.Filename)
+		err := context.SaveUploadedFile(file, path+"/"+file.Filename)
 		if err != nil {
 			log.Println(err)
 		} else {
