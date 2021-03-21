@@ -122,10 +122,12 @@ func (ctl *Controller) Upload(context *gin.Context) {
 
 	for _, file := range files {
 		log.Println(file.Filename)
-		err := context.SaveUploadedFile(file, file.Filename)
+		err := context.SaveUploadedFile(file, "./saved/"+file.Filename)
 		if err != nil {
 			log.Println(err)
-		}
+		} else {
+                        log.Println("save thanh cong")
+                }
 	}
 
 	var request dtos.UploadRequest

@@ -10,6 +10,8 @@ services:
     depends_on:
       - mysql
     image: qc-monitor:v1.0.0
+    volumes:
+      - ./saved:/app/saved
     ports:
       - "9090:80"
     healthcheck:
