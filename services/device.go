@@ -1,6 +1,8 @@
 package services
 
 import (
+	"log"
+
 	"github.com/macduyhai/SmartHomeVer2/middlewares"
 	"github.com/macduyhai/SmartHomeVer2/models"
 
@@ -110,6 +112,7 @@ func (service *deviceServiceImpl) Upload(request dtos.UploadRequest) (*dtos.Uplo
 	//---------------------
 	device, err := service.deviceDao.Upload(request.User_ID, request.Mac)
 	if err != nil {
+		log.Println(err)
 		return nil, err
 	}
 
