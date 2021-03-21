@@ -108,9 +108,9 @@ func (service *deviceServiceImpl) Getstatus(request dtos.GetstatusRequest) (*dto
 
 // Upload
 func (service *deviceServiceImpl) Upload(request dtos.UploadRequest) (*dtos.UploadResponse, error) {
-	fmt.Println("------------0------------")
+	fmt.Printf("------------0------------\n")
 	fmt.Println(request.Files)
-	fmt.Println("------------1------------")
+	fmt.Printf("------------1------------\n")
 	//---------------------
 	device, err := service.deviceDao.Upload(request.User_ID, request.Mac)
 	if err != nil {
