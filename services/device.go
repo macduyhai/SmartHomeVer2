@@ -110,7 +110,7 @@ func (service *deviceServiceImpl) Getstatus(request dtos.GetstatusRequest) (*dto
 func (service *deviceServiceImpl) Upload(request dtos.UploadRequest) (*dtos.UploadResponse, error) {
 
 	//---------------------
-	device, err := service.deviceDao.Upload(request.User_ID, request.Mac)
+	device, err := service.deviceDao.Upload(request)
 	if err != nil {
 		log.Println(err)
 		return nil, err

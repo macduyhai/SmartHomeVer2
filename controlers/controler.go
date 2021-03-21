@@ -124,12 +124,16 @@ func (ctl *Controller) Upload(context *gin.Context) {
 	userID := form.Value["user_id"]
 	mac := form.Value["mac"]
 
+	log.Printf("%T", files)
 	log.Println(mac[0])
 	// log.Println(userID[0])
 
 	var request dtos.UploadRequest
 	request.User_ID, _ = strconv.ParseInt(userID[0], 10, 64)
 	request.Mac = mac[0]
+	request.Files[0].Video_name = files[0].Filename
+	request.Files[0].Video_size = files[0].Size
+	request.Files[0].Video_time = 0
 
 	// err := context.ShouldBindJSON(&request)
 	// if err != nil {

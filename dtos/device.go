@@ -50,9 +50,14 @@ type DeleteRequest struct {
 	Mac     string `json:"mac"`
 }
 type UploadRequest struct {
-	User_ID int64       `json:"user_id"`
-	Mac     string      `json:"mac"`
-	Files   interface{} `json:"files"`
+	User_ID int64        `json:"user_id"`
+	Mac     string       `json:"mac"`
+	Files   []FileUpload `json:"files"`
+}
+type FileUpload struct {
+	Video_name string `json:"video_name"`
+	Video_size int64  `json:"video_size"`
+	Video_time int64  `json:"video_time"`
 }
 type UploadResponse struct {
 	Device models.Device

@@ -6,6 +6,7 @@ import (
 
 	"github.com/jinzhu/gorm"
 
+	"github.com/macduyhai/SmartHomeVer2/dtos"
 	"github.com/macduyhai/SmartHomeVer2/models"
 )
 
@@ -14,7 +15,7 @@ type DeviceDao interface {
 	List(userID int64, username string) ([]models.Device, error)
 	Delete(userID int64, mac string) (models.Device, error)
 	Edit(userID int64, mac, deviceName, location string) (models.Device, error)
-	Upload(userID int64, mac string) (models.Device, error)
+	Upload(request dtos.UploadRequest) (models.Device, error)
 	Getstatus(userID int64, mac string) (models.Device, error)
 }
 
@@ -68,17 +69,23 @@ func (dao *deviceDaoImpl) Delete(userID int64, mac string) (models.Device, error
 	return device, nil
 }
 
-func (dao *deviceDaoImpl) Upload(userID int64, mac string) (models.Device, error) {
+func (dao *deviceDaoImpl) Upload(request dtos.UploadRequest) (models.Device, error) {
 	device := models.Device{}
-	if err := dao.db.Where("user_id = ? AND mac =?", userID, mac).Find(&device).Error; err != nil {
+	if err := dao.db.Where("user_id = ? AND mac =?", request.User_ID, request.Mac).Find(&device).Error; err != nil {
 		log.Println(err)
 		return device, err
+	}
+	for _, file := range request.Files {
+
+		device.Video_name = file.Video_name
+		device.Video_size = file.Video_size
+		device.Video_time = file.Video_time
 	}
 	// if device.State != state {
 	// 	device.State = state
 
 	// }
-	//dao.db.Save(&device)
+	dao.db.Save(&device)
 	return device, nil
 }
 func (dao *deviceDaoImpl) Getstatus(userID int64, mac string) (models.Device, error) {
