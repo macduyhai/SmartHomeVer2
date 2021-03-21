@@ -124,7 +124,7 @@ func (ctl *Controller) Upload(context *gin.Context) {
 
 	log.Println(mac)
 	log.Println(userID)
-	log.Println(form.File)
+	log.Println(form.File["name"])
 	// Tao thu muc
 	// var path = "./storage/" + string(userID)
 	// if _, err := os.Stat(path); os.IsNotExist(err) {
