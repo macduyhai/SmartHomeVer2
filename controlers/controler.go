@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/macduyhai/SmartHomeVer2/common"
@@ -115,7 +116,12 @@ func (ctl *Controller) GetstatusDevice(context *gin.Context) {
 		utilitys.ResponseSuccess200(context, data, "success")
 	}
 }
-
+func (ctl *Controller) Download(context *gin.Context) {
+	url := context.Request.URL.Path
+	log.Println(url)
+	p := strings.Split(url, "/")
+	log.Println(p)
+}
 func (ctl *Controller) Upload(context *gin.Context) {
 
 	// Multipart form
@@ -166,6 +172,7 @@ func (ctl *Controller) Upload(context *gin.Context) {
 			} else {
 				log.Println("save thanh cong")
 			}
+
 		}
 		utilitys.ResponseSuccess200(context, data, "success")
 	}

@@ -22,6 +22,8 @@ func NewRouter(conf *config.Config, db *gorm.DB) Router {
 
 func (router *Router) InitGin() (*gin.Engine, error) {
 
+	// fs := http.FileServer(http.Dir("/root/SmartHomeVer2/storage"))
+
 	providerService := services.NewProvider(router.config, router.db)
 	controller := controlers.NewController(providerService)
 
@@ -45,7 +47,9 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 		device.POST("/delete", controller.DeleteDevice)
 		device.POST("/edit", controller.EditDevice)
 		device.POST("/upload", controller.Upload)
+		device.POST("/download", controller.Download)
 		device.POST("/getstatus", controller.GetstatusDevice)
+		// dev ice.GET("/static", controller.FileServer)
 	}
 	{
 		log := engine.Group("/api/v1/log")
