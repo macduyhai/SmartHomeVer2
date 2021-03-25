@@ -121,6 +121,8 @@ func (ctl *Controller) Download(context *gin.Context) {
 	log.Println(url)
 	p := strings.Split(url, "/")
 	log.Println(p)
+
+	utilitys.ResponseSuccess200(context, "", "success")
 }
 func (ctl *Controller) Upload(context *gin.Context) {
 
