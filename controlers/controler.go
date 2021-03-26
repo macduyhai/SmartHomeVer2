@@ -1,8 +1,8 @@
 package controlers
 
 import (
-	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"strconv"
 	"strings"
@@ -122,11 +122,14 @@ func (ctl *Controller) Download(context *gin.Context) {
 	log.Println(url)
 	p := strings.Split(url, "/")
 	log.Println(p)
-	context.Writer.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", p[6])) //fmt.Sprintf("attachment; filename=%s", filename) Downloaded file renamed
-	context.Writer.Header().Add("Content-Type", "application/octet-stream")
 	path := "./storage/" + p[5] + "/" + p[6]
 	log.Println(path)
-	context.FileAttachment(path, p[6])
+
+	// context.Writer.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", p[6])) //fmt.Sprintf("attachment; filename=%s", filename) Downloaded file renamed
+	// context.Writer.Header().Add("Content-Type", "application/octet-stream")
+	// context.FileAttachment(path, p[6])
+
+	http.ServeFile(context.Writer, context.Request, path)
 	// utilitys.ResponseSuccess200(context, "", "success")
 }
 func (ctl *Controller) Upload(context *gin.Context) {
