@@ -124,7 +124,14 @@ func (ctl *Controller) Download(context *gin.Context) {
 	log.Println(p)
 	path := "./storage/" + p[5] + "/" + p[6]
 	log.Println(path)
-
+	log.Println("Opening a file ")
+	var file, err = os.OpenFile(path, os.O_RDWR, 0644)
+	if err != nil {
+		log.Println(err)
+	} else {
+		log.Println("MOpen file done")
+	}
+	defer file.Close()
 	// context.Writer.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", p[6])) //fmt.Sprintf("attachment; filename=%s", filename) Downloaded file renamed
 	// context.Writer.Header().Add("Content-Type", "application/octet-stream")
 	// context.FileAttachment(path, p[6])
