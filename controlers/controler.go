@@ -126,7 +126,7 @@ func (ctl *Controller) Download(context *gin.Context) {
 	context.Writer.Header().Add("Content-Type", "application/octet-stream")
 	path := "./storage/" + p[5] + "/" + p[6]
 	log.Println(path)
-	context.File(path)
+	context.FileAttachment(path, p[6])
 	// utilitys.ResponseSuccess200(context, "", "success")
 }
 func (ctl *Controller) Upload(context *gin.Context) {
