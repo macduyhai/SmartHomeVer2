@@ -149,6 +149,7 @@ func (ctl *Controller) Upload(context *gin.Context) {
 	form, _ := context.MultipartForm()
 	files := form.File["file"]
 	userID := form.Value["user_id"]
+	key := form.Value["key"]
 
 	log.Printf("%T", files)
 
@@ -156,6 +157,7 @@ func (ctl *Controller) Upload(context *gin.Context) {
 
 	var request dtos.UploadRequest
 	request.User_ID, _ = strconv.ParseInt(userID[0], 10, 64)
+	request.Key = key[0]
 
 	for _, file := range files {
 		var f dtos.FileUpload
