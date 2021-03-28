@@ -78,7 +78,8 @@ func (dao *deviceDaoImpl) Upload(request dtos.UploadRequest) (*dtos.UploadRespon
 	user := models.User{}
 
 	// Cap nhat thong tin user
-	if err := dao.db.Where("user_id = ? ", request.User_ID).Find(&user).Error; err != nil {
+	if err := dao.db.Where("id = ? ", request.User_ID).Find(&user).Error; err != nil {
+		log.Println()
 		log.Println(err)
 		return &response, err
 	}
