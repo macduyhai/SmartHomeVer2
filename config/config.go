@@ -6,7 +6,7 @@ type Config struct {
 	SecretKet string `envconfig:"SECRET_KEY" default:"duyhai-monitor-v1-key"`
 }
 
-var publicKey = []byte(`
+var PublicKey = []byte(`
 -----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCF3e0oBwnmlxbb2ibwUhOanRgq
 8M0zKBuMaz+lQokW8GrKHFbe6DDiPR9N93q2KW4da0T3hL03l4+BTOCRA2lZybDZ
@@ -15,7 +15,7 @@ a+hs5Lo7nE5IwbIurwIDAQAB
 -----END PUBLIC KEY-----
 `)
 
-var privateKey = []byte(`
+var PrivateKey = []byte(`
 -----BEGIN RSA PRIVATE KEY-----
 MIICXAIBAAKBgQCF3e0oBwnmlxbb2ibwUhOanRgq8M0zKBuMaz+lQokW8GrKHFbe
 6DDiPR9N93q2KW4da0T3hL03l4+BTOCRA2lZybDZxAMWgiQSdF85lH024T67J2y/

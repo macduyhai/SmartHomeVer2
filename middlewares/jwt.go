@@ -8,7 +8,7 @@ import (
 
 type JWT interface {
 	CreateTocken(id int64) (string, error)
-	CreateTockenPrivate(id int64) (string, error)
+	CreateTockenPrivate(encode_str string) (string, error)
 }
 
 type jwtImpl struct {
@@ -34,11 +34,11 @@ func (c *jwtImpl) CreateTocken(id int64) (string, error) {
 	}
 }
 
-func (c *jwtImpl) CreateTockenPrivate(id int64) (string, error) {
+func (c *jwtImpl) CreateTockenPrivate(encode_str string) (string, error) {
 	token := jwt_lib.New(jwt_lib.GetSigningMethod("HS256"))
 
 	token.Claims = jwt_lib.MapClaims{
-		"id":  id,
+		"key": encode_str,
 		"exp": time.Now().Add(time.Hour * 24).Unix(),
 	}
 
