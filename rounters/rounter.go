@@ -31,17 +31,20 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 	engine.Use(middlewares.CORSMiddleware())
 	engine.Use(middlewares.RequestLogger())
 	engine.GET("/ping", controller.Ping)
+	engine.POST("/login", controller.Login)
 
 	accountAuthMiddleWare := middlewares.CheckAPIKey{ApiKey: router.config.APIKey}
 	{
 		account := engine.Group("/api/v1/account")
 		account.Use(accountAuthMiddleWare.Check)
 		account.POST("", controller.CreateUser)
-		account.POST("/login", controller.Login)
+		// account.POST("/login", controller.Login)
 	}
 	{
 		device := engine.Group("/api/v1/device")
-		device.Use(accountAuthMiddleWare.Check)
+		// device.Use(accountAuthMiddleWare.Check)
+		device.Use(jwt.Auth(router.config.SecretKet))
+		device.Use(middlewares.SetUserID)
 		device.POST("/add", controller.AddDevice)
 		device.POST("/list", controller.ListDevice)
 		device.POST("/delete", controller.DeleteDevice)
