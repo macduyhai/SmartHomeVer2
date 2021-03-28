@@ -42,9 +42,8 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 	}
 	{
 		device := engine.Group("/api/v1/device")
-		// device.Use(accountAuthMiddleWare.Check)
-		device.Use(jwt.Auth(router.config.SecretKet))
-		device.Use(middlewares.SetUserID)
+		device.Use(accountAuthMiddleWare.Check)
+
 		device.POST("/add", controller.AddDevice)
 		device.POST("/list", controller.ListDevice)
 		device.POST("/delete", controller.DeleteDevice)
