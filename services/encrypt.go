@@ -8,6 +8,7 @@ import (
 	"encoding/binary"
 	"encoding/pem"
 	"errors"
+	"log"
 	"strings"
 
 	"github.com/macduyhai/SmartHomeVer2/config"
@@ -34,18 +35,23 @@ func CheckKey(id int64, token_str string) error {
 	// if err != nil {
 	// 	return err
 	// }
+	log.Println(id)
+	log.Println(token_str)
 	tokenDe, err := Base64Dec(token_str)
 	if err != nil {
 		return err
 	}
 	tokenID, err := RsaDecrypt(tokenDe, config.PrivateKey)
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 	if id != int64(binary.LittleEndian.Uint64(tokenID)) { // convert []byte to int64
 		err := errors.New("Key invalid")
+		log.Println(err)
 		return err
 	} else {
+		log.Println("Key is Valid")
 		return nil
 	}
 }
