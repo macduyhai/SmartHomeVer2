@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS `medias`;
+DROP TABLE IF EXISTS `media`;
 
-CREATE TABLE `medias` (
+CREATE TABLE `media` (
     `id` BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     `user_id` BIGINT(20),
     `video_name` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ,

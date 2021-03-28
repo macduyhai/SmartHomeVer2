@@ -117,7 +117,8 @@ func (dao *deviceDaoImpl) Upload(request dtos.UploadRequest) (*dtos.UploadRespon
 	user.Number_video = count
 	user.Total_size = total_size
 	dao.db.Save(&user)
-
+	response.Total_size = total_size
+	response.Max_size = user.Max_size
 	// for _, file := range request.Files {
 	// 	device.Video_name = file.Video_name
 	// 	if strings.ContainsAny(device.Video_name, " ") != true {
