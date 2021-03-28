@@ -144,7 +144,8 @@ func (ctl *Controller) PushDevice(context *gin.Context) {
 
 }
 func (ctl *Controller) Upload(context *gin.Context) {
-
+	start := time.Now()
+	log.Println(start)
 	// Multipart form
 	form, _ := context.MultipartForm()
 	files := form.File["file"]
@@ -173,10 +174,16 @@ func (ctl *Controller) Upload(context *gin.Context) {
 	// 	return
 	// }
 	// process data
+	t1 := time.Since(start)
+	log.Println("T1: ")
+	log.Println(t1)
 	data, err := ctl.deviceService.Upload(request)
 	if err != nil {
 		utilitys.ResponseError400(context, err.Error())
 	} else {
+		t2 := time.Since(start)
+		log.Println("T2: ")
+		log.Println(t2)
 		//Tao thu muc
 		var path = "./storage/" + string(userID[0])
 		if _, err := os.Stat(path); os.IsNotExist(err) {
@@ -197,6 +204,9 @@ func (ctl *Controller) Upload(context *gin.Context) {
 			}
 
 		}
+		t3 := time.Since(start)
+		log.Println("T3: ")
+		log.Println(t3)
 		utilitys.ResponseSuccess200(context, data, "success")
 	}
 }
