@@ -79,13 +79,12 @@ func (dao *deviceDaoImpl) Upload(request dtos.UploadRequest) (*dtos.UploadRespon
 
 	// Cap nhat thong tin user
 	if err := dao.db.Where("id = ? ", request.User_ID).Find(&user).Error; err != nil {
-		log.Println()
 		log.Println(err)
 		return &response, err
 	}
 
 	// Check thong so video upload
-	var total_size int64 = 0
+	var total_size int64 = user.Total_size
 	var count int64 = 0
 	for _, file := range request.Files {
 		count = count + 1
@@ -108,11 +107,16 @@ func (dao *deviceDaoImpl) Upload(request dtos.UploadRequest) (*dtos.UploadRespon
 		media.Video_size = file.Video_size
 		media.Video_time = file.Video_time
 		response.Video_name = append(response.Video_name, file.Video_name)
-
-		if err := dao.db.Create(&media).Error; err != nil {
-			fmt.Println("insert database media error")
+		if err := dao.db.Where("user_id = ? AND video_name = ? ", request.User_ID, file.Video_name).Find(&media).Error; err != nil {
+			if err := dao.db.Create(&media).Error; err != nil {
+				fmt.Println("insert database media error")
+				return &response, err
+			}
+		} else {
+			err := errors.New("File exits")
 			return &response, err
 		}
+
 	}
 	user.Number_video = count
 	user.Total_size = total_size
