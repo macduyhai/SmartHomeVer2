@@ -69,7 +69,7 @@ func (service *deviceServiceImpl) List(request dtos.ListRequest) (*dtos.ListResp
 		log.Println(err)
 		return nil, err
 	} else {
-		log.Println("Key okie")
+		// log.Println("Key okie")
 	}
 	devices, err := service.deviceDao.List(request.User_ID, request.Username)
 	if err != nil {
