@@ -2,6 +2,7 @@ package services
 
 import (
 	"encoding/base64"
+	"encoding/binary"
 	"time"
 
 	"github.com/macduyhai/SmartHomeVer2/config"
@@ -39,11 +40,14 @@ func (service *userServiceImpl) Login(request dtos.LoginRequest) (*dtos.LoginRes
 	if err != nil {
 		return nil, err
 	}
-	encode, err := RsaEncrypt([]byte(user.Username), config.PublicKey)
+	array_byte := make([]byte, 8)
+	binary.LittleEndian.PutUint64(array_byte, uint64(user.ID))
+	// encode, err := RsaEncrypt([]byte(user.Username), config.PublicKey)
+	encode, err := RsaEncrypt(array_byte, config.PublicKey)
 	if err != nil {
 		panic(err)
 	}
-	token_str := base64.StdEncoding.EncodeToString(encode)
+	token_str := base64.StdEncoding.EncodeToString(encode) // convert int64  to []byte
 
 	// tocken, err := service.jwt.CreateTocken(user.ID)
 	tocken, err := service.jwt.CreateTockenPrivate(token_str)

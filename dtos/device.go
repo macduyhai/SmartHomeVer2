@@ -12,6 +12,7 @@ type AddRequest struct {
 	Mac         string `json:"mac"`
 	Device_name string `json:"device_name"`
 	Location    string `json:"location"`
+	Key         string `json:"key"`
 }
 type AddResponse struct {
 	Mac         string     `json:"mac"`
@@ -28,6 +29,7 @@ type AddResponse struct {
 type ListRequest struct {
 	User_ID  int64  `json:"user_id"`
 	Username string `json:"username"`
+	Key      string `json:"key"`
 }
 type ListResponse struct {
 	User_ID  int64  `json:"user_id"`
@@ -39,6 +41,7 @@ type EditRequest struct {
 	Mac         string `json:"mac"`
 	Device_Name string `json:"device_name"`
 	Location    string `json:"location"`
+	Key         string `json:"key"`
 }
 type EditResponse struct {
 	User_ID  int64  `json:"user_id"`
@@ -48,11 +51,13 @@ type EditResponse struct {
 type DeleteRequest struct {
 	User_ID int64  `json:"user_id"`
 	Mac     string `json:"mac"`
+	Key     string `json:"key"`
 }
 type UploadRequest struct {
 	User_ID int64        `json:"user_id"`
 	Mac     string       `json:"mac"`
 	Files   []FileUpload `json:"files"`
+	Key     string       `json:"key"`
 }
 type FileUpload struct {
 	Video_name string `json:"video_name"`
@@ -65,6 +70,7 @@ type UploadResponse struct {
 type GetstatusRequest struct {
 	User_ID int64  `json:"user_id"`
 	Mac     string `json:"mac"`
+	Key     string `json:"key"`
 }
 type GetstatusResponse struct {
 	Mac    string `json:"mac"`

@@ -10,6 +10,7 @@ import (
 
 type UserDao interface {
 	Login(userName, pass string) (*models.User, error)
+	CheckUserID(id int64) (*models.User, error)
 	Create(user models.User) (*models.User, error)
 	CreateLog(log models.Log) (*models.Log, error)
 	GetLog(userID int64, begin *time.Time, end *time.Time) ([]models.Log, error)
@@ -23,7 +24,13 @@ type userDaoImpl struct {
 func NewUserDao(db *gorm.DB) UserDao {
 	return &userDaoImpl{db: db}
 }
-
+func (dao *userDaoImpl) CheckUserID(id int64) (*models.User, error) {
+	var user models.User
+	if err := dao.db.Where("id = ? ", id).First(&user).Error; err != nil {
+		return nil, err
+	}
+	return &user, nil
+}
 func (dao *userDaoImpl) Login(userName, pass string) (*models.User, error) {
 	var user models.User
 	if err := dao.db.Where("username = ? AND password = ?", userName, pass).First(&user).Error; err != nil {

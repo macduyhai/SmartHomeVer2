@@ -5,34 +5,50 @@ import (
 	"crypto/rsa"
 	"crypto/x509"
 	"encoding/base64"
+	"encoding/binary"
 	"encoding/pem"
 	"errors"
 	"strings"
 
 	"github.com/macduyhai/SmartHomeVer2/config"
+	"github.com/macduyhai/SmartHomeVer2/daos"
 	// "github.com/macduyhai/SmartHomeVer2/middlewares"
 )
 
 type EncryptService interface {
+	CheckKey(username string, id int64) error
 	Base64Enc(b1 []byte) string
 	Base64Dec(s1 string) ([]byte, error)
 	RsaDecrypt(ciphertext []byte, key []byte) ([]byte, error)
 	RsaEncrypt(origData []byte, key []byte) ([]byte, error)
-
-	// Add(request dtos.AddRequest) (*dtos.AddResponse, error)
-	// List(request dtos.ListRequest) (*dtos.ListResponse, error)
-	// Delete(request dtos.DeleteRequest) (*dtos.DeviceResponse, error)
-	// Edit(request dtos.EditRequest) (*dtos.EditResponse, error)
-	// Upload(request dtos.UploadRequest) (*dtos.UploadResponse, error)
-	// Getstatus(request dtos.GetstatusRequest) (*dtos.GetstatusResponse, error)
 }
 
 type ecryptServiceImpl struct {
-	config *config.Config
+	config  *config.Config
+	userDao daos.UserDao
 }
 
 //=================== MA HOA ==========================
-
+func CheckKey(id int64, token_str string) error {
+	// user, err := service.userDao.CheckUserID(id)
+	// if err != nil {
+	// 	return err
+	// }
+	tokenDe, err := Base64Dec(token_str)
+	if err != nil {
+		return err
+	}
+	tokenID, err := RsaDecrypt(tokenDe, config.PrivateKey)
+	if err != nil {
+		return err
+	}
+	if id != int64(binary.LittleEndian.Uint64(tokenID)) { // convert []byte to int64
+		err := errors.New("Key invalid")
+		return err
+	} else {
+		return nil
+	}
+}
 func Base64Enc(b1 []byte) string {
 	s1 := base64.StdEncoding.EncodeToString(b1)
 	s2 := ""

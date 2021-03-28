@@ -32,7 +32,10 @@ func NewDeviceService(conf *config.Config, deviceDao daos.DeviceDao, jwt middlew
 	}
 }
 func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddResponse, error) {
-
+	err := CheckKey(request.User_ID, request.Key)
+	if err != nil {
+		return nil, err
+	}
 	dv := models.Device{
 		User_ID:     request.User_ID,
 		Mac:         request.Mac,
@@ -61,6 +64,10 @@ func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRespons
 }
 
 func (service *deviceServiceImpl) List(request dtos.ListRequest) (*dtos.ListResponse, error) {
+	err := CheckKey(request.User_ID, request.Key)
+	if err != nil {
+		return nil, err
+	}
 	devices, err := service.deviceDao.List(request.User_ID, request.Username)
 	if err != nil {
 		return nil, err
@@ -73,6 +80,10 @@ func (service *deviceServiceImpl) List(request dtos.ListRequest) (*dtos.ListResp
 	return &response, nil
 }
 func (service *deviceServiceImpl) Delete(request dtos.DeleteRequest) (*dtos.DeviceResponse, error) {
+	err1 := CheckKey(request.User_ID, request.Key)
+	if err1 != nil {
+		return nil, err1
+	}
 	_, err := service.deviceDao.Delete(request.User_ID, request.Mac)
 	if err != nil {
 		return nil, err
@@ -84,6 +95,10 @@ func (service *deviceServiceImpl) Delete(request dtos.DeleteRequest) (*dtos.Devi
 }
 
 func (service *deviceServiceImpl) Edit(request dtos.EditRequest) (*dtos.EditResponse, error) {
+	err := CheckKey(request.User_ID, request.Key)
+	if err != nil {
+		return nil, err
+	}
 	device, err := service.deviceDao.Edit(request.User_ID, request.Mac, request.Device_Name, request.Location)
 	if (device == models.Device{}) {
 		return nil, err
@@ -95,6 +110,10 @@ func (service *deviceServiceImpl) Edit(request dtos.EditRequest) (*dtos.EditResp
 	return &response, nil
 }
 func (service *deviceServiceImpl) Getstatus(request dtos.GetstatusRequest) (*dtos.GetstatusResponse, error) {
+	err := CheckKey(request.User_ID, request.Key)
+	if err != nil {
+		return nil, err
+	}
 	device, err := service.deviceDao.Getstatus(request.User_ID, request.Mac)
 	if (device == models.Device{}) {
 		return nil, err
@@ -108,7 +127,10 @@ func (service *deviceServiceImpl) Getstatus(request dtos.GetstatusRequest) (*dto
 
 // Upload
 func (service *deviceServiceImpl) Upload(request dtos.UploadRequest) (*dtos.UploadResponse, error) {
-
+	err := CheckKey(request.User_ID, request.Key)
+	if err != nil {
+		return nil, err
+	}
 	//---------------------
 	device, err := service.deviceDao.Upload(request)
 	if err != nil {
