@@ -102,14 +102,14 @@ func (dao *deviceDaoImpl) Upload(request dtos.UploadRequest) (*dtos.UploadRespon
 	}
 	for _, file := range request.Files {
 		// Add thong tin cho user
-		media := models.Media{}
-		media.User_ID = request.User_ID
-		media.Video_name = file.Video_name
-		media.Video_size = file.Video_size
-		media.Video_time = file.Video_time
+		medias := models.Media{}
+		medias.User_ID = request.User_ID
+		medias.Video_name = file.Video_name
+		medias.Video_size = file.Video_size
+		medias.Video_time = file.Video_time
 		response.Video_name = append(response.Video_name, file.Video_name)
 
-		if err := dao.db.Create(&media).Error; err != nil {
+		if err := dao.db.Create(&medias).Error; err != nil {
 			fmt.Println("insert database media error")
 			return &response, err
 		}
