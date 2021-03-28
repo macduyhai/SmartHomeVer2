@@ -123,7 +123,7 @@ func (ctl *Controller) Download(context *gin.Context) {
 	log.Println(p)
 	path := "./storage/" + p[5] + "/" + p[6]
 	log.Println(path)
-	log.Println("Opening a file ")
+	//log.Println("Opening a file ")
 	// var file, err = os.OpenFile(path, os.O_RDWR, 0644)
 	// if err != nil {
 	// 	log.Println(err)
@@ -138,27 +138,32 @@ func (ctl *Controller) Download(context *gin.Context) {
 	// http.ServeFile(context.Writer, context.Request, path)
 	context.FileAttachment(path, p[6])
 }
+
+// PushDevice
+func (ctl *Controller) PushDevice(context *gin.Context) {
+
+}
 func (ctl *Controller) Upload(context *gin.Context) {
 
 	// Multipart form
 	form, _ := context.MultipartForm()
 	files := form.File["file"]
 	userID := form.Value["user_id"]
-	mac := form.Value["mac"]
 
 	log.Printf("%T", files)
-	log.Println(mac[0])
+
 	// log.Println(userID[0])
 
 	var request dtos.UploadRequest
 	request.User_ID, _ = strconv.ParseInt(userID[0], 10, 64)
-	request.Mac = mac[0]
-	var f dtos.FileUpload
 
-	f.Video_name = files[0].Filename
-	f.Video_size = files[0].Size
-	f.Video_time = 0
-	request.Files = append(request.Files, f)
+	for _, file := range files {
+		var f dtos.FileUpload
+		f.Video_name = file.Filename
+		f.Video_size = file.Size
+		f.Video_time = 0
+		request.Files = append(request.Files, f)
+	}
 
 	// err := context.ShouldBindJSON(&request)
 	// if err != nil {

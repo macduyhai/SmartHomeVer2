@@ -135,7 +135,7 @@ func (service *deviceServiceImpl) Upload(request dtos.UploadRequest) (*dtos.Uplo
 		return nil, err
 	}
 	//---------------------
-	device, err := service.deviceDao.Upload(request)
+	response, err := service.deviceDao.Upload(request)
 	if err != nil {
 		log.Println(err)
 		return nil, err
@@ -153,8 +153,5 @@ func (service *deviceServiceImpl) Upload(request dtos.UploadRequest) (*dtos.Uplo
 	// 	PublishData(device.Chip_ID, s)
 	// }
 
-	response := dtos.UploadResponse{
-		Device: device,
-	}
-	return &response, nil
+	return response, nil
 }

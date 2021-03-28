@@ -55,18 +55,30 @@ type DeleteRequest struct {
 }
 type UploadRequest struct {
 	User_ID int64        `json:"user_id"`
-	Mac     string       `json:"mac"`
 	Files   []FileUpload `json:"files"`
 	Key     string       `json:"key"`
+}
+type PushRequest struct {
+	User_ID    int64  `json:"user_id"`
+	Mac        string `json:"mac"`
+	Video_name string `json:"video_name"`
 }
 type FileUpload struct {
 	Video_name string `json:"video_name"`
 	Video_size int64  `json:"video_size"`
 	Video_time int64  `json:"video_time"`
 }
+
 type UploadResponse struct {
-	Device models.Device
+	User_ID    int64    `json:"user_id"`
+	Total_size int64    `json:"total_size"`
+	Max_size   int64    `json:"max_size"`
+	Video_name []string `json:"video_name"`
 }
+
+// type UploadResponse struct {
+// 	Device models.Device
+// }
 type GetstatusRequest struct {
 	User_ID int64  `json:"user_id"`
 	Mac     string `json:"mac"`
