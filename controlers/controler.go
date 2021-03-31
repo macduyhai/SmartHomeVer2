@@ -217,6 +217,7 @@ func (ctl *Controller) Login(context *gin.Context) {
 	var request dtos.LoginRequest
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
+		log.Println(err)
 		utilitys.ResponseError400(context, "login error")
 		return
 	}
