@@ -36,12 +36,14 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 	accountAuthMiddleWare := middlewares.CheckAPIKey{ApiKey: router.config.APIKey}
 	{
 		account := engine.Group("/api/v1/account")
+		account.Use(middlewares.CORSMiddleware())
 		account.Use(accountAuthMiddleWare.Check)
 		account.POST("", controller.CreateUser)
 		// account.POST("/login", controller.Login)
 	}
 	{
 		device := engine.Group("/api/v1/device")
+		device.Use(middlewares.CORSMiddleware())
 		device.Use(accountAuthMiddleWare.Check)
 		device.POST("/add", controller.AddDevice)
 		device.POST("/list", controller.ListDevice)
