@@ -29,7 +29,7 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 
 	engine := gin.Default()
 	engine.Use(middlewares.CORSMiddleware())
-	engine.Use(middlewares.RequestLogger())
+	// engine.Use(middlewares.RequestLogger())
 	engine.GET("/ping", controller.Ping)
 	engine.POST("/login", controller.Login)
 

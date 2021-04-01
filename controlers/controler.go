@@ -214,6 +214,7 @@ func (ctl *Controller) Upload(context *gin.Context) {
 //-------------------------------------------------------------
 
 func (ctl *Controller) Login(context *gin.Context) {
+
 	var request dtos.LoginRequest
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
@@ -224,6 +225,7 @@ func (ctl *Controller) Login(context *gin.Context) {
 
 	data, err := ctl.userService.Login(request)
 	if err != nil {
+		log.Println(err)
 		utilitys.ResponseError400(context, err.Error())
 	} else {
 		utilitys.ResponseSuccess200(context, data, "login success")
