@@ -214,7 +214,7 @@ func (ctl *Controller) Upload(context *gin.Context) {
 //-------------------------------------------------------------
 
 func (ctl *Controller) Login(context *gin.Context) {
-
+	log.Println(context.Request.Header)
 	var request dtos.LoginRequest
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
