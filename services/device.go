@@ -41,6 +41,8 @@ func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRespons
 		Mac:         request.Mac,
 		Device_name: request.Device_name,
 		Location:    request.Location,
+		Map_long:    request.Map_long,
+		Map_lat:     request.Map_lat,
 		Status:      1,
 	}
 
@@ -56,6 +58,8 @@ func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRespons
 		Video_time:  device.Video_time,
 		Status:      device.Status,
 		Location:    device.Location,
+		Map_long:    device.Map_long,
+		Map_lat:     device.Map_lat,
 		Expired:     device.Expired,
 		CreateAt:    device.CreateAt,
 	}

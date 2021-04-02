@@ -16,3 +16,7 @@ CREATE TABLE `devices` (
     INDEX device_mac (`mac`)
 );
 
+ALTER TABLE devices
+ADD COLUMN `map_long` VARCHAR(255) UNIQUE DEFAULT NULL AFTER `location`;
+ALTER TABLE devices
+ADD COLUMN `map_lat` VARCHAR(255) UNIQUE DEFAULT NULL AFTER `map_long`;

@@ -13,6 +13,8 @@ type Device struct {
 	Video_time  int64      `gorm:"column:video_time"`
 	Status      int        `gorm:"column:status"`
 	Location    string     `gorm:"column:location"`
+	Map_long    string     `gorm:"column:map_long"`
+	Map_lat     string     `gorm:"column:map_lat"`
 	Expired     *time.Time `gorm:"column:expired"`
 	CreateAt    *time.Time `gorm:"column:created_at"`
 	Updated_at  *time.Time `gorm:"column:updated_at"`

@@ -89,7 +89,7 @@ func (dao *deviceDaoImpl) Upload(request dtos.UploadRequest) (*dtos.UploadRespon
 	for _, file := range request.Files {
 		count = count + 1
 		if strings.ContainsAny(file.Video_name, " ") == true {
-			err := errors.New("Video name don't have space character")
+			err := errors.New("Video name no space character")
 			return &response, err
 		}
 		total_size = total_size + file.Video_size

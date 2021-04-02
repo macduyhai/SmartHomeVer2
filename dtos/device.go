@@ -12,6 +12,8 @@ type AddRequest struct {
 	Mac         string `json:"mac"`
 	Device_name string `json:"device_name"`
 	Location    string `json:"location"`
+	Map_long    string `json:"map_long"`
+	Map_lat     string `json:"map_lat"`
 	Key         string `json:"key"`
 }
 type AddResponse struct {
@@ -22,6 +24,8 @@ type AddResponse struct {
 	Video_time  int64      `json:"video_time"`
 	Status      int        `json:"status"`
 	Location    string     `json:"location"`
+	Map_long    string     `json:"map_long"`
+	Map_lat     string     `json:"map_lat"`
 	Expired     *time.Time `json:"expired"`
 	CreateAt    *time.Time `json:"createat"`
 }
@@ -101,6 +105,8 @@ type Device struct {
 	Video_time int64      `json:"video_time"`
 	Status     int        `json:"status"`
 	Location   string     `json:"location"`
+	Map_long   string     `json:"map_long"`
+	Map_lat    string     `json:"map_lat"`
 	Expired    *time.Time `json:"expired"`
 	CreateAt   *time.Time `json:"createat"`
 }
