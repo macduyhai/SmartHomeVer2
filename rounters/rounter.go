@@ -54,6 +54,13 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 		// dev ice.GET("/static", controller.FileServer)
 	}
 	{
+		media := engine.Group("/api/v1/media")
+		media.Use(accountAuthMiddleWare.Check)
+		media.POST("/add", controller.AddMedia)
+		media.POST("/list", controller.ListMedia)
+		media.POST("/delete", controller.DeleteMedia)
+	}
+	{
 		log := engine.Group("/api/v1/log")
 		log.Use(jwt.Auth(router.config.SecretKet))
 		log.Use(middlewares.SetUserID)

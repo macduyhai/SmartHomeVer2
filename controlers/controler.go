@@ -21,16 +21,71 @@ type Controller struct {
 	userService   services.UserService
 	avrService    services.AverageService
 	deviceService services.DeviceService
+	mediaService  services.MediaService
 }
 
 func NewController(provider services.Provider) Controller {
 	return Controller{userService: provider.GetUserService(),
 		avrService:    provider.GetAverageService(),
 		deviceService: provider.GetDeviceService(),
+		mediaService:  provider.GetMediaService(),
 	}
 }
 
 //------------------------------------------------------------
+func (ctl *Controller) AddMedia(context *gin.Context) {
+	var request dtos.AddMediaRequest
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+		return
+	}
+	// fmt.Println(request)
+	data, err := ctl.mediaService.AddMedia(request)
+
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+	} else {
+		utilitys.ResponseSuccess200(context, data, "success")
+	}
+}
+
+//ListMedia
+func (ctl *Controller) ListMedia(context *gin.Context) {
+	var request dtos.ListMediaRequest
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+		return
+	}
+	// fmt.Println(request)
+	data, err := ctl.mediaService.ListMedia(request)
+
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+	} else {
+		utilitys.ResponseSuccess200(context, data, "success")
+	}
+}
+
+// Delete media
+func (ctl *Controller) DeleteMedia(context *gin.Context) {
+	var request dtos.DeleteMediaRequest
+
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+		return
+	}
+	data, err := ctl.mediaService.DeleteMedia(request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+	} else {
+		utilitys.ResponseSuccess200(context, data, "success")
+	}
+}
+
+//--------------------------DEVICE----------------------------------
 func (ctl *Controller) AddDevice(context *gin.Context) {
 	var request dtos.AddRequest
 	err := context.ShouldBindJSON(&request)

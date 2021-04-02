@@ -12,6 +12,7 @@ type Provider interface {
 	GetAnalysisService() AnalysisService
 	GetAverageService() AverageService
 	GetDeviceService() DeviceService
+	GetMediaService() MediaService
 }
 
 type providerImpl struct {
@@ -19,6 +20,11 @@ type providerImpl struct {
 	db     *gorm.DB
 }
 
+func (provider *providerImpl) GetMediaService() MediaService {
+	mediaDao := daos.NewMediaDao(provider.db)
+	jwtClient := middlewares.NewJWT(provider.config.SecretKet)
+	return NewMediaService(provider.config, mediaDao, jwtClient)
+}
 func (provider *providerImpl) GetDeviceService() DeviceService {
 	deviceDao := daos.NewDeviceDao(provider.db)
 	jwtClient := middlewares.NewJWT(provider.config.SecretKet)
