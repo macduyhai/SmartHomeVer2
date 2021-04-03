@@ -35,7 +35,7 @@ var CmsTopicOut = "/v1/devices/monitor/" + mac + "/request/"
 //PublishData : Function
 func PublishData(mac string, payload string) { // idBox : Mac of device
 	CmsTopicIn = "/v1/devices/monitor/" + mac + "/telemetry"
-	CmsTopicOut = "/v1/devices/monitor/" + mac + "/request/"
+	CmsTopicOut = "/v1/devices/monitor/" + mac + "/request"
 	fmt.Println("Mac: " + mac)
 	fmt.Println("TOPIC IN :" + CmsTopicIn)
 	fmt.Println("TOPIC OUT :" + CmsTopicOut)
@@ -51,6 +51,16 @@ func PublishData(mac string, payload string) { // idBox : Mac of device
 		fmt.Printf("Error Publish message : %v\n", Token1.Error())
 	} else {
 		fmt.Println("Send message")
+	}
+
+	payloadTest := "{" + "\"status\":" + "1" + "}"
+	fmt.Printf("Payload = %v\n\n", payloadTest)
+
+	Token1 = MqttCmsBi.Publish(CmsTopicOut, 1, false, payloadTest)
+	if Token1.Wait() && Token1.Error() != nil {
+		fmt.Printf("Error Publish message : %v\n", Token1.Error())
+	} else {
+		fmt.Println("Send message test done")
 	}
 	fmt.Println("-------------------------------------------------------------")
 }
