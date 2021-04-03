@@ -37,10 +37,11 @@ func (ctl *Controller) AddMedia(context *gin.Context) {
 	var request dtos.AddMediaRequest
 	err := context.ShouldBindJSON(&request)
 	if err != nil {
+		log.Println(err)
 		utilitys.ResponseError400(context, err.Error())
 		return
 	}
-	// fmt.Println(request)
+	log.Println(request)
 	data, err := ctl.mediaService.AddMedia(request)
 
 	if err != nil {
