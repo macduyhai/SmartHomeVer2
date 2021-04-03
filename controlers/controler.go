@@ -1,6 +1,7 @@
 package controlers
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -35,19 +36,22 @@ func NewController(provider services.Provider) Controller {
 //------------------------------------------------------------
 func (ctl *Controller) AddMedia(context *gin.Context) {
 	var request dtos.AddMediaRequest
-	var res interface{}
-	err := context.ShouldBindJSON(&res)
 
-	if err != nil {
-		log.Println("Lôi encode Json request")
-		log.Println(err)
-		utilitys.ResponseError400(context, err.Error())
-		return
-	} else {
-		log.Println("------------- Resquest form data  ----------------")
-		log.Println(res)
-		log.Println("---------------------------------------------------")
+	context.Request.ParseForm()
+	for key, value := range context.Request.PostForm {
+		fmt.Println(key, value)
 	}
+
+	// if err != nil {
+	// 	log.Println("Lôi encode Json request")
+	// 	log.Println(err)
+	// 	utilitys.ResponseError400(context, err.Error())
+	// 	return
+	// } else {
+	// 	log.Println("------------- Resquest form data  ----------------")
+	// 	log.Println(res)
+	// 	log.Println("---------------------------------------------------")
+	// }
 
 	// err := context.ShouldBindJSON(&request)
 
