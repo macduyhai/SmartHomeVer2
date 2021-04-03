@@ -108,7 +108,9 @@ func (dao *mediaDaoImpl) Delete(ID int64, userID int64) (models.Media, error) {
 	dao.db.Save(&user)
 	// Xoa file tren storage
 	file_name := media.Video_name
+	log.Println(userID)
 	var path = "./storage/" + string(userID) + "/" + file_name
+	log.Println(path)
 	err := os.Remove(path)
 	if err != nil {
 		log.Println(err)
