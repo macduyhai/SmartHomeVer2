@@ -42,6 +42,7 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 	}
 	{
 		device := engine.Group("/api/v1/device")
+		device.GET("/download/:id/:name", controller.Download)
 		device.Use(accountAuthMiddleWare.Check)
 		device.POST("/add", controller.AddDevice)
 		device.POST("/list", controller.ListDevice)
@@ -49,7 +50,6 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 		device.POST("/edit", controller.EditDevice)
 		device.POST("/upload", controller.Upload)
 		device.POST("/push", controller.PushDevice)
-		device.GET("/download/:id/:name", controller.Download)
 		device.POST("/getstatus", controller.GetstatusDevice)
 		// dev ice.GET("/static", controller.FileServer)
 	}

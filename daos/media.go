@@ -35,6 +35,7 @@ func (dao *mediaDaoImpl) Add(request dtos.AddMediaRequest) (*dtos.AddMediaRespon
 
 	// Cap nhat thong tin user
 	if err := dao.db.Where("id = ? ", request.User_ID).Find(&user).Error; err != nil {
+		log.Println("Load user error")
 		log.Println(err)
 		return &response, err
 	}
@@ -48,6 +49,8 @@ func (dao *mediaDaoImpl) Add(request dtos.AddMediaRequest) (*dtos.AddMediaRespon
 			err := errors.New("Video name no space character")
 			return &response, err
 		}
+		log.Print("File size: ")
+		log.Println(file.Video_size)
 		total_size = total_size + file.Video_size
 		if total_size > user.Max_size {
 			err := errors.New("Total size > Max size")

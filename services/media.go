@@ -32,9 +32,11 @@ func (service *mediaServiceImpl) AddMedia(request dtos.AddMediaRequest) (*dtos.A
 	if err != nil {
 		return nil, err
 	}
+	log.Println(request)
 	//---------------------
 	response, err := service.mediaDao.Add(request)
 	if err != nil {
+		log.Println("Service media errr")
 		log.Println(err)
 		return nil, err
 	}

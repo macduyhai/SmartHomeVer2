@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
@@ -55,7 +56,7 @@ func PublishData(mac string, payload string) { // idBox : Mac of device
 
 	payloadTest := "{" + "\"status\":" + "1" + "}"
 	fmt.Printf("Payload = %v\n\n", payloadTest)
-
+	time.Sleep(5 * time.Second)
 	Token1 = MqttCmsBi.Publish(CmsTopicOut, 1, false, payloadTest)
 	if Token1.Wait() && Token1.Error() != nil {
 		fmt.Printf("Error Publish message : %v\n", Token1.Error())
