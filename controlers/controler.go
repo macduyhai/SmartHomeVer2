@@ -1,7 +1,6 @@
 package controlers
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -38,9 +37,10 @@ func (ctl *Controller) AddMedia(context *gin.Context) {
 	var request dtos.AddMediaRequest
 
 	context.Request.ParseForm()
-	for key, value := range context.Request.PostForm {
-		fmt.Println(key, value)
-	}
+	log.Println(context.Request)
+	// for key, value := range context.Request.PostForm {
+	// 	fmt.Println(key, value)
+	// }
 
 	// if err != nil {
 	// 	log.Println("Lôi encode Json request")
