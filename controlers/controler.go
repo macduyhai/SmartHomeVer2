@@ -197,6 +197,20 @@ func (ctl *Controller) Download(context *gin.Context) {
 
 // PushDevice
 func (ctl *Controller) PushDevice(context *gin.Context) {
+	var request dtos.PushRequest
+	err := context.ShouldBindJSON(&request)
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+		return
+	}
+	// fmt.Println(request)
+	data, err := ctl.deviceService.Push(request)
+
+	if err != nil {
+		utilitys.ResponseError400(context, err.Error())
+	} else {
+		utilitys.ResponseSuccess200(context, data, "success")
+	}
 
 }
 func (ctl *Controller) Upload(context *gin.Context) {

@@ -19,8 +19,8 @@ type DeviceDao interface {
 	Edit(userID int64, mac, deviceName, location string) (models.Device, error)
 	Upload(request dtos.UploadRequest) (*dtos.UploadResponse, error)
 	Getstatus(userID int64, mac string) (models.Device, error)
+	Push(deviceID int64, mediaID int64) (models.Device, error)
 }
-
 type deviceDaoImpl struct {
 	db *gorm.DB
 }
@@ -47,6 +47,26 @@ func (dao *deviceDaoImpl) List(userID int64, username string) ([]models.Device, 
 	return devices, nil
 }
 
+//	Push(deviceID int64, videoName string, videoSize, videoTime int64) (models.Device, error)
+func (dao *deviceDaoImpl) Push(deviceID int64, mediaID int64) (models.Device, error) {
+	device := models.Device{}
+	media := models.Media{}
+	if err := dao.db.Where("id = ?", mediaID).Find(&media).Error; err != nil {
+		return device, err
+	}
+	if err := dao.db.Where("id = ?", deviceID).Find(&device).Error; err != nil {
+		return device, err
+	}
+	device.Video_name = media.Video_name
+	device.Video_size = media.Video_size
+	device.Video_time = media.Video_time
+
+	dao.db.Save(&device)
+
+	return device, nil
+}
+
+//
 func (dao *deviceDaoImpl) Edit(userID int64, mac, deviceName, location string) (models.Device, error) {
 	device := models.Device{}
 	if err := dao.db.Where("user_id = ? AND mac =?", userID, mac).Find(&device).Error; err != nil {

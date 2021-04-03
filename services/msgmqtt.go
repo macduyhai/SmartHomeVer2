@@ -23,19 +23,19 @@ const CmsAccessTokenBi = ""
 const CmsPassBi = ""
 
 // idBox : Phân định device
-var idBox = ""
+var mac = ""
 
 // CmsTopicIn : Server to Box
-var CmsTopicIn = "/v1/devices/NTQ/" + idBox + "/telemetry"
+var CmsTopicIn = "/v1/devices/monitor/" + mac + "/telemetry"
 
 // CmsTopicOut : Box to Server
-var CmsTopicOut = "/v1/devices/NTQ/" + idBox + "/request/"
+var CmsTopicOut = "/v1/devices/monitor/" + mac + "/request/"
 
 //PublishData : Function
-func PublishData(idBox string, payload string) { // idBox : Mac of device
-	CmsTopicIn = "/v1/devices/NTQ/" + idBox + "/telemetry"
-	CmsTopicOut = "/v1/devices/NTQ/" + idBox + "/request/"
-	fmt.Println("idBox: " + idBox)
+func PublishData(mac string, payload string) { // idBox : Mac of device
+	CmsTopicIn = "/v1/devices/monitor/" + mac + "/telemetry"
+	CmsTopicOut = "/v1/devices/monitor/" + mac + "/request/"
+	fmt.Println("Mac: " + mac)
 	fmt.Println("TOPIC IN :" + CmsTopicIn)
 	fmt.Println("TOPIC OUT :" + CmsTopicOut)
 	// If Test device with static Topic

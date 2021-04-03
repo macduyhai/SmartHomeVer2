@@ -2,6 +2,7 @@ package services
 
 import (
 	"log"
+	"net/url"
 
 	"github.com/macduyhai/SmartHomeVer2/middlewares"
 	"github.com/macduyhai/SmartHomeVer2/models"
@@ -19,6 +20,7 @@ type DeviceService interface {
 	Edit(request dtos.EditRequest) (*dtos.EditResponse, error)
 	Upload(request dtos.UploadRequest) (*dtos.UploadResponse, error)
 	Getstatus(request dtos.GetstatusRequest) (*dtos.GetstatusResponse, error)
+	Push(request dtos.PushRequest) (*dtos.DeviceResponse, error)
 }
 
 type deviceServiceImpl struct {
@@ -31,6 +33,38 @@ func NewDeviceService(conf *config.Config, deviceDao daos.DeviceDao, jwt middlew
 		deviceDao: deviceDao,
 	}
 }
+
+//--------------------------Upload video to device used MQTT -----------------------------
+func (service *deviceServiceImpl) Push(request dtos.PushRequest) (*dtos.DeviceResponse, error) {
+	err := CheckKey(request.User_ID, request.Key)
+	if err != nil {
+		return nil, err
+	}
+	deviceID := request.Device_ID
+	mediaID := request.Media_ID
+
+	device, err := service.deviceDao.Push(deviceID, mediaID)
+	if err != nil {
+		return nil, err
+	}
+	Url, err := url.Parse("http://vuaop.com:9090/api/v1/device/download/")
+	if err != nil {
+		log.Fatal(err)
+	}
+	Url.Path += string(request.User_ID) + "/" + request.Video_name
+
+	s := "{\"mac\":" + device.Mac + "," + "\"url\":" + Url.String() + "}"
+	log.Println(s)
+	PublishData(device.Mac, s)
+
+	response := dtos.DeviceResponse{
+		Status: "suscess",
+	}
+
+	return &response, nil
+}
+
+//--------------------------------------------------------------------------------------
 func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddResponse, error) {
 	err := CheckKey(request.User_ID, request.Key)
 	if err != nil {

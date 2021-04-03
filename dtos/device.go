@@ -64,8 +64,10 @@ type UploadRequest struct {
 }
 type PushRequest struct {
 	User_ID    int64  `json:"user_id"`
-	Mac        string `json:"mac"`
+	Device_ID  int64  `json:"device_id"`
+	Media_ID   int64  `json:"media_id"`
 	Video_name string `json:"video_name"`
+	Key        string `json:"key"`
 }
 type FileUpload struct {
 	Video_name string `json:"video_name"`
