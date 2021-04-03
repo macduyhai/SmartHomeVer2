@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	"log"
 	"net/url"
 
@@ -51,16 +52,17 @@ func (service *deviceServiceImpl) Push(request dtos.PushRequest) (*dtos.DeviceRe
 	if err != nil {
 		log.Fatal(err)
 	}
-	Url.Path += string(request.User_ID) + "/" + request.Video_name
+
+	Url.Path += fmt.Sprint(request.User_ID) + "/" + request.Video_name
 
 	s := "{\"mac\":" + device.Mac + "," + "\"url\":" + Url.String() + "}"
 	log.Println(s)
 	PublishData(device.Mac, s)
-
+	log.Println("Response")
 	response := dtos.DeviceResponse{
 		Status: "suscess",
 	}
-
+	log.Println("Return")
 	return &response, nil
 }
 
