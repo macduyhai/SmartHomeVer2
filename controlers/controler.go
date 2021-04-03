@@ -222,7 +222,7 @@ func (ctl *Controller) Upload(context *gin.Context) {
 		f.Video_time = 0
 		request.Files = append(request.Files, f)
 	}
-
+	log.Println(request.Files)
 	// err := context.ShouldBindJSON(&request)
 	// if err != nil {
 	// 	utilitys.ResponseError400(context, err.Error())
