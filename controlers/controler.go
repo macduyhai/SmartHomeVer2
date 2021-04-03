@@ -35,7 +35,9 @@ func NewController(provider services.Provider) Controller {
 //------------------------------------------------------------
 func (ctl *Controller) AddMedia(context *gin.Context) {
 	var request dtos.AddMediaRequest
+
 	err := context.ShouldBindJSON(&request)
+
 	if err != nil {
 		log.Println("Lôi encode Json request")
 		log.Println(err)
