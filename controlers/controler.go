@@ -61,23 +61,14 @@ func (ctl *Controller) AddMedia(context *gin.Context) {
 	// 	utilitys.ResponseError400(context, err.Error())
 	// 	return
 	// }
-	context.Request.ParseMultipartForm(1000)
+	log.Println("------------------")
+	context.Request.ParseForm()
 	for key, value := range context.Request.PostForm {
 		log.Println(key, value)
 	}
-
-	req := context.Request
-
-	req.ParseForm()
-	// log.Println(req.Form)
-	// log.Println(req.FormFile("user_id")) // Parses the request body
 	log.Println("------------------")
-	userID := req.Form.Get("user_id") // x will be "" if parameter is not set
-	log.Println(userID)
 
-	log.Println("------------------")
-	request.User_ID, _ = strconv.ParseInt(userID, 10, 64)
-
+	//request.User_ID, _ = strconv.ParseInt(context.Request.PostForm["user_id"], 10, 64)
 	// log.Println(request)
 
 	data, err := ctl.mediaService.AddMedia(request)
