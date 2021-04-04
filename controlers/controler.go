@@ -1,7 +1,6 @@
 package controlers
 
 import (
-	"encoding/json"
 	"log"
 	"os"
 	"strconv"
@@ -63,11 +62,9 @@ func (ctl *Controller) AddMedia(context *gin.Context) {
 	// 	return
 	// }
 	req := context.Request
-	err := json.NewDecoder(req.Body).Decode(request)
-	if err != nil {
-		log.Println("Loi decode")
-		log.Println(err)
-	}
+	req.ParseForm()              // Parses the request body
+	x := req.Form.Get("user_id") // x will be "" if parameter is not set
+	log.Println(x)
 
 	log.Println(request)
 	data, err := ctl.mediaService.AddMedia(request)
