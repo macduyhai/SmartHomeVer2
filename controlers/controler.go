@@ -65,11 +65,10 @@ func (ctl *Controller) AddMedia(context *gin.Context) {
 	req.ParseForm()
 	// log.Println(req.Form)
 	log.Println(req.FormFile("user_id")) // Parses the request body
-	log.Println(req.FormFile("key"))     // Parses the request body
-	// x := req.Form.Get("user_id") // x will be "" if parameter is not set
-	// log.Println(x)
-	// y := req.Form.Get("key") // x will be "" if parameter is not set
-	// log.Println(y)
+	log.Println("------------------")
+	x := req.Form.Get("user_id") // x will be "" if parameter is not set
+	log.Println(x)
+	log.Println("------------------")
 
 	// log.Println(request)
 
