@@ -1,7 +1,7 @@
 package controlers
 
 import (
-	"fmt"
+	"encoding/json"
 	"log"
 	"os"
 	"strconv"
@@ -37,11 +37,11 @@ func NewController(provider services.Provider) Controller {
 func (ctl *Controller) AddMedia(context *gin.Context) {
 	var request dtos.AddMediaRequest
 
-	context.Request.ParseForm()
-	log.Println(context.Request)
-	for key, value := range context.Request.PostForm {
-		fmt.Println(key, value)
-	}
+	// context.Request.ParseForm()
+	// log.Println(context.Request)
+	// for key, value := range context.Request.PostForm {
+	// 	fmt.Println(key, value)
+	// }
 
 	// if err != nil {
 	// 	log.Println("Lôi encode Json request")
@@ -62,6 +62,13 @@ func (ctl *Controller) AddMedia(context *gin.Context) {
 	// 	utilitys.ResponseError400(context, err.Error())
 	// 	return
 	// }
+	req := context.Request
+	err := json.NewDecoder(req.Body).Decode(request)
+	if err != nil {
+		log.Println("Loi decode")
+		log.Println(err)
+	}
+
 	log.Println(request)
 	data, err := ctl.mediaService.AddMedia(request)
 
