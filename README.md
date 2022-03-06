@@ -14,11 +14,11 @@ step 3: data base migration
     - login mysql container with user: root, password: bW90aGVyIGZ1Y2tlciBub29i<br>
     - create mysql table by copy file scripts/log.sql and scripts/user.sql, paste to mysql terminal<br>
 </p>
-<p>List API support </p><br>
-[GIN-debug] <b> GET </b>    /ping                      <br>
-[GIN-debug] <b>POST </b>  /login                    <br>
+<p>List API support </p>
+[GIN-debug] <b> GET </b>    /ping                  <br>
+[GIN-debug] <b>POST </b>  /login                   <br>
 [GIN-debug] <b>POST </b>  /api/v1/account          <br>
-[GIN-debug]<b>GET   </b> /api/v1/device/download/:id/:name <br>
+[GIN-debug] <b>GET  </b> /api/v1/device/download/:id/:name <br>
 [GIN-debug] <b>POST </b>  /api/v1/device/add        <br>
 [GIN-debug] <b>POST </b>  /api/v1/device/list       <br>
 [GIN-debug] <b>POST </b>  /api/v1/device/delete     <br>

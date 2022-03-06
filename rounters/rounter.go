@@ -1,6 +1,8 @@
 package rounters
 
 import (
+	"log"
+
 	"github.com/macduyhai/SmartHomeVer2/config"
 	"github.com/macduyhai/SmartHomeVer2/controlers"
 	"github.com/macduyhai/SmartHomeVer2/middlewares"
@@ -36,6 +38,7 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 	accountAuthMiddleWare := middlewares.CheckAPIKey{ApiKey: router.config.APIKey}
 	{
 		account := engine.Group("/api/v1/account")
+		log.Println("create user")
 		account.Use(accountAuthMiddleWare.Check)
 		account.POST("", controller.CreateUser)
 		// account.POST("/login", controller.Login)
