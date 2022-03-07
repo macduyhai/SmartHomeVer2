@@ -29,16 +29,17 @@ CREATE TABLE `devices` (
   `deleted_at`                 DATETIME    DEFAULT NULL
 );
 
-DROP TABLE IF EXISTS `medias`;
-CREATE TABLE `medias` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `id_user` BIGINT(20)  NOT NULL,
-  `video_name` VARCHAR(255) DEFAULT '',
-  `video_size` BIGINT(20)  NOT NULL,
-  `video_time` BIGINT(20)  NOT NULL,
-  `created_at`                 DATETIME    DEFAULT NOW(),
-  `deleted_at`                 DATETIME    DEFAULT NULL
-);
+-- DROP TABLE IF EXISTS `medias`;
+-- CREATE TABLE `medias` (
+--   `id` BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+--   `id_user` BIGINT(20)  NOT NULL,
+--   `video_name` VARCHAR(255) DEFAULT '',
+--   `video_size` BIGINT(20)  NOT NULL,
+--   `video_time` BIGINT(20)  NOT NULL,
+--   `created_at`                 DATETIME    DEFAULT NOW(),
+--   `deleted_at`                 DATETIME    DEFAULT NULL
+-- );
+ 
 
 DROP TABLE IF EXISTS `authenkey`;
 CREATE TABLE `authenkey` (
