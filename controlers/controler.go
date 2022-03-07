@@ -4,6 +4,7 @@ import (
 	"errors"
 	"log"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -260,7 +261,7 @@ func (ctl *Controller) Upload(context *gin.Context) {
 	log.Println(userID)
 	log.Println(files)
 	if userID == nil || key == nil || files == nil {
-		err_up := errors.New("UserID or Key or File upload not null")
+		err_up := errors.New("Params upload not null")
 		utilitys.ResponseError400(context, err_up.Error())
 		return
 	}
@@ -273,16 +274,18 @@ func (ctl *Controller) Upload(context *gin.Context) {
 	for _, file := range files {
 		var f dtos.FileUpload
 		f.Video_name = file.Filename
+		fType := filepath.Ext(f.Video_name)
+		if fType != ".mp4" {
+			err_up := errors.New("Only support .mp4 File ")
+			utilitys.ResponseError400(context, err_up.Error())
+			return
+		}
 		f.Video_size = file.Size
 		f.Video_time = 0
 		request.Files = append(request.Files, f)
 	}
 	log.Println(request.Files)
-	// err := context.ShouldBindJSON(&request)
-	// if err != nil {
-	// 	utilitys.ResponseError400(context, err.Error())
-	// 	return
-	// }
+
 	// process data
 	t1 := time.Since(start)
 	log.Println("T1: ")
