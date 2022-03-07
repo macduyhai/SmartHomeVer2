@@ -17,11 +17,11 @@ type UserIdentity struct {
 	UserID int64 `json:"id"`
 }
 
-// RequestHeader request header struct, get Bearer tocken
+// RequestHeader request header struct, get Bearer token
 type RequestHeader struct {
 	Rate   int    `header:"Rate"`
 	Domain string `header:"Domain"`
-	Tocken string `header:"Authorization"`
+	Token  string `header:"Authorization"`
 }
 
 // MakeRespond make respond when frontend call API
@@ -48,21 +48,21 @@ func ResponseSuccess200(context *gin.Context, data interface{}, msg string) {
 	Response(context, data, 200, msg)
 }
 
-func parseBearerTocken(context *gin.Context) (*UserIdentity, error) {
+func parseBearerToken(context *gin.Context) (*UserIdentity, error) {
 	header := RequestHeader{}
 
 	if err := context.BindHeader(&header); err != nil {
 		return nil, err
 	}
 	// split header
-	payloadArr := strings.Split(header.Tocken, " ")
+	payloadArr := strings.Split(header.Token, " ")
 	if len(payloadArr) != 2 {
 		return nil, errors.New("parse error")
 	}
 
 	payload := payloadArr[1]
 	// split payload header
-	payloadArr = strings.Split(header.Tocken, ".")
+	payloadArr = strings.Split(header.Token, ".")
 	if len(payloadArr) != 3 {
 		return nil, errors.New("parse error")
 	}
@@ -94,7 +94,7 @@ func parseBearerTocken(context *gin.Context) (*UserIdentity, error) {
 }
 
 func SetUserID(context *gin.Context) error {
-	UserIdentity, err := parseBearerTocken(context)
+	UserIdentity, err := parseBearerToken(context)
 	if err != nil {
 		return err
 	}

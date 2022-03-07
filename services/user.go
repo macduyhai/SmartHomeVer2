@@ -49,8 +49,8 @@ func (service *userServiceImpl) Login(request dtos.LoginRequest) (*dtos.LoginRes
 	}
 	token_str := base64.StdEncoding.EncodeToString(encode) // convert int64  to []byte
 
-	// tocken, err := service.jwt.CreateTocken(user.ID)
-	tocken, err := service.jwt.CreateTockenPrivate(token_str)
+	// token, err := service.jwt.CreateToken(user.ID)
+	token, err := service.jwt.CreateTokenPrivate(token_str)
 	if err != nil {
 		return nil, err
 	}
@@ -59,7 +59,7 @@ func (service *userServiceImpl) Login(request dtos.LoginRequest) (*dtos.LoginRes
 		UserID:   user.ID,
 		Username: user.Username,
 		Name:     user.Name,
-		Tocken:   tocken,
+		Token:    token,
 		Money:    user.Money,
 		Phone:    user.Phone,
 	}
