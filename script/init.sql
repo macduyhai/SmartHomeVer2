@@ -7,7 +7,7 @@ CREATE TABLE `users` (
   `phone_number` VARCHAR(255) DEFAULT '',
   `number_video` INT(10)  DEFAULT 0,
   `total_size` INT(10)  DEFAULT 0,
-  `max_size` INT(10)  DEFAULT 2100,
+  `max_size` INT(10)  DEFAULT 600,
   `created_at`  DATETIME    DEFAULT NOW(),
   `deleted_at`                 DATETIME     DEFAULT NULL
 
