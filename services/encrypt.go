@@ -35,8 +35,9 @@ func CheckKey(id int64, token_str string) error {
 	// if err != nil {
 	// 	return err
 	// }
-	log.Printf("UserID: %d/t", id)
-	log.Println("Token: " + token_str)
+
+	// log.Printf("UserID: %d/t", id)
+	// log.Println("Token: " + token_str)
 	tokenDe, err := Base64Dec(token_str)
 	if err != nil {
 		log.Println(err)

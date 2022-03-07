@@ -1,6 +1,7 @@
 package controlers
 
 import (
+	"errors"
 	"log"
 	"os"
 	"strconv"
@@ -255,8 +256,13 @@ func (ctl *Controller) Upload(context *gin.Context) {
 	userID := form.Value["user_id"]
 	key := form.Value["key"]
 
+	log.Println(form)
 	log.Printf("%T", files)
-
+	if userID == nil || key == nil || files == nil {
+		err_up := errors.New("UserID or Key or File upload not null")
+		utilitys.ResponseError400(context, err_up.Error())
+		return
+	}
 	// log.Println(userID[0])
 
 	var request dtos.UploadRequest

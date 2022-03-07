@@ -47,7 +47,7 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 		device.Use(accountAuthMiddleWare.Check)
 		device.POST("/add", controller.AddDevice)
 		device.POST("/list", controller.ListDevice)
-		device.POST("/delete", controller.DeleteDevice)
+		device.DELETE("/delete", controller.DeleteDevice)
 		device.POST("/edit", controller.EditDevice)
 		device.POST("/upload", controller.Upload)
 		device.POST("/push", controller.PushDevice)
