@@ -252,12 +252,13 @@ func (ctl *Controller) Upload(context *gin.Context) {
 	log.Println(start)
 	// Multipart form
 	form, _ := context.MultipartForm()
-	files := form.File["file"]
+	log.Println(form)
+
+	files := form.File["files"]
 	userID := form.Value["user_id"]
 	key := form.Value["key"]
-
-	log.Println(form)
-	log.Printf("%T", files)
+	log.Println(userID)
+	log.Println(files)
 	if userID == nil || key == nil || files == nil {
 		err_up := errors.New("UserID or Key or File upload not null")
 		utilitys.ResponseError400(context, err_up.Error())
