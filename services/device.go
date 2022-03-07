@@ -48,7 +48,7 @@ func (service *deviceServiceImpl) Push(request dtos.PushRequest) (*dtos.DeviceRe
 	if err != nil {
 		return nil, err
 	}
-	Url, err := url.Parse("http://vuaop.com:9090/api/v1/device/download/")
+	Url, err := url.Parse("http://hapyc.com:9090/api/v1/device/download/")
 	if err != nil {
 		log.Fatal(err)
 	}
