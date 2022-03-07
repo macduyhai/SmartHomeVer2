@@ -10,13 +10,10 @@ CREATE TABLE `devices` (
     `video_time` BIGINT(20)  NOT NULL,
     `status` TINYINT(3) DEFAULT 0,
     `location` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    `map_long` VARCHAR(255)  DEFAULT NULL,
+    `map_lat` VARCHAR(255)  DEFAULT NULL,
     `expired` DATETIME     DEFAULT NULL,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     INDEX device_mac (`mac`)
 );
-
-ALTER TABLE devices
-ADD COLUMN `map_long` VARCHAR(255) UNIQUE DEFAULT NULL AFTER `location`;
-ALTER TABLE devices
-ADD COLUMN `map_lat` VARCHAR(255) UNIQUE DEFAULT NULL AFTER `map_long`;
