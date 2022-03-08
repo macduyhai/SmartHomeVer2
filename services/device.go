@@ -57,7 +57,7 @@ func (service *deviceServiceImpl) Push(request dtos.PushRequest) (*dtos.DeviceRe
 
 	s := "{\"mac\":" + device.Mac + "," + "\"url\":" + Url.String() + "}"
 	log.Println(s)
-	PublishData(device.Mac, s)
+	PublishData(device.Mac, s) // mqtt push device
 	log.Println("Response")
 	response := dtos.DeviceResponse{
 		Status: "suscess",

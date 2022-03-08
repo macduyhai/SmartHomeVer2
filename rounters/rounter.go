@@ -1,6 +1,8 @@
 package rounters
 
 import (
+	"net/http"
+
 	"github.com/macduyhai/SmartHomeVer2/config"
 	"github.com/macduyhai/SmartHomeVer2/controlers"
 	"github.com/macduyhai/SmartHomeVer2/middlewares"
@@ -28,6 +30,8 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 	controller := controlers.NewController(providerService)
 
 	engine := gin.Default()
+	engine.StaticFS("/file", http.Dir("storage"))
+
 	engine.Use(middlewares.CORSMiddleware())
 	// engine.Use(middlewares.RequestLogger())
 	engine.GET("/ping", controller.Ping)
