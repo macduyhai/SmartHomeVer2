@@ -30,7 +30,7 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 	controller := controlers.NewController(providerService)
 
 	engine := gin.Default()
-	engine.StaticFS("/file", http.Dir("storage"))
+	// engine.StaticFS("/file", http.Dir("storage"))
 
 	engine.Use(middlewares.CORSMiddleware())
 	// engine.Use(middlewares.RequestLogger())
@@ -43,6 +43,7 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 		// log.Println("create user")
 		account.Use(accountAuthMiddleWare.Check)
 		account.POST("", controller.CreateUser)
+		account.StaticFS("/file", http.Dir("storage"))
 		// account.POST("/login", controller.Login)
 	}
 	{
