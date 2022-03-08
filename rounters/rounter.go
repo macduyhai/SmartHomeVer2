@@ -40,15 +40,13 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 	accountAuthMiddleWare := middlewares.CheckAPIKey{ApiKey: router.config.APIKey}
 	{
 		account := engine.Group("/api/v1/account")
-		// log.Println("create user")
 		account.Use(accountAuthMiddleWare.Check)
 		account.POST("", controller.CreateUser)
-		account.StaticFS("/file", http.Dir("storage"))
 		// account.POST("/login", controller.Login)
 	}
 	{
 		device := engine.Group("/api/v1/device")
-		device.GET("/download/:id/:name", controller.Download)
+		// device.GET("/download/:id/:name", controller.Download)
 		device.Use(accountAuthMiddleWare.Check)
 		device.POST("/add", controller.AddDevice)
 		device.POST("/list", controller.ListDevice)
@@ -62,9 +60,10 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 	{
 		media := engine.Group("/api/v1/media")
 		media.Use(accountAuthMiddleWare.Check)
+		media.StaticFS("/dowload", http.Dir("storage"))
 		media.POST("/add", controller.AddMedia)
 		media.POST("/list", controller.ListMedia)
-		media.POST("/delete", controller.DeleteMedia)
+		media.DELETE("/delete", controller.DeleteMedia)
 	}
 	{
 		log := engine.Group("/api/v1/log")

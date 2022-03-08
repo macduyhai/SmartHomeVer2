@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-	"time"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
@@ -16,7 +15,7 @@ var MqttCmsBi mqtt.Client
 
 // CmsHostBi : host MQTT
 // const CmsHostBi string = "tcp://broker.hivemq.com:1883"
-const CmsHostBi string = "tcp://vuaop.com:1883"
+const CmsHostBi string = "tcp://hapyc.com:1883"
 
 // CmsAccessTokenBi : User
 const CmsAccessTokenBi = ""
@@ -35,8 +34,8 @@ var CmsTopicOut = "/v1/devices/monitor/" + mac + "/request/"
 
 //PublishData : Function
 func PublishData(mac string, payload string) { // idBox : Mac of device
-	CmsTopicIn = "/v1/devices/monitor/" + mac + "/telemetry"
-	CmsTopicOut = "/v1/devices/monitor/" + mac + "/request"
+	CmsTopicIn = "/v1/devices/monitor/" + mac + "/in"
+	CmsTopicOut = "/v1/devices/monitor/" + mac + "/out"
 	fmt.Println("Mac: " + mac)
 	fmt.Println("TOPIC IN :" + CmsTopicIn)
 	fmt.Println("TOPIC OUT :" + CmsTopicOut)
@@ -51,18 +50,18 @@ func PublishData(mac string, payload string) { // idBox : Mac of device
 	if Token1.Wait() && Token1.Error() != nil {
 		fmt.Printf("Error Publish message : %v\n", Token1.Error())
 	} else {
-		fmt.Println("Send message")
+		fmt.Println("Send message done")
 	}
 
-	payloadTest := "{" + "\"status\":" + "1" + "}"
-	fmt.Printf("Payload = %v\n\n", payloadTest)
-	time.Sleep(5 * time.Second)
-	Token1 = MqttCmsBi.Publish(CmsTopicOut, 1, false, payloadTest)
-	if Token1.Wait() && Token1.Error() != nil {
-		fmt.Printf("Error Publish message : %v\n", Token1.Error())
-	} else {
-		fmt.Println("Send message test done")
-	}
+	// payloadTest := "{" + "\"status\":" + "1" + "}"
+	// fmt.Printf("Payload = %v\n\n", payloadTest)
+	// time.Sleep(5 * time.Second)
+	// Token1 = MqttCmsBi.Publish(CmsTopicOut, 1, false, payloadTest)
+	// if Token1.Wait() && Token1.Error() != nil {
+	// 	fmt.Printf("Error Publish message : %v\n", Token1.Error())
+	// } else {
+	// 	fmt.Println("Send message test done")
+	// }
 	fmt.Println("-------------------------------------------------------------")
 }
 
