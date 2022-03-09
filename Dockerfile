@@ -1,4 +1,4 @@
-FROM golang:1.12 as builder
+FROM golang:1.13.1 as builder
 
 MAINTAINER MDH <dh.duyhai@gmail.com>
 RUN mkdir /app

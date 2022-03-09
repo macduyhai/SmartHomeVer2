@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"io"
 	"io/ioutil"
+	_ "log"
 
 	"github.com/gin-gonic/gin"
 	"github.com/macduyhai/SmartHomeVer2/utilitys"
@@ -48,6 +49,8 @@ type CheckAPIKey struct {
 
 func (client *CheckAPIKey) Check(context *gin.Context) {
 	apiKey := context.Request.Header.Get("api-key")
+	// log.Println(client.ApiKey)
+	// log.Println(apiKey)
 	if apiKey == client.ApiKey {
 		context.Next()
 	} else {

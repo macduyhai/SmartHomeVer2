@@ -1,10 +1,11 @@
 package controlers
 
 import (
+	"errors"
 	"log"
 	"os"
+	"path/filepath"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/macduyhai/SmartHomeVer2/common"
@@ -56,7 +57,7 @@ func (ctl *Controller) AddMedia(context *gin.Context) {
 	// err := context.ShouldBindJSON(&request)
 
 	// if err != nil {
-	// 	log.Println("Lôi encode Json request")
+	// 	log.Println("Error encode Json request")
 	// 	log.Println(err)
 	// 	utilitys.ResponseError400(context, err.Error())
 	// 	return
@@ -66,17 +67,11 @@ func (ctl *Controller) AddMedia(context *gin.Context) {
 		log.Println(key, value)
 	}
 
-	log.Println("------------------")
+	// log.Println("------------------")
 
 	request.User_ID, _ = strconv.ParseInt(context.Request.PostForm["user_id"][0], 10, 64)
 	request.Key = context.Request.PostForm["key"][0]
-	// for f := range context.Request.PostForm["file"] {
-	// 	m := dtos.FileUpload{}
-	// 	// m.Video_name = f.
 
-	// }
-	log.Println(request)
-	log.Println("------------------")
 	// request.Files =   context.Request.PostForm["file"]
 	// log.Println(request)
 
@@ -210,28 +205,29 @@ func (ctl *Controller) GetstatusDevice(context *gin.Context) {
 		utilitys.ResponseSuccess200(context, data, "success")
 	}
 }
-func (ctl *Controller) Download(context *gin.Context) {
-	url := context.Request.URL.Path
-	log.Println(url)
-	p := strings.Split(url, "/")
-	log.Println(p)
-	path := "./storage/" + p[5] + "/" + p[6]
-	log.Println(path)
-	//log.Println("Opening a file ")
-	// var file, err = os.OpenFile(path, os.O_RDWR, 0644)
-	// if err != nil {
-	// 	log.Println(err)
-	// } else {
-	// 	log.Println("MOpen file done")
-	// }
-	// defer file.Close()
-	// context.Writer.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", p[6])) //fmt.Sprintf("attachment; filename=%s", filename) Downloaded file renamed
-	// context.Writer.Header().Add("Content-Type", "application/octet-stream")
-	// context.FileAttachment(path, p[6])
 
-	// http.ServeFile(context.Writer, context.Request, path)
-	context.FileAttachment(path, p[6])
-}
+// func (ctl *Controller) Download(context *gin.Context) {
+// 	url := context.Request.URL.Path
+// 	log.Println(url)
+// 	p := strings.Split(url, "/")
+// 	log.Println(p)
+// 	path := "./storage/" + p[5] + "/" + p[6]
+// 	log.Println(path)
+// 	//log.Println("Opening a file ")
+// 	// var file, err = os.OpenFile(path, os.O_RDWR, 0644)
+// 	// if err != nil {
+// 	// 	log.Println(err)
+// 	// } else {
+// 	// 	log.Println("MOpen file done")
+// 	// }
+// 	// defer file.Close()
+// 	// context.Writer.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", p[6])) //fmt.Sprintf("attachment; filename=%s", filename) Downloaded file renamed
+// 	// context.Writer.Header().Add("Content-Type", "application/octet-stream")
+// 	// context.FileAttachment(path, p[6])
+
+// 	// http.ServeFile(context.Writer, context.Request, path)
+// 	context.FileAttachment(path, p[6])
+// }
 
 // PushDevice
 func (ctl *Controller) PushDevice(context *gin.Context) {
@@ -256,12 +252,18 @@ func (ctl *Controller) Upload(context *gin.Context) {
 	log.Println(start)
 	// Multipart form
 	form, _ := context.MultipartForm()
-	files := form.File["file"]
+	log.Println(form)
+
+	files := form.File["files"]
 	userID := form.Value["user_id"]
 	key := form.Value["key"]
-
-	log.Printf("%T", files)
-
+	log.Println(userID)
+	log.Println(files)
+	if userID == nil || key == nil || files == nil {
+		err_up := errors.New("Params upload not null")
+		utilitys.ResponseError400(context, err_up.Error())
+		return
+	}
 	// log.Println(userID[0])
 
 	var request dtos.UploadRequest
@@ -271,16 +273,18 @@ func (ctl *Controller) Upload(context *gin.Context) {
 	for _, file := range files {
 		var f dtos.FileUpload
 		f.Video_name = file.Filename
-		f.Video_size = file.Size
+		fType := filepath.Ext(f.Video_name)
+		if fType != ".mp4" {
+			err_up := errors.New("Only supported .mp4 File ")
+			utilitys.ResponseError400(context, err_up.Error())
+			return
+		}
+		f.Video_size = file.Size / 1024000
 		f.Video_time = 0
 		request.Files = append(request.Files, f)
 	}
 	log.Println(request.Files)
-	// err := context.ShouldBindJSON(&request)
-	// if err != nil {
-	// 	utilitys.ResponseError400(context, err.Error())
-	// 	return
-	// }
+
 	// process data
 	t1 := time.Since(start)
 	log.Println("T1: ")
@@ -353,7 +357,7 @@ func (ctl *Controller) CreateUser(context *gin.Context) {
 		Username: request.Username,
 		Password: request.Password,
 		Phone:    request.Phone,
-		Max_size: 629145600,
+		Max_size: 600, //MB
 	}
 	data, err := ctl.userService.Create(acc)
 	if err != nil {

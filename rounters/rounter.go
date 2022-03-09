@@ -1,6 +1,8 @@
 package rounters
 
 import (
+	"net/http"
+
 	"github.com/macduyhai/SmartHomeVer2/config"
 	"github.com/macduyhai/SmartHomeVer2/controlers"
 	"github.com/macduyhai/SmartHomeVer2/middlewares"
@@ -28,6 +30,8 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 	controller := controlers.NewController(providerService)
 
 	engine := gin.Default()
+	// engine.StaticFS("/file", http.Dir("storage"))
+
 	engine.Use(middlewares.CORSMiddleware())
 	// engine.Use(middlewares.RequestLogger())
 	engine.GET("/ping", controller.Ping)
@@ -42,11 +46,11 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 	}
 	{
 		device := engine.Group("/api/v1/device")
-		device.GET("/download/:id/:name", controller.Download)
+		// device.GET("/download/:id/:name", controller.Download)
 		device.Use(accountAuthMiddleWare.Check)
 		device.POST("/add", controller.AddDevice)
 		device.POST("/list", controller.ListDevice)
-		device.POST("/delete", controller.DeleteDevice)
+		device.DELETE("/delete", controller.DeleteDevice)
 		device.POST("/edit", controller.EditDevice)
 		device.POST("/upload", controller.Upload)
 		device.POST("/push", controller.PushDevice)
@@ -56,9 +60,10 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 	{
 		media := engine.Group("/api/v1/media")
 		media.Use(accountAuthMiddleWare.Check)
+		media.StaticFS("/download", http.Dir("storage"))
 		media.POST("/add", controller.AddMedia)
 		media.POST("/list", controller.ListMedia)
-		media.POST("/delete", controller.DeleteMedia)
+		media.DELETE("/delete", controller.DeleteMedia)
 	}
 	{
 		log := engine.Group("/api/v1/log")

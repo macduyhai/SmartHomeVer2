@@ -7,5 +7,6 @@ CREATE TABLE `media` (
     `video_size` BIGINT(20)  NOT NULL,
     `video_time` BIGINT(20)  NOT NULL,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `deleted_at`                 DATETIME    DEFAULT NULL,
     INDEX video_name (`video_name`)
 );

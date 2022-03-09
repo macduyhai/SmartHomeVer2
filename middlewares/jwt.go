@@ -7,8 +7,8 @@ import (
 )
 
 type JWT interface {
-	CreateTocken(id int64) (string, error)
-	CreateTockenPrivate(encode_str string) (string, error)
+	CreateToken(id int64) (string, error)
+	CreateTokenPrivate(encode_str string) (string, error)
 }
 
 type jwtImpl struct {
@@ -19,7 +19,7 @@ func NewJWT(secretKey string) JWT {
 	return &jwtImpl{secretKey: secretKey}
 }
 
-func (c *jwtImpl) CreateTocken(id int64) (string, error) {
+func (c *jwtImpl) CreateToken(id int64) (string, error) {
 	token := jwt_lib.New(jwt_lib.GetSigningMethod("HS256"))
 
 	token.Claims = jwt_lib.MapClaims{
@@ -34,7 +34,7 @@ func (c *jwtImpl) CreateTocken(id int64) (string, error) {
 	}
 }
 
-func (c *jwtImpl) CreateTockenPrivate(encode_str string) (string, error) {
+func (c *jwtImpl) CreateTokenPrivate(encode_str string) (string, error) {
 	token := jwt_lib.New(jwt_lib.GetSigningMethod("HS256"))
 
 	token.Claims = jwt_lib.MapClaims{

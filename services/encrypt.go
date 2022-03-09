@@ -35,15 +35,20 @@ func CheckKey(id int64, token_str string) error {
 	// if err != nil {
 	// 	return err
 	// }
-	log.Printf("UserID: %d/n", id)
-	log.Println("Token: " + token_str)
+
+	// log.Printf("UserID: %d/t", id)
+	// log.Println("Token: " + token_str)
 	tokenDe, err := Base64Dec(token_str)
 	if err != nil {
+		log.Println(err)
+		err = errors.New("Key invalid")
 		return err
+
 	}
 	tokenID, err := RsaDecrypt(tokenDe, config.PrivateKey)
 	if err != nil {
 		log.Println(err)
+		err = errors.New("Key invalid")
 		return err
 	}
 	if id != int64(binary.LittleEndian.Uint64(tokenID)) { // convert []byte to int64
