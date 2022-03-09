@@ -55,7 +55,7 @@ func (service *deviceServiceImpl) Push(request dtos.PushRequest) (*dtos.DeviceRe
 
 	Url.Path += fmt.Sprint(request.User_ID) + "/" + request.Video_name
 
-	s := "{\"mac\":" + device.Mac + "," + "\"url\":" + Url.String() + "}"
+	s := "{\"mac\":" + `"` + device.Mac + `",` + "\"url\":" + `"` + Url.String() + `"}`
 	log.Println(s)
 	PublishData(device.Mac, s)
 	log.Println("Response")

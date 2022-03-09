@@ -28,10 +28,10 @@ const CmsPassBi = ""
 var mac = ""
 
 // CmsTopicIn : Server to Box
-var CmsTopicIn = "/v1/devices/monitor/" + mac + "/telemetry"
+var CmsTopicIn = "/v1/devices/monitor/" + mac + "/in"
 
 // CmsTopicOut : Box to Server
-var CmsTopicOut = "/v1/devices/monitor/" + mac + "/request/"
+var CmsTopicOut = "/v1/devices/monitor/" + mac + "/out/"
 
 //PublishData : Function
 func PublishData(mac string, payload string) { // idBox : Mac of device

@@ -70,6 +70,11 @@ func (ctl *Controller) AddMedia(context *gin.Context) {
 
 	request.User_ID, _ = strconv.ParseInt(context.Request.PostForm["user_id"][0], 10, 64)
 	request.Key = context.Request.PostForm["key"][0]
+	// for f := range context.Request.PostForm["file"] {
+	// 	m := dtos.FileUpload{}
+	// 	// m.Video_name = f.
+
+	// }
 	log.Println(request)
 	log.Println("------------------")
 	// request.Files =   context.Request.PostForm["file"]
