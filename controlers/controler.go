@@ -274,12 +274,12 @@ func (ctl *Controller) Upload(context *gin.Context) {
 		var f dtos.FileUpload
 		f.Video_name = file.Filename
 		fType := filepath.Ext(f.Video_name)
-		if fType != ".mp4" {
-			err_up := errors.New("Only supported .mp4 File ")
+		if fType != ".mp4" && fType != ".jpg" && fType != ".png" {
+			err_up := errors.New("Only supported mp4, jpeg, png File  ")
 			utilitys.ResponseError400(context, err_up.Error())
 			return
 		}
-		f.Video_size = file.Size / 1024000
+		f.Video_size = file.Size / 1024
 		f.Video_time = 0
 		request.Files = append(request.Files, f)
 	}
@@ -357,7 +357,7 @@ func (ctl *Controller) CreateUser(context *gin.Context) {
 		Username: request.Username,
 		Password: request.Password,
 		Phone:    request.Phone,
-		Max_size: 600, //MB
+		Max_size: 600000, //KB 1MB=1000KB
 	}
 	data, err := ctl.userService.Create(acc)
 	if err != nil {
