@@ -61,7 +61,7 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 		media := engine.Group("/api/v1/media")
 		media.Use(accountAuthMiddleWare.Check)
 		media.StaticFS("/download", http.Dir("storage"))
-		media.POST("/add", controller.AddMedia)
+		media.POST("/add", controller.Upload)
 		media.POST("/list", controller.ListMedia)
 		media.DELETE("/delete", controller.DeleteMedia)
 	}

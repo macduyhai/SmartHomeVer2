@@ -37,8 +37,8 @@ func NewController(provider services.Provider) Controller {
 func (ctl *Controller) AddMedia(context *gin.Context) {
 	var request dtos.AddMediaRequest
 
-	// context.Request.ParseForm()
-	// log.Println(context.Request)
+	context.Request.ParseForm()
+	log.Println(context.Request)
 	// for key, value := range context.Request.PostForm {
 	// 	fmt.Println(key, value)
 	// }
@@ -72,7 +72,7 @@ func (ctl *Controller) AddMedia(context *gin.Context) {
 	request.User_ID, _ = strconv.ParseInt(context.Request.PostForm["user_id"][0], 10, 64)
 	request.Key = context.Request.PostForm["key"][0]
 
-	// request.Files =   context.Request.PostForm["file"]
+	// request.Files[0] =   context.Request.PostForm["file"]
 	// log.Println(request)
 
 	data, err := ctl.mediaService.AddMedia(request)
@@ -254,7 +254,7 @@ func (ctl *Controller) Upload(context *gin.Context) {
 	form, _ := context.MultipartForm()
 	log.Println(form)
 
-	files := form.File["file"]
+	files := form.File["files"]
 	userID := form.Value["user_id"]
 	key := form.Value["key"]
 	log.Println(userID)
