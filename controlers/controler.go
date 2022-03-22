@@ -254,7 +254,7 @@ func (ctl *Controller) Upload(context *gin.Context) {
 	form, _ := context.MultipartForm()
 	log.Println(form)
 
-	files := form.File["files"]
+	files := form.File["file"]
 	userID := form.Value["user_id"]
 	key := form.Value["key"]
 	log.Println(userID)

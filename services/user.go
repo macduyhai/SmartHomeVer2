@@ -21,7 +21,6 @@ type UserService interface {
 	AnalysisByDay(userID int64, begin *time.Time, end *time.Time) (map[string]int64, error)
 	GetLogsByTime(userID int64, begin *time.Time, end *time.Time) ([]models.Log, error)
 }
-
 type userServiceImpl struct {
 	config  *config.Config
 	userDao daos.UserDao
@@ -56,7 +55,6 @@ func (service *userServiceImpl) Login(request dtos.LoginRequest) (*dtos.LoginRes
 	}
 
 	response := dtos.LoginResponse{
-		UserID:   user.ID,
 		Username: user.Username,
 		Name:     user.Name,
 		Token:    token,
