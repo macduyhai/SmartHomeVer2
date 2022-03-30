@@ -42,7 +42,7 @@ func (service *userServiceImpl) Login(request dtos.LoginRequest) (*dtos.LoginRes
 	array_byte := make([]byte, 8)
 	binary.LittleEndian.PutUint64(array_byte, uint64(user.ID))
 	// encode, err := RsaEncrypt([]byte(user.Username), config.PublicKey)
-	encode, err := RsaEncrypt(array_byte, service.config.PublicKey)
+	encode, err := RsaEncrypt(array_byte, config.Conf.PublicKey) //service.config.PublicKey
 	if err != nil {
 		panic(err)
 	}

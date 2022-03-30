@@ -45,7 +45,7 @@ func (service ecryptServiceImpl) CheckKey(id int64, token_str string) error {
 		return err
 
 	}
-	tokenID, err := RsaDecrypt(tokenDe, service.config.PrivateKey)
+	tokenID, err := RsaDecrypt(tokenDe, config.Conf.PrivateKey)
 	if err != nil {
 		log.Println(err)
 		err = errors.New("Key invalid")
