@@ -20,69 +20,19 @@ import (
 
 type Controller struct {
 	userService   services.UserService
-	avrService    services.AverageService
 	deviceService services.DeviceService
 	mediaService  services.MediaService
 }
 
 func NewController(provider services.Provider) Controller {
-	return Controller{userService: provider.GetUserService(),
-		avrService:    provider.GetAverageService(),
+	return Controller{
+		userService:   provider.GetUserService(),
 		deviceService: provider.GetDeviceService(),
 		mediaService:  provider.GetMediaService(),
 	}
 }
 
-//------------------------------------------------------------
-func (ctl *Controller) AddMedia(context *gin.Context) {
-	var request dtos.AddMediaRequest
-
-	context.Request.ParseForm()
-	log.Println(context.Request)
-	// for key, value := range context.Request.PostForm {
-	// 	fmt.Println(key, value)
-	// }
-
-	// if err != nil {
-	// 	log.Println("Lôi encode Json request")
-	// 	log.Println(err)
-	// 	utilitys.ResponseError400(context, err.Error())
-	// 	return
-	// } else {
-	// 	log.Println("------------- Resquest form data  ----------------")
-	// 	log.Println(res)
-	// 	log.Println("---------------------------------------------------")
-	// }
-
-	// err := context.ShouldBindJSON(&request)
-
-	// if err != nil {
-	// 	log.Println("Error encode Json request")
-	// 	log.Println(err)
-	// 	utilitys.ResponseError400(context, err.Error())
-	// 	return
-	// }
-	context.Request.ParseMultipartForm(1000)
-	for key, value := range context.Request.PostForm {
-		log.Println(key, value)
-	}
-
-	// log.Println("------------------")
-
-	request.User_ID, _ = strconv.ParseInt(context.Request.PostForm["user_id"][0], 10, 64)
-	request.Key = context.Request.PostForm["key"][0]
-
-	// request.Files[0] =   context.Request.PostForm["file"]
-	// log.Println(request)
-
-	data, err := ctl.mediaService.AddMedia(request)
-
-	if err != nil {
-		utilitys.ResponseError400(context, err.Error())
-	} else {
-		utilitys.ResponseSuccess200(context, data, "success")
-	}
-}
+//-----------------------------------------------------------
 
 //ListMedia
 func (ctl *Controller) ListMedia(context *gin.Context) {
@@ -205,29 +155,6 @@ func (ctl *Controller) GetstatusDevice(context *gin.Context) {
 		utilitys.ResponseSuccess200(context, data, "success")
 	}
 }
-
-// func (ctl *Controller) Download(context *gin.Context) {
-// 	url := context.Request.URL.Path
-// 	log.Println(url)
-// 	p := strings.Split(url, "/")
-// 	log.Println(p)
-// 	path := "./storage/" + p[5] + "/" + p[6]
-// 	log.Println(path)
-// 	//log.Println("Opening a file ")
-// 	// var file, err = os.OpenFile(path, os.O_RDWR, 0644)
-// 	// if err != nil {
-// 	// 	log.Println(err)
-// 	// } else {
-// 	// 	log.Println("MOpen file done")
-// 	// }
-// 	// defer file.Close()
-// 	// context.Writer.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", p[6])) //fmt.Sprintf("attachment; filename=%s", filename) Downloaded file renamed
-// 	// context.Writer.Header().Add("Content-Type", "application/octet-stream")
-// 	// context.FileAttachment(path, p[6])
-
-// 	// http.ServeFile(context.Writer, context.Request, path)
-// 	context.FileAttachment(path, p[6])
-// }
 
 // PushDevice
 func (ctl *Controller) PushDevice(context *gin.Context) {
@@ -433,88 +360,6 @@ func stringYYYYMMDD2Time(input string) (*time.Time, error) {
 	}
 
 	return &result, nil
-}
-
-func (ctl *Controller) AnalysisByTag(context *gin.Context) {
-	userID, err := utilitys.GetUserID(context)
-	if err != nil {
-		utilitys.ResponseError400(context, "get userID error")
-		return
-	}
-
-	beginTime, err := stringYYYYMMDD2Time(context.Query(common.BeginTimeStampKey))
-	if err != nil {
-		utilitys.ResponseError400(context, "input format YYYY-MM-DD")
-		return
-	}
-
-	endTime, err := stringYYYYMMDD2Time(context.Query(common.EndTimeStampKey))
-	if err != nil {
-		utilitys.ResponseError400(context, "input format YYYY-MM-DD")
-		return
-	}
-
-	data, err := ctl.userService.AnalysisByTag(userID, beginTime, endTime)
-	if err != nil {
-		utilitys.ResponseError400(context, err.Error())
-	} else {
-		utilitys.ResponseSuccess200(context, data, "success")
-	}
-}
-
-func (ctl *Controller) AnalysisByDay(context *gin.Context) {
-	userID, err := utilitys.GetUserID(context)
-	if err != nil {
-		utilitys.ResponseError400(context, "get userID error")
-		return
-	}
-
-	beginTime, err := stringYYYYMMDD2Time(context.Query(common.BeginTimeStampKey))
-	if err != nil {
-		utilitys.ResponseError400(context, "input format YYYY-MM-DD")
-		return
-	}
-
-	endTime, err := stringYYYYMMDD2Time(context.Query(common.EndTimeStampKey))
-	if err != nil {
-		utilitys.ResponseError400(context, "input format YYYY-MM-DD")
-		return
-	}
-
-	data, err := ctl.userService.AnalysisByDay(userID, beginTime, endTime)
-	if err != nil {
-		utilitys.ResponseError400(context, err.Error())
-	} else {
-		utilitys.ResponseSuccess200(context, data, "input format YYYY-MM-DD")
-	}
-}
-
-func (ctl *Controller) GetAverageByDay(context *gin.Context) {
-	userID, err := utilitys.GetUserID(context)
-	if err != nil {
-		utilitys.ResponseError400(context, "get userID error")
-		return
-	}
-
-	beginTime, err := stringYYYYMMDD2Time(context.Query(common.BeginTimeStampKey))
-	if err != nil {
-		utilitys.ResponseError400(context, "input format YYYY-MM-DD")
-		return
-	}
-
-	endTime, err := stringYYYYMMDD2Time(context.Query(common.EndTimeStampKey))
-	if err != nil {
-		utilitys.ResponseError400(context, "input format YYYY-MM-DD")
-		return
-	}
-
-	money, err := ctl.avrService.CalculateByDay(userID, beginTime, endTime)
-	if err != nil {
-		utilitys.ResponseError400(context, err.Error())
-	} else {
-		result := dtos.AverageMoneyPerDayResponse{Money: money}
-		utilitys.ResponseSuccess200(context, result, "success")
-	}
 }
 
 func (ctl *Controller) Ping(context *gin.Context) {

@@ -17,7 +17,7 @@ import (
 )
 
 type EncryptService interface {
-	CheckKey(username string, id int64) error
+	CheckKey(id int64, username string) error
 	Base64Enc(b1 []byte) string
 	Base64Dec(s1 string) ([]byte, error)
 	RsaDecrypt(ciphertext []byte, key []byte) ([]byte, error)
@@ -30,7 +30,7 @@ type ecryptServiceImpl struct {
 }
 
 //=================== MA HOA ==========================
-func CheckKey(id int64, token_str string) error {
+func (service ecryptServiceImpl) CheckKey(id int64, token_str string) error {
 	// user, err := service.userDao.CheckUserID(id)
 	// if err != nil {
 	// 	return err
@@ -45,7 +45,7 @@ func CheckKey(id int64, token_str string) error {
 		return err
 
 	}
-	tokenID, err := RsaDecrypt(tokenDe, config.PrivateKey)
+	tokenID, err := RsaDecrypt(tokenDe, service.config.PrivateKey)
 	if err != nil {
 		log.Println(err)
 		err = errors.New("Key invalid")
@@ -92,6 +92,7 @@ func RsaDecrypt(ciphertext []byte, key []byte) ([]byte, error) {
 }
 
 func RsaEncrypt(origData []byte, key []byte) ([]byte, error) {
+	log.Println(key)
 	block, _ := pem.Decode(key)
 	if block == nil {
 		return nil, errors.New("public key error")

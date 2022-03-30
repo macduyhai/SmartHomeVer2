@@ -1,9 +1,47 @@
 package config
 
+import (
+	"fmt"
+	"log"
+
+	"github.com/caarlos0/env"
+	"github.com/joho/godotenv"
+)
+
 type Config struct {
-	MySQLURL  string `envconfig:"MYSQL_URL" default:"root:1@tcp(localhost:3306)/qc_monitor?charset=utf8mb4&collation=utf8mb4_unicode_ci&parseTime=True&loc=Local"`
-	APIKey    string `envconfig:"API_KEY" default:"duyhai-monitor-v1"`
-	SecretKet string `envconfig:"SECRET_KEY" default:"duyhai-monitor-v1-key"`
+	Port       string `env:"PORT" default:"9090"`
+	MySQLURL   string `env:"MYSQL_URL,required"`
+	APIKey     string `env:"API_KEY,required"`
+	SecretKey  string `env:"SECRET_KEY,required"`
+	PublicKey  []byte `env:"PUBLICKEY,required"`
+	PrivateKey []byte `env:"PRIVATEKEY,required"`
+}
+
+var Conf Config
+
+// NewConfig will read the config data from given .env file
+func NewConfig(files ...string) *Config {
+	err := godotenv.Load(files...) // Loading config from env file
+	if err != nil {
+		log.Printf("No .env file could be found %q\n", files)
+	}
+	cfg := Config{}
+	err = env.Parse(&cfg)
+	if err != nil {
+		fmt.Printf("%+v\n", err)
+
+	}
+	Conf = cfg
+	return &cfg
+}
+
+/*
+type Config struct {
+	MySQLURL   string `env:"MYSQL_URL" default:"root:1@tcp(localhost:3306)/qc_monitor?charset=utf8mb4&collation=utf8mb4_unicode_ci&parseTime=True&loc=Local"`
+	APIKey     string `env:"API_KEY" default:"duyhai-monitor-v1"`
+	SecretKey  string `env:"SECRET_KEY" default:"duyhai-monitor-v1-key"`
+	PublicKey  []byte `env:"PUBLICKEY,required"`
+	PrivateKey []byte `env:"PRIVATEKEY,required"`
 }
 
 var PublicKey = []byte(`
@@ -32,3 +70,4 @@ nxIeBMdrDBZ/2xDb2OUCQHnot9aJVhXah5hTPKBG6fOrFLz3tvQiIDoqPmW2TH+g
 62tZyiZylQ3xhWuPgF0pUbwSJJ46PZ52P6RCnDSMcTk=
 -----END RSA PRIVATE KEY-----
 `)
+*/

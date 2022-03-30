@@ -9,8 +9,6 @@ import (
 
 type Provider interface {
 	GetUserService() UserService
-	GetAnalysisService() AnalysisService
-	GetAverageService() AverageService
 	GetDeviceService() DeviceService
 	GetMediaService() MediaService
 }
@@ -22,29 +20,20 @@ type providerImpl struct {
 
 func (provider *providerImpl) GetMediaService() MediaService {
 	mediaDao := daos.NewMediaDao(provider.db)
-	jwtClient := middlewares.NewJWT(provider.config.SecretKet)
+	jwtClient := middlewares.NewJWT(provider.config.SecretKey)
 	return NewMediaService(provider.config, mediaDao, jwtClient)
 }
 func (provider *providerImpl) GetDeviceService() DeviceService {
 	deviceDao := daos.NewDeviceDao(provider.db)
-	jwtClient := middlewares.NewJWT(provider.config.SecretKet)
+	jwtClient := middlewares.NewJWT(provider.config.SecretKey)
 	return NewDeviceService(provider.config, deviceDao, jwtClient)
 }
 
 //---------------------------------------
 func (provider *providerImpl) GetUserService() UserService {
 	userDao := daos.NewUserDao(provider.db)
-	jwtClient := middlewares.NewJWT(provider.config.SecretKet)
+	jwtClient := middlewares.NewJWT(provider.config.SecretKey)
 	return NewUserService(provider.config, userDao, jwtClient)
-}
-
-func (provider *providerImpl) GetAverageService() AverageService {
-	userDao := daos.NewUserDao(provider.db)
-	return NewAverageService(userDao)
-}
-
-func (provider *providerImpl) GetAnalysisService() AnalysisService {
-	return NewAnalysisService()
 }
 
 func NewProvider(conf *config.Config, db *gorm.DB) Provider {

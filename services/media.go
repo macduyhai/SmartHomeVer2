@@ -18,8 +18,9 @@ type MediaService interface {
 }
 
 type mediaServiceImpl struct {
-	config   *config.Config
-	mediaDao daos.MediaDao
+	config     *config.Config
+	mediaDao   daos.MediaDao
+	keyService EncryptService
 }
 
 func NewMediaService(conf *config.Config, mediaDao daos.MediaDao, jwt middlewares.JWT) MediaService {
@@ -28,7 +29,7 @@ func NewMediaService(conf *config.Config, mediaDao daos.MediaDao, jwt middleware
 	}
 }
 func (service *mediaServiceImpl) AddMedia(request dtos.AddMediaRequest) (*dtos.AddMediaResponse, error) {
-	err := CheckKey(request.User_ID, request.Key)
+	err := service.keyService.CheckKey(request.User_ID, request.Key)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +58,7 @@ func (service *mediaServiceImpl) AddMedia(request dtos.AddMediaRequest) (*dtos.A
 }
 
 func (service *mediaServiceImpl) ListMedia(request dtos.ListMediaRequest) (*dtos.ListMediaResponse, error) {
-	err := CheckKey(request.User_ID, request.Key)
+	err := service.keyService.CheckKey(request.User_ID, request.Key)
 	if err != nil {
 		log.Println(err)
 		return nil, err
@@ -76,7 +77,7 @@ func (service *mediaServiceImpl) ListMedia(request dtos.ListMediaRequest) (*dtos
 }
 
 func (service *mediaServiceImpl) DeleteMedia(request dtos.DeleteMediaRequest) (*dtos.MediaResponse, error) {
-	err1 := CheckKey(request.User_ID, request.Key)
+	err1 := service.keyService.CheckKey(request.User_ID, request.Key)
 	if err1 != nil {
 		return nil, err1
 	}

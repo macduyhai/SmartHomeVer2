@@ -25,8 +25,9 @@ type DeviceService interface {
 }
 
 type deviceServiceImpl struct {
-	config    *config.Config
-	deviceDao daos.DeviceDao
+	config     *config.Config
+	deviceDao  daos.DeviceDao
+	keyService EncryptService
 }
 
 func NewDeviceService(conf *config.Config, deviceDao daos.DeviceDao, jwt middlewares.JWT) DeviceService {
@@ -37,7 +38,7 @@ func NewDeviceService(conf *config.Config, deviceDao daos.DeviceDao, jwt middlew
 
 //--------------------------Upload video to device used MQTT -----------------------------
 func (service *deviceServiceImpl) Push(request dtos.PushRequest) (*dtos.DeviceResponse, error) {
-	err := CheckKey(request.User_ID, request.Key)
+	err := service.keyService.CheckKey(request.User_ID, request.Key)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +49,7 @@ func (service *deviceServiceImpl) Push(request dtos.PushRequest) (*dtos.DeviceRe
 	if err != nil {
 		return nil, err
 	}
-	Url, err := url.Parse("http://hapyc.com:9090/api/v1/media/download/")
+	Url, err := url.Parse("http://192.168.2.9:9090/api/v1/media/download/")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -68,7 +69,7 @@ func (service *deviceServiceImpl) Push(request dtos.PushRequest) (*dtos.DeviceRe
 
 //--------------------------------------------------------------------------------------
 func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddResponse, error) {
-	err := CheckKey(request.User_ID, request.Key)
+	err := service.keyService.CheckKey(request.User_ID, request.Key)
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +105,7 @@ func (service *deviceServiceImpl) Add(request dtos.AddRequest) (*dtos.AddRespons
 }
 
 func (service *deviceServiceImpl) List(request dtos.ListRequest) (*dtos.ListResponse, error) {
-	err := CheckKey(request.User_ID, request.Key)
+	err := service.keyService.CheckKey(request.User_ID, request.Key)
 	if err != nil {
 		log.Println(err)
 		return nil, err
@@ -123,7 +124,7 @@ func (service *deviceServiceImpl) List(request dtos.ListRequest) (*dtos.ListResp
 	return &response, nil
 }
 func (service *deviceServiceImpl) Delete(request dtos.DeleteRequest) (*dtos.DeviceResponse, error) {
-	err1 := CheckKey(request.User_ID, request.Key)
+	err1 := service.keyService.CheckKey(request.User_ID, request.Key)
 	if err1 != nil {
 		return nil, err1
 	}
@@ -138,7 +139,7 @@ func (service *deviceServiceImpl) Delete(request dtos.DeleteRequest) (*dtos.Devi
 }
 
 func (service *deviceServiceImpl) Edit(request dtos.EditRequest) (*dtos.EditResponse, error) {
-	err := CheckKey(request.User_ID, request.Key)
+	err := service.keyService.CheckKey(request.User_ID, request.Key)
 	if err != nil {
 		return nil, err
 	}
@@ -153,7 +154,7 @@ func (service *deviceServiceImpl) Edit(request dtos.EditRequest) (*dtos.EditResp
 	return &response, nil
 }
 func (service *deviceServiceImpl) Getstatus(request dtos.GetstatusRequest) (*dtos.GetstatusResponse, error) {
-	err := CheckKey(request.User_ID, request.Key)
+	err := service.keyService.CheckKey(request.User_ID, request.Key)
 	if err != nil {
 		return nil, err
 	}
@@ -170,7 +171,7 @@ func (service *deviceServiceImpl) Getstatus(request dtos.GetstatusRequest) (*dto
 
 // Upload
 func (service *deviceServiceImpl) Upload(request dtos.UploadRequest) (*dtos.UploadResponse, error) {
-	err := CheckKey(request.User_ID, request.Key)
+	err := service.keyService.CheckKey(request.User_ID, request.Key)
 	if err != nil {
 		return nil, err
 	}

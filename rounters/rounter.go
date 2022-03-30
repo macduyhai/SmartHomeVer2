@@ -67,26 +67,26 @@ func (router *Router) InitGin() (*gin.Engine, error) {
 	}
 	{
 		log := engine.Group("/api/v1/log")
-		log.Use(jwt.Auth(router.config.SecretKet))
+		log.Use(jwt.Auth(router.config.SecretKey))
 		log.Use(middlewares.SetUserID)
 		log.POST("", controller.CreateLog)
 		log.GET("", controller.GetLogs)
 	}
 
-	{
-		analysis := engine.Group("/api/v1/analysis")
-		analysis.Use(jwt.Auth(router.config.SecretKet))
-		analysis.Use(middlewares.SetUserID)
-		analysis.GET("/tag", controller.AnalysisByTag)
-		analysis.GET("/day", controller.AnalysisByDay)
-	}
+	// {
+	// 	analysis := engine.Group("/api/v1/analysis")
+	// 	analysis.Use(jwt.Auth(router.config.SecretKet))
+	// 	analysis.Use(middlewares.SetUserID)
+	// 	analysis.GET("/tag", controller.AnalysisByTag)
+	// 	analysis.GET("/day", controller.AnalysisByDay)
+	// }
 
-	{
-		avg := engine.Group("/api/v1/average")
-		avg.Use(jwt.Auth(router.config.SecretKet))
-		avg.Use(middlewares.SetUserID)
-		avg.GET("day", controller.GetAverageByDay)
-	}
+	// {
+	// 	avg := engine.Group("/api/v1/average")
+	// 	avg.Use(jwt.Auth(router.config.SecretKet))
+	// 	avg.Use(middlewares.SetUserID)
+	// 	avg.GET("day", controller.GetAverageByDay)
+	// }
 
 	return engine, nil
 }
