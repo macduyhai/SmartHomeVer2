@@ -13,8 +13,8 @@ type Config struct {
 	MySQLURL   string `env:"MYSQL_URL,required"`
 	APIKey     string `env:"API_KEY,required"`
 	SecretKey  string `env:"SECRET_KEY,required"`
-	PublicKey  []byte `env:"PUBLICKEY,required"`
-	PrivateKey []byte `env:"PRIVATEKEY,required"`
+	PublicKey  string `env:"PUBLICKEY,required"`
+	PrivateKey string `env:"PRIVATEKEY,required"`
 }
 
 var Conf Config

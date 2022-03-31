@@ -45,7 +45,7 @@ func (service *userServiceImpl) Login(request dtos.LoginRequest) (*dtos.LoginRes
 	// encode, err := RsaEncrypt([]byte(user.Username), config.PublicKey)
 	log.Println("Infor config.Conf:")
 	log.Println(config.Conf)
-	encode, err := RsaEncrypt(array_byte, config.Conf.PublicKey) //service.config.PublicKey
+	encode, err := RsaEncrypt(array_byte, []byte(config.Conf.PublicKey)) //service.config.PublicKey
 	if err != nil {
 		panic(err)
 	}
