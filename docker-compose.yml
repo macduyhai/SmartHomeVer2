@@ -21,9 +21,10 @@ services:
       retries: 3
       start_period: 40s
     environment:
-      - PORT=9090
+      - MYSQL_URL=root:bW90aGVyIGZ1Y2tlciBub29i@tcp(mysql:3306)/qc_monitor?charset=utf8mb4&collation=utf8mb4_unicode_ci&parseTime=True&loc=Local
+      - API_KEY=duyhai1995
+      - SECRET_KEY=duyhai1995
     env_file: .env
-    
   mysql:
     image: mysql:5.7
     container_name: mysql-qc-monitor
