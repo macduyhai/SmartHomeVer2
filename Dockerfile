@@ -22,6 +22,8 @@ RUN echo 123 > storage/test_save.txt
 
 COPY --from=builder /app/main .
 
+COPY --from=builder /app/.env .
+
 EXPOSE 80
 
 CMD ["/app/main"]
