@@ -12,7 +12,6 @@ services:
     image: qc-monitor:v1.0.0
     volumes:
       - ./storage:/app/storage
-      - ./.env :/app/.env
     ports:
       - "9090:80"
     healthcheck:
