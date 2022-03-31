@@ -21,7 +21,7 @@ services:
       retries: 3
       start_period: 40s
     environment:
-      - Port: 9090
+      - Port: "9090"
     env_file: .env
 
   mysql:
