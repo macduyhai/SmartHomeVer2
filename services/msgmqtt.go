@@ -15,7 +15,7 @@ var MqttCmsBi mqtt.Client
 
 // CmsHostBi : host MQTT
 // const CmsHostBi string = "tcp://broker.hivemq.com:1883"
-const CmsHostBi string = "tcp://hapyc.com:1883"
+const CmsHostBi string = "tcp://192.168.2.9:1883"
 
 // CmsAccessTokenBi : User
 const CmsAccessTokenBi = ""
