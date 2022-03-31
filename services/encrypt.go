@@ -92,7 +92,6 @@ func RsaDecrypt(ciphertext []byte, key []byte) ([]byte, error) {
 }
 
 func RsaEncrypt(origData []byte, key []byte) ([]byte, error) {
-	log.Println(key)
 	block, _ := pem.Decode(key)
 	if block == nil {
 		return nil, errors.New("public key error")
