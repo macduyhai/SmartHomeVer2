@@ -1,7 +1,7 @@
 FROM golang:1.13.1 as builder
 
-MAINTAINER MDH <dh.duyhai@gmail.com>
 RUN mkdir /app
+
 WORKDIR /app
 
 COPY . /app
@@ -17,7 +17,9 @@ FROM ubuntu:16.04
 RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
+
 RUN mkdir storage
+
 RUN echo 123 > storage/test_save.txt
 
 COPY --from=builder /app/main .

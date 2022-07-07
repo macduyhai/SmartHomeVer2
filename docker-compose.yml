@@ -6,7 +6,7 @@ services:
       dockerfile: "./Dockerfile"
       cache_from:
         - ubuntu:16.04
-        - golang:1.12
+        - golang:1.13.1 
     depends_on:
       - mysql
     image: qc-monitor:v1.0.0
