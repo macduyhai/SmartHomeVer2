@@ -14,7 +14,7 @@ import (
 var MqttCmsBi mqtt.Client
 
 // CmsHostBi : host MQTT
-const CmsHostBi string = "tcp://broker.hivemq.com:1883"
+const CmsHostBi string = "tcp://test.mosquitto.org:1883"
 
 // const CmsHostBi string = "tcp://192.168.2.9:1883"
 
@@ -28,18 +28,17 @@ const CmsPassBi = ""
 var mac = ""
 
 // CmsTopicIn : Server to Box
-var CmsTopicIn = "/v1/devices/monitor/" + mac + "/in"
+// var CmsTopicIn = "/v1/devices/monitor/" + mac + "/in"
 
 // CmsTopicOut : Box to Server
-var CmsTopicOut = "/v1/devices/monitor/" + mac + "/out/"
+// var CmsTopicOut = "/v1/devices/monitor/" + mac + "/out/+"
+const CmsTopicOut = "/v1/devices/monitor/out/+"
 
 //PublishData : Function
 func PublishData(mac string, payload string) { // idBox : Mac of device
-	CmsTopicIn = "/v1/devices/monitor/" + mac + "/in"
-	CmsTopicOut = "/v1/devices/monitor/" + mac + "/out"
+	CmsTopicIn := "/v1/devices/monitor/" + mac + "/in"
 	fmt.Println("Mac: " + mac)
 	fmt.Println("TOPIC IN :" + CmsTopicIn)
-	fmt.Println("TOPIC OUT :" + CmsTopicOut)
 	// If Test device with static Topic
 	//CmsTopicIn = "TNQ_MQTT"
 	fmt.Println("Test device with static Topic")
@@ -122,7 +121,6 @@ func MQTTOnConnectHandler(client mqtt.Client) {
 }
 func MqttMessageHandler(MqttBI mqtt.Client, message mqtt.Message) {
 	fmt.Println("=================== MqttMessageHandler ====================")
-	fmt.Printf("Message %s\n", message)
 	fmt.Printf("TOPIC: %s\n", message.Topic())
 	fmt.Printf("MSG:\n %s\n", message.Payload())
 	fmt.Println("=========================== + = + ==========================")

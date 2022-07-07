@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	fmt.Println("Hello")
+	fmt.Println("Server starting ...")
 	// Init connect mqtt
 	services.MqttBegin()
 
