@@ -1,5 +1,9 @@
 FROM golang:1.13.1 as builder
 
+LABEL maintainer="dh.duyhai@gmail.com"
+
+LABEL vendor="MAC DUY HAI"
+
 RUN mkdir /app
 
 WORKDIR /app
